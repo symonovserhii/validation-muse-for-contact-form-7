@@ -1,0 +1,91 @@
+# Spanish (Spain) translation for Validation Muse for Contact Form 7
+# Copyright (C) 2026
+# This file is distributed under the same license as the plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Validation Muse for Contact Form 7 1.2.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/validation-muse-for-contact-form-7\n"
+"POT-Creation-Date: 2026-01-31 00:00:00+0000\n"
+"PO-Revision-Date: 2026-01-31 00:00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Spanish (Spain)\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit\n"
+"X-Domain: validation-muse-for-contact-form-7\n"
+
+#: validation-muse-for-contact-form-7.php:71
+#: validation-muse-for-contact-form-7.php:72
+msgid "This plugin requires Contact Form 7 to be installed and activated."
+msgstr "Este plugin requiere que Contact Form 7 esté instalado y activado."
+
+#: validation-muse-for-contact-form-7.php:72
+msgid "Plugin dependency check"
+msgstr "Verificación de dependencias del plugin"
+
+#: validation-muse-for-contact-form-7.php:116
+msgid "Validation Muse requires Contact Form 7 to be installed and activated. %1$sInstall Contact Form 7%2$s"
+msgstr "Validation Muse requiere que Contact Form 7 esté instalado y activado. %1$sInstalar Contact Form 7%2$s"
+
+#: includes/class-vmcf7-admin.php:84
+msgid "Custom Validation"
+msgstr "Validación personalizada"
+
+#: includes/class-vmcf7-admin.php:234
+msgid "Please enter a valid email address"
+msgstr "Por favor, introduce una dirección de correo electrónico válida"
+
+#: includes/class-vmcf7-admin.php:235
+msgid "Please enter a valid URL"
+msgstr "Por favor, introduce una URL válida"
+
+#: includes/class-vmcf7-admin.php:236
+msgid "Please enter a valid phone number"
+msgstr "Por favor, introduce un número de teléfono válido"
+
+#: includes/class-vmcf7-admin.php:237
+#: includes/class-vmcf7-admin.php:238
+msgid "Please enter a valid number"
+msgstr "Por favor, introduce un número válido"
+
+#: includes/class-vmcf7-admin.php:239
+msgid "Please enter a valid date"
+msgstr "Por favor, introduce una fecha válida"
+
+#: admin/views/panel.php:27
+msgid "Enable custom validation messages for this form"
+msgstr "Habilitar mensajes de validación personalizados para este formulario"
+
+#: admin/views/panel.php:32
+msgid "Custom validation messages"
+msgstr "Mensajes de validación personalizados"
+
+#: admin/views/panel.php:35
+msgid "Field"
+msgstr "Campo"
+
+#: admin/views/panel.php:36
+msgid "Required Message"
+msgstr "Mensaje de campo obligatorio"
+
+#: admin/views/panel.php:37
+msgid "Invalid Format Message"
+msgstr "Mensaje de formato inválido"
+
+#: admin/views/panel.php:52
+msgid "Required message for %s"
+msgstr "Mensaje de campo obligatorio para %s"
+
+#: admin/views/panel.php:62
+msgid "This field is required"
+msgstr "Este campo es obligatorio"
+
+#: admin/views/panel.php:70
+msgid "Invalid format message for %s"
+msgstr "Mensaje de formato inválido para %s"
+
+#: admin/views/panel.php:89
+msgid "No required fields found in this form."
+msgstr "No se encontraron campos obligatorios en este formulario."
