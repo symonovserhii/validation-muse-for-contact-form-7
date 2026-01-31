@@ -1,0 +1,57 @@
+/**
+ * Admin styles for Validation Muse for Contact Form 7.
+ *
+ * @package ValidationMuse
+ * @since   1.0.0
+ */
+
+.vmcf7-panel {
+	padding: 20px;
+}
+
+.vmcf7-enable-toggle {
+	margin-bottom: 20px;
+}
+
+.vmcf7-fields-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 15px;
+}
+
+.vmcf7-fields-table th,
+.vmcf7-fields-table td {
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: left;
+}
+
+.vmcf7-fields-table th {
+	background: #f5f5f5;
+}
+
+.vmcf7-fields-table input[type="text"] {
+	width: 100%;
+	padding: 5px;
+}
+
+.vmcf7-fields-table.vmcf7-disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.vmcf7-field-name {
+	font-weight: 600;
+	color: #23282d;
+}
+
+.vmcf7-field-type {
+	color: #666;
+	font-size: 12px;
+}
+
+.vmcf7-no-fields {
+	padding: 15px;
+	background: #fff;
+	border-left: 4px solid #dc3232;
+}

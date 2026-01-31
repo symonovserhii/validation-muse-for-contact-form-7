@@ -1,28 +1,43 @@
 <?php
-if (!defined('WP_UNINSTALL_PLUGIN')) {
-    exit;
+/**
+ * Uninstall script for Validation Muse for Contact Form 7.
+ *
+ * Removes all plugin data when the plugin is deleted.
+ *
+ * @package ValidationMuse
+ * @since   1.0.0
+ */
+
+// If uninstall not called from WordPress, exit.
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit;
 }
 
-$forms = get_posts([
-    'post_type'      => 'wpcf7_contact_form',
-    'post_status'    => 'any',
-    'fields'         => 'ids',
-    'posts_per_page' => -1,
-    'no_found_rows'  => true,
-]);
+// Get all Contact Form 7 forms.
+$vmcf7_forms = get_posts(
+	array(
+		'post_type'      => 'wpcf7_contact_form',
+		'post_status'    => 'any',
+		'fields'         => 'ids',
+		'posts_per_page' => -1,
+		'no_found_rows'  => true,
+	)
+);
 
-if ($forms) {
-    foreach ($forms as $form_id) {
-        $meta = get_post_meta($form_id);
+// Delete all plugin meta from forms.
+if ( $vmcf7_forms ) {
+	foreach ( $vmcf7_forms as $vmcf7_form_id ) {
+		$vmcf7_meta = get_post_meta( $vmcf7_form_id );
 
-        foreach ($meta as $key => $values) {
-            if (0 !== strpos((string) $key, '_cf7cv_')) {
-                continue;
-            }
+		foreach ( $vmcf7_meta as $vmcf7_key => $vmcf7_values ) {
+			if ( 0 !== strpos( (string) $vmcf7_key, '_vmcf7_' ) ) {
+				continue;
+			}
 
-            delete_post_meta($form_id, $key);
-        }
-    }
+			delete_post_meta( $vmcf7_form_id, $vmcf7_key );
+		}
+	}
 }
 
-delete_option('cf7cv_version');
+// Delete plugin options.
+delete_option( 'vmcf7_version' );
