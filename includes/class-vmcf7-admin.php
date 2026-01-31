@@ -101,9 +101,9 @@ class VMCF7_Admin {
 			return;
 		}
 
-		$form_id = absint( $post->id() );
-		$fields  = $this->get_form_fields( $post );
-		$enabled = get_post_meta( $form_id, '_vmcf7_enabled', true );
+		$form_id      = absint( $post->id() );
+		$vmcf7_fields = $this->get_form_fields( $post );
+		$enabled      = get_post_meta( $form_id, '_vmcf7_enabled', true );
 
 		include VMCF7_PATH . 'admin/views/panel.php';
 	}

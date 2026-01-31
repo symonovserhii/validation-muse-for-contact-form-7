@@ -4,7 +4,7 @@ Tags: contact form 7, validation, forms, messages, customization
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,9 @@ Yes, basic HTML is allowed and sanitized using `wp_kses_post()`.
 2. Example of custom validation messages on the frontend
 
 == Changelog ==
+
+= 1.2.1 =
+* Fixed variable name mismatch causing "No required fields" error
 
 = 1.2.0 =
 * Refactored codebase to follow WordPress Coding Standards
