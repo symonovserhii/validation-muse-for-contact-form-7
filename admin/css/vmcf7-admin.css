@@ -55,3 +55,78 @@
 	background: #fff;
 	border-left: 4px solid #dc3232;
 }
+
+/* Flavor Translation Tabs */
+
+.vmcf7-translations {
+	margin-top: 30px;
+	border-top: 1px solid #ddd;
+	padding-top: 20px;
+}
+
+.vmcf7-translations.vmcf7-disabled {
+	opacity: 0.5;
+	pointer-events: none;
+}
+
+.vmcf7-translations h3 {
+	margin: 0 0 15px;
+}
+
+.vmcf7-lang-tabs {
+	display: flex;
+	align-items: center;
+	gap: 0;
+	border-bottom: 1px solid #ddd;
+	margin-bottom: 0;
+}
+
+.vmcf7-lang-tab {
+	padding: 8px 16px;
+	border: 1px solid transparent;
+	border-bottom: none;
+	background: none;
+	cursor: pointer;
+	font-size: 13px;
+	color: #646970;
+	margin-bottom: -1px;
+	border-radius: 3px 3px 0 0;
+}
+
+.vmcf7-lang-tab:hover {
+	color: #135e96;
+}
+
+.vmcf7-lang-tab.active {
+	background: #fff;
+	border-color: #ddd;
+	color: #1d2327;
+	font-weight: 600;
+}
+
+.vmcf7-ai-translate {
+	margin-left: auto !important;
+	margin-bottom: 4px !important;
+}
+
+.vmcf7-lang-panel {
+	display: none;
+}
+
+.vmcf7-lang-panel.active {
+	display: block;
+}
+
+.vmcf7-translation-table {
+	margin-top: 0;
+	border-top: none;
+}
+
+.vmcf7-translation-table input::placeholder {
+	font-style: italic;
+	color: #a7aaad;
+}
+
+.vmcf7-notice {
+	margin: 10px 0;
+}

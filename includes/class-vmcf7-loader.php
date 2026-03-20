@@ -29,12 +29,14 @@ class VMCF7_Loader {
 	 * @return void
 	 */
 	public function init() {
+		require_once VMCF7_PATH . 'includes/class-vmcf7-flavor.php';
 		require_once VMCF7_PATH . 'includes/class-vmcf7-admin.php';
 
 		// Register validation filters for each supported tag type.
+		// Priority 20 = after CF7 core (10) and SWV, so we can replace error messages.
 		foreach ( $this->get_validation_tag_types() as $tag_type ) {
-			add_filter( "wpcf7_validate_{$tag_type}", array( $this, 'validate_field' ), 9, 2 );
-			add_filter( "wpcf7_validate_{$tag_type}*", array( $this, 'validate_field' ), 9, 2 );
+			add_filter( "wpcf7_validate_{$tag_type}", array( $this, 'validate_field' ), 20, 2 );
+			add_filter( "wpcf7_validate_{$tag_type}*", array( $this, 'validate_field' ), 20, 2 );
 		}
 
 		// Initialize admin functionality.
@@ -43,6 +45,10 @@ class VMCF7_Loader {
 			add_action( 'admin_enqueue_scripts', array( $admin, 'enqueue_scripts' ) );
 			add_filter( 'wpcf7_editor_panels', array( $admin, 'add_panel' ) );
 			add_action( 'wpcf7_save_contact_form', array( $admin, 'save_messages' ) );
+
+			if ( VMCF7_Flavor::is_active() ) {
+				add_action( 'wp_ajax_vmcf7_ai_translate', array( $admin, 'ajax_ai_translate' ) );
+			}
 		}
 
 		/**
@@ -75,52 +81,95 @@ class VMCF7_Loader {
 			return $result;
 		}
 
-		$value = $this->get_posted_value( $tag );
+		$value          = $this->get_posted_value( $tag );
+		$invalid_fields = $result->get_invalid_fields();
+		$already_invalid = isset( $invalid_fields[ $tag->name ] );
 
-		// Check for custom required message.
-		$required_message = $this->get_custom_message( $form->id(), $field_name, 'required' );
-		if ( $required_message && $tag->is_required() && $this->value_is_empty( $value ) ) {
-			$result->invalidate( $tag, $required_message );
-			return $result;
+		// Replace required error message if field is empty and already invalid.
+		if ( $already_invalid && $tag->is_required() && $this->value_is_empty( $value ) ) {
+			$required_message = $this->get_custom_message( $form->id(), $field_name, 'required' );
+			if ( $required_message ) {
+				$this->replace_error( $result, $tag->name, $required_message );
+				return $result;
+			}
 		}
 
-		// Check for custom invalid message.
-		$invalid_message = $this->get_custom_message( $form->id(), $field_name, 'invalid' );
-		if ( ! $invalid_message || $this->value_is_empty( $value ) || is_array( $value ) ) {
-			return $result;
+		// Replace invalid format error message.
+		if ( $already_invalid && ! $this->value_is_empty( $value ) && ! is_array( $value ) ) {
+			$invalid_message = $this->get_custom_message( $form->id(), $field_name, 'invalid' );
+			if ( $invalid_message ) {
+				$this->replace_error( $result, $tag->name, $invalid_message );
+				return $result;
+			}
 		}
 
-		// Validate based on field type.
-		switch ( $tag->basetype ) {
-			case 'email':
-				if ( ! wpcf7_is_email( $value ) ) {
+		// Field not yet invalid — apply custom validation (for fields not handled by SWV).
+		if ( ! $already_invalid ) {
+			$required_message = $this->get_custom_message( $form->id(), $field_name, 'required' );
+			if ( $required_message && $tag->is_required() && $this->value_is_empty( $value ) ) {
+				$result->invalidate( $tag, $required_message );
+				return $result;
+			}
+
+			$invalid_message = $this->get_custom_message( $form->id(), $field_name, 'invalid' );
+			if ( $invalid_message && ! $this->value_is_empty( $value ) && ! is_array( $value ) ) {
+				$is_invalid = false;
+
+				switch ( $tag->basetype ) {
+					case 'email':
+						$is_invalid = ! wpcf7_is_email( $value );
+						break;
+					case 'url':
+						$is_invalid = ! wpcf7_is_url( $value );
+						break;
+					case 'tel':
+						$is_invalid = ! wpcf7_is_tel( $value );
+						break;
+					case 'number':
+					case 'range':
+						$is_invalid = ! wpcf7_is_number( $value );
+						break;
+					case 'date':
+						$is_invalid = ! wpcf7_is_date( $value );
+						break;
+				}
+
+				if ( $is_invalid ) {
 					$result->invalidate( $tag, $invalid_message );
 				}
-				break;
-			case 'url':
-				if ( ! wpcf7_is_url( $value ) ) {
-					$result->invalidate( $tag, $invalid_message );
-				}
-				break;
-			case 'tel':
-				if ( ! wpcf7_is_tel( $value ) ) {
-					$result->invalidate( $tag, $invalid_message );
-				}
-				break;
-			case 'number':
-			case 'range':
-				if ( ! wpcf7_is_number( $value ) ) {
-					$result->invalidate( $tag, $invalid_message );
-				}
-				break;
-			case 'date':
-				if ( ! wpcf7_is_date( $value ) ) {
-					$result->invalidate( $tag, $invalid_message );
-				}
-				break;
+			}
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Replace an existing validation error message.
+	 *
+	 * CF7's WPCF7_Validation::invalidate() skips already-invalid fields
+	 * and invalid_fields is private, so we use Reflection to replace the message.
+	 *
+	 * @since 1.3.0
+	 *
+	 * @param WPCF7_Validation $result     The validation result.
+	 * @param string           $field_name The field name.
+	 * @param string           $message    The replacement message.
+	 * @return void
+	 */
+	private function replace_error( $result, $field_name, $message ) {
+		try {
+			$ref = new \ReflectionProperty( $result, 'invalid_fields' );
+			$ref->setAccessible( true );
+
+			$invalid_fields = $ref->getValue( $result );
+
+			if ( isset( $invalid_fields[ $field_name ] ) ) {
+				$invalid_fields[ $field_name ]['reason'] = $message;
+				$ref->setValue( $result, $invalid_fields );
+			}
+		} catch ( \ReflectionException $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
+			// Silently fail if Reflection is unavailable.
+		}
 	}
 
 	/**
@@ -254,8 +303,17 @@ class VMCF7_Loader {
 
 		$meta_key = sprintf( '_vmcf7_%s_%s', $field_name, $type );
 		$message  = get_post_meta( $form_id, $meta_key, true );
+		$message  = is_string( $message ) ? $message : '';
 
-		return is_string( $message ) ? $message : '';
+		// Return translated message if available and needed.
+		if ( '' !== $message && VMCF7_Flavor::needs_translation() ) {
+			$translated = VMCF7_Flavor::get_translation( $form_id, $field_name, $type );
+			if ( null !== $translated ) {
+				return $translated;
+			}
+		}
+
+		return $message;
 	}
 
 	/**

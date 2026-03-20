@@ -58,13 +58,21 @@ class VMCF7_Admin {
 			true
 		);
 
-		wp_localize_script(
-			'vmcf7-admin',
-			'vmcf7',
-			array(
-				'nonce' => wp_create_nonce( 'vmcf7_ajax_nonce' ),
-			)
+		$script_data = array(
+			'nonce' => wp_create_nonce( 'vmcf7_ajax_nonce' ),
 		);
+
+		if ( VMCF7_Flavor::is_active() ) {
+			$script_data['flavor'] = array(
+				'active'       => true,
+				'ai_available' => VMCF7_Flavor::is_ai_available(),
+				'languages'    => VMCF7_Flavor::get_target_languages(),
+				'nonce'        => wp_create_nonce( 'vmcf7_flavor_nonce' ),
+				'ajax_url'     => admin_url( 'admin-ajax.php' ),
+			);
+		}
+
+		wp_localize_script( 'vmcf7-admin', 'vmcf7', $script_data );
 	}
 
 	/**
@@ -117,17 +125,45 @@ class VMCF7_Admin {
 	 * @return array Array of field data.
 	 */
 	private function get_form_fields( $post ) {
-		$fields = array();
-		$tags   = $post->scan_form_tags();
+		$fields  = array();
+		$tags    = $post->scan_form_tags();
+		$form_id = $post->id();
+
+		// Preload Flavor translations for all languages.
+		$flavor_translations = array();
+		if ( VMCF7_Flavor::is_active() ) {
+			foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+				$flavor_translations[ $code ] = VMCF7_Flavor::get_all_translations( $form_id, $code );
+			}
+		}
 
 		foreach ( $tags as $tag ) {
 			if ( $tag->is_required() ) {
-				$fields[] = array(
-					'name'             => sanitize_key( $tag->name ),
+				$name = sanitize_key( $tag->name );
+
+				$field_data = array(
+					'name'             => $name,
 					'type'             => sanitize_key( $tag->basetype ),
-					'required_message' => $this->get_message( $post->id(), $tag->name, 'required' ),
-					'invalid_message'  => $this->get_message( $post->id(), $tag->name, 'invalid' ),
+					'required_message' => $this->get_message( $form_id, $tag->name, 'required' ),
+					'invalid_message'  => $this->get_message( $form_id, $tag->name, 'invalid' ),
 				);
+
+				// Add per-language translations.
+				if ( ! empty( $flavor_translations ) ) {
+					$field_data['translations'] = array();
+
+					foreach ( $flavor_translations as $code => $translations ) {
+						$req_key = VMCF7_Flavor::field_key( $name, 'required' );
+						$inv_key = VMCF7_Flavor::field_key( $name, 'invalid' );
+
+						$field_data['translations'][ $code ] = array(
+							'required' => isset( $translations[ $req_key ] ) ? $translations[ $req_key ] : '',
+							'invalid'  => isset( $translations[ $inv_key ] ) ? $translations[ $inv_key ] : '',
+						);
+					}
+				}
+
+				$fields[] = $field_data;
 			}
 		}
 
@@ -219,6 +255,60 @@ class VMCF7_Admin {
 				update_post_meta( $form_id, $meta_key, $clean_message );
 			}
 		}
+
+		// Save Flavor translations.
+		$this->save_flavor_translations( $form_id );
+	}
+
+	/**
+	 * Save Flavor translations from POST data.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @param int $form_id The form ID.
+	 * @return void
+	 */
+	private function save_flavor_translations( $form_id ) {
+		if ( ! VMCF7_Flavor::is_active() ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in save_messages().
+		if ( ! isset( $_POST['vmcf7_translations'] ) || ! is_array( $_POST['vmcf7_translations'] ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce verified in save_messages(). Data is sanitized in the loop below.
+		$translations = wp_unslash( $_POST['vmcf7_translations'] );
+
+		foreach ( $translations as $lang => $fields ) {
+			$lang = sanitize_key( $lang );
+			if ( ! $lang || ! is_array( $fields ) ) {
+				continue;
+			}
+
+			foreach ( $fields as $field_name => $messages ) {
+				$field_name = sanitize_key( $field_name );
+				if ( ! $field_name || ! is_array( $messages ) ) {
+					continue;
+				}
+
+				foreach ( $messages as $type => $message ) {
+					$type          = sanitize_key( $type );
+					$clean_message = wp_kses_post( $message );
+
+					if ( ! $type ) {
+						continue;
+					}
+
+					if ( '' === $clean_message ) {
+						VMCF7_Flavor::delete_translation( $form_id, $field_name, $type, $lang );
+					} else {
+						VMCF7_Flavor::save_translation( $form_id, $field_name, $type, $lang, $clean_message );
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -240,5 +330,51 @@ class VMCF7_Admin {
 		);
 
 		return isset( $messages[ $type ] ) ? $messages[ $type ] : '';
+	}
+
+	/**
+	 * AJAX handler for AI translation of form messages.
+	 *
+	 * @since 1.4.0
+	 *
+	 * @return void
+	 */
+	public function ajax_ai_translate() {
+		check_ajax_referer( 'vmcf7_flavor_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
+			wp_send_json_error( array( 'message' => 'Permission denied.' ), 403 );
+		}
+
+		if ( ! VMCF7_Flavor::is_active() ) {
+			wp_send_json_error( array( 'message' => 'Flavor not active.' ), 400 );
+		}
+
+		$form_id  = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+		$language = isset( $_POST['language'] ) ? sanitize_key( wp_unslash( $_POST['language'] ) ) : '';
+
+		if ( ! $form_id || ! $language ) {
+			wp_send_json_error( array( 'message' => 'Missing form_id or language.' ), 400 );
+		}
+
+		// Validate form ID belongs to a CF7 form.
+		$form_post = get_post( $form_id );
+		if ( ! $form_post || 'wpcf7_contact_form' !== $form_post->post_type ) {
+			wp_send_json_error( array( 'message' => 'Invalid form ID.' ), 400 );
+		}
+
+		// Validate language against enabled target languages.
+		$valid_languages = array_keys( VMCF7_Flavor::get_target_languages() );
+		if ( ! in_array( $language, $valid_languages, true ) ) {
+			wp_send_json_error( array( 'message' => 'Invalid language.' ), 400 );
+		}
+
+		$translations = VMCF7_Flavor::ai_translate_form( $form_id, $language );
+
+		if ( empty( $translations ) ) {
+			wp_send_json_error( array( 'message' => 'No messages to translate or AI not available.' ), 400 );
+		}
+
+		wp_send_json_success( array( 'translations' => $translations ) );
 	}
 }

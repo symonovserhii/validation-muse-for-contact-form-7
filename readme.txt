@@ -4,7 +4,7 @@ Tags: contact form 7, validation, forms, messages, customization
 Requires at least: 5.8
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -53,6 +53,21 @@ Yes, basic HTML is allowed and sanitized using `wp_kses_post()`.
 2. Example of custom validation messages on the frontend
 
 == Changelog ==
+
+= 1.4.0 =
+* Added multilingual support via Flavor translation plugin integration
+* Validation messages can now be translated per language in the form editor
+* Language tabs appear automatically when Flavor plugin is active
+* AI Translate button for one-click machine translation of all messages
+* Translations stored in Flavor's database, keeping plugin data portable
+* Zero overhead when Flavor is not installed — all calls behind class_exists() checks
+* Flavor translations cleaned up on plugin uninstall
+
+= 1.3.0 =
+* Fixed compatibility with Contact Form 7 6.x SWV (Schema-based Validation)
+* Validation filters now run at priority 20 (after CF7 core) to replace SWV error messages
+* Added Reflection-based error replacement for already-invalidated fields
+* Custom messages now correctly override default CF7 "The field is required." text
 
 = 1.2.1 =
 * Fixed variable name mismatch causing "No required fields" error
