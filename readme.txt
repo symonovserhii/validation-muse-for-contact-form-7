@@ -8,7 +8,7 @@ Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Custom error and required-field messages for Contact Form 7. Per-form, per-field, CF7 6.x SWV-compatible, multilingual, exportable.
+Custom error and required-field messages for Contact Form 7. Per-form, per-field, CF7 6.x SWV-compatible, multilingual.
 
 == Description ==
 
@@ -20,7 +20,7 @@ Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-ba
 
 * **CF7 6.x SWV compatible** — works with the new Schema-based Validation engine, not just legacy hooks.
 * **Per-form, per-field** — each form keeps its own messages; no global override.
-* **Stored in post meta** — messages travel with the form when you use Contact Form 7 export/import.
+* **Stored in post meta** — messages live with the form, compatible with CF7 form duplication and third-party CF7 import/export plugins.
 * **Multilingual via Flavor** — when the Flavor translation plugin is active, language tabs and a one-click AI Translate button appear in the editor automatically. Zero overhead when Flavor is not installed.
 * **Developer-friendly** — extensibility hooks `vmcf7_loaded` and `vmcf7_validation_tag_types` let you add custom field types.
 * **Lightweight** — no admin bloat, no tracking, no upsells.
@@ -50,7 +50,7 @@ Yes. Since version 1.3.0, Validation Muse hooks at priority 20 (after CF7 core) 
 
 = How is this different from other CF7 validation plugins? =
 
-Validation Muse is the only CF7 validation plugin that (1) is compatible with CF7 6.x SWV out of the box, (2) stores messages in form post meta so they migrate with CF7 export/import, and (3) integrates with the Flavor translation plugin for per-language messages with one-click AI translation.
+Validation Muse is the only CF7 validation plugin that (1) is compatible with CF7 6.x SWV out of the box, (2) stores messages in form post meta so they live with the form (compatible with CF7 form duplication and import/export plugins), and (3) integrates with the Flavor translation plugin for per-language messages with one-click AI translation.
 
 = Can I translate validation messages per language? =
 
@@ -62,7 +62,7 @@ Yes — install the Flavor translation plugin and Validation Muse will show lang
 
 = Where are the messages stored? =
 
-In each form's post meta. They are included in Contact Form 7 exports, so migrating a form moves the messages with it — no separate import step.
+In each form's post meta. They live with the form, so duplicating a form (built into CF7) keeps the messages. CF7 has no native export, but third-party CF7 import/export plugins read post meta — so migrations across sites work without a separate import step.
 
 = Can I use HTML in validation messages? =
 
@@ -86,7 +86,6 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 2. Per-language tabs and the **AI Translate** button (visible when the Flavor translation plugin is active).
 3. Required-field message rendered on the frontend.
 4. Invalid-format message for an email field rendered on the frontend.
-5. Messages preserved through CF7 export/import.
 
 == Changelog ==
 
