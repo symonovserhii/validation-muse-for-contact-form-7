@@ -4,7 +4,7 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 5.8
 Tested up to: 6.9.4
 Requires PHP: 7.4
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -89,6 +89,10 @@ Não. O Validation Muse não faz nenhuma requisição externa. O botão opcional
 
 == Changelog ==
 
+= 1.4.2 =
+* Plugin URI: agora aponta para a página dedicada em https://plugins.symonov.com/validation-muse-for-cf7/
+* Sem mudanças de código ou comportamento
+
 = 1.4.1 =
 * Readme: reescrita USP-first para visibilidade SEO
 * Tags: substituídas as genéricas `messages`/`forms`/`customization` pelas direcionadas `contact-form-7`, `cf7`, `validation`, `error-message`, `multilingual`
@@ -139,6 +143,9 @@ Não. O Validation Muse não faz nenhuma requisição externa. O botão opcional
 * Initial public iteration bundled with the project.
 
 == Upgrade Notice ==
+
+= 1.4.2 =
+Plugin URI agora aponta para a página dedicada em plugins.symonov.com. Sem mudanças de código.
 
 = 1.4.1 =
 Release de documentação. Readme atualizado para melhor descoberta de funcionalidades e compatibilidade com WordPress 6.9.4 confirmada.
