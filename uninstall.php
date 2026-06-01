@@ -30,7 +30,7 @@ if ( $vmcf7_forms ) {
 		$vmcf7_meta = get_post_meta( $vmcf7_form_id );
 
 		foreach ( $vmcf7_meta as $vmcf7_key => $vmcf7_values ) {
-			if ( 0 !== strpos( (string) $vmcf7_key, '_vmcf7_' ) ) {
+			if ( ! str_starts_with( (string) $vmcf7_key, '_vmcf7_' ) ) {
 				continue;
 			}
 

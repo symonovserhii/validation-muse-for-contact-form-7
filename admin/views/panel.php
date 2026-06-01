@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								   placeholder="<?php esc_attr_e( 'This field is required', 'validation-muse-for-contact-form-7' ); ?>">
 						</td>
 						<td>
-							<?php if ( in_array( $vmcf7_field['type'], array( 'email', 'url', 'tel', 'number', 'range', 'date' ), true ) ) : ?>
+							<?php if ( in_array( $vmcf7_field['type'], array( 'email', 'url', 'tel', 'number', 'range', 'date', 'time' ), true ) ) : ?>
 								<label for="vmcf7-<?php echo esc_attr( $vmcf7_field['name'] ); ?>-invalid" class="screen-reader-text">
 									<?php
 									printf(
@@ -103,7 +103,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				foreach ( $vmcf7_flavor_languages as $vmcf7_lang_code => $vmcf7_lang_data ) :
 				?>
 					<button type="button"
-							class="vmcf7-lang-tab<?php echo $vmcf7_first_tab ? ' active' : ''; ?>"
+							class="vmcf7-lang-tab<?php echo esc_attr( $vmcf7_first_tab ? ' active' : '' ); ?>"
 							data-lang="<?php echo esc_attr( $vmcf7_lang_code ); ?>">
 						<?php echo esc_html( $vmcf7_lang_data['native_name'] ); ?>
 					</button>
@@ -125,7 +125,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$vmcf7_first_panel = true;
 			foreach ( $vmcf7_flavor_languages as $vmcf7_lang_code => $vmcf7_lang_data ) :
 			?>
-				<div class="vmcf7-lang-panel<?php echo $vmcf7_first_panel ? ' active' : ''; ?>"
+				<div class="vmcf7-lang-panel<?php echo esc_attr( $vmcf7_first_panel ? ' active' : '' ); ?>"
 					 data-lang="<?php echo esc_attr( $vmcf7_lang_code ); ?>">
 					<table class="vmcf7-fields-table vmcf7-translation-table" role="grid"
 						   aria-label="<?php echo esc_attr( $vmcf7_lang_data['name'] ); ?> translations">
@@ -159,7 +159,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											   placeholder="<?php echo esc_attr( $vmcf7_req_placeholder ? 'EN: ' . $vmcf7_req_placeholder : '' ); ?>">
 									</td>
 									<td>
-										<?php if ( in_array( $vmcf7_field['type'], array( 'email', 'url', 'tel', 'number', 'range', 'date' ), true ) ) : ?>
+										<?php if ( in_array( $vmcf7_field['type'], array( 'email', 'url', 'tel', 'number', 'range', 'date', 'time' ), true ) ) : ?>
 											<input type="text"
 												   name="vmcf7_translations[<?php echo esc_attr( $vmcf7_lang_code ); ?>][<?php echo esc_attr( $vmcf7_field['name'] ); ?>][invalid]"
 												   value="<?php echo esc_attr( $vmcf7_inv_trans ); ?>"

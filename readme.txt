@@ -1,10 +1,10 @@
 === Validation Muse for Contact Form 7 ===
 Contributors: simmotorlp
 Tags: contact-form-7, cf7, validation, error-message, multilingual
-Requires at least: 5.8
-Tested up to: 6.9.4
-Requires PHP: 7.4
-Stable tag: 1.4.2
+Requires at least: 6.0
+Tested up to: 7.0
+Requires PHP: 8.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-ba
 = Supported field types =
 
 * Required-field messages: any required tag (text, textarea, select, checkbox, radio, file, etc.)
-* Invalid-format messages: `email`, `url`, `tel`, `number` (including `range`), and `date`.
+* Invalid-format messages: `email`, `url`, `tel`, `number` (including `range`), `date`, and `time`.
 * HTML inside messages is allowed and sanitized through `wp_kses_post()`.
 
 = Translations =
@@ -58,7 +58,7 @@ Yes — install the Flavor translation plugin and Validation Muse will show lang
 
 = Which field types support custom invalid messages? =
 
-`email`, `url`, `tel`, `number` (including `range`), and `date`. Any required field of any type can have a custom required-field message.
+`email`, `url`, `tel`, `number` (including `range`), `date`, and `time`. Any required field of any type can have a custom required-field message.
 
 = Where are the messages stored? =
 
@@ -89,6 +89,14 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 
 == Changelog ==
 
+= 1.5.0 =
+* Minimum PHP raised to 8.0; minimum WordPress raised to 6.0; tested up to WordPress 7.0.
+* New: custom validation messages for `time` fields.
+* Clearer AI Translate error feedback in the form editor.
+* Reflection-based SWV message replacement now logs failures under WP_DEBUG for easier diagnosis.
+* Improved handling of pending translations (no more silent fallback) with per-request caching.
+* Code modernized to PHP 8 idioms; output escaping hardened; first unit-test suite added.
+
 = 1.4.2 =
 * Plugin URI: now points to the dedicated landing page at https://plugins.symonov.com/validation-muse-for-cf7/
 * No code or behavior changes
@@ -97,7 +105,6 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Readme: USP-first rewrite for SEO discoverability
 * Tags: replaced generic `messages`/`forms`/`customization` with targeted `contact-form-7`, `cf7`, `validation`, `error-message`, `multilingual`
 * FAQ: added entries for CF7 6.x SWV compatibility, comparison with other CF7 validation plugins, and multilingual via Flavor
-* Tested up to WordPress 6.9.4
 
 = 1.4.0 =
 * Added multilingual support via Flavor translation plugin integration
@@ -148,7 +155,7 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 Plugin URI now points to the dedicated landing page on plugins.symonov.com. No code changes.
 
 = 1.4.1 =
-Documentation-only release. Refreshed readme for clearer feature discovery and confirmed compatibility with WordPress 6.9.4.
+Documentation-only release. Refreshed readme for clearer feature discovery.
 
 = 1.4.0 =
 Adds multilingual support via the Flavor translation plugin and one-click AI translation of validation messages. No data migration required.

@@ -39,7 +39,7 @@ class VMCF7_Admin {
 	 * @return void
 	 */
 	public function enqueue_scripts( $hook ) {
-		if ( false === strpos( $hook, 'wpcf7' ) ) {
+		if ( ! str_contains( $hook, 'wpcf7' ) ) {
 			return;
 		}
 
@@ -327,6 +327,7 @@ class VMCF7_Admin {
 			'number' => __( 'Please enter a valid number', 'validation-muse-for-contact-form-7' ),
 			'range'  => __( 'Please enter a valid number', 'validation-muse-for-contact-form-7' ),
 			'date'   => __( 'Please enter a valid date', 'validation-muse-for-contact-form-7' ),
+			'time'   => __( 'Please enter a valid time', 'validation-muse-for-contact-form-7' ),
 		);
 
 		return isset( $messages[ $type ] ) ? $messages[ $type ] : '';
@@ -343,36 +344,59 @@ class VMCF7_Admin {
 		check_ajax_referer( 'vmcf7_flavor_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
-			wp_send_json_error( array( 'message' => 'Permission denied.' ), 403 );
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'validation-muse-for-contact-form-7' ) ), 403 );
 		}
 
 		if ( ! VMCF7_Flavor::is_active() ) {
-			wp_send_json_error( array( 'message' => 'Flavor not active.' ), 400 );
+			wp_send_json_error( array( 'message' => __( 'Flavor plugin is not active.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		if ( ! VMCF7_Flavor::is_ai_available() ) {
+			wp_send_json_error( array( 'message' => __( 'AI translation provider is not configured. Please check Flavor settings.', 'validation-muse-for-contact-form-7' ) ), 400 );
 		}
 
 		$form_id  = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
 		$language = isset( $_POST['language'] ) ? sanitize_key( wp_unslash( $_POST['language'] ) ) : '';
 
 		if ( ! $form_id || ! $language ) {
-			wp_send_json_error( array( 'message' => 'Missing form_id or language.' ), 400 );
+			wp_send_json_error( array( 'message' => __( 'Missing form ID or language.', 'validation-muse-for-contact-form-7' ) ), 400 );
 		}
 
 		// Validate form ID belongs to a CF7 form.
 		$form_post = get_post( $form_id );
 		if ( ! $form_post || 'wpcf7_contact_form' !== $form_post->post_type ) {
-			wp_send_json_error( array( 'message' => 'Invalid form ID.' ), 400 );
+			wp_send_json_error( array( 'message' => __( 'Invalid form ID.', 'validation-muse-for-contact-form-7' ) ), 400 );
 		}
 
 		// Validate language against enabled target languages.
 		$valid_languages = array_keys( VMCF7_Flavor::get_target_languages() );
 		if ( ! in_array( $language, $valid_languages, true ) ) {
-			wp_send_json_error( array( 'message' => 'Invalid language.' ), 400 );
+			wp_send_json_error( array( 'message' => __( 'Invalid target language.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		// Check if we have source texts to translate.
+		$meta  = get_post_meta( $form_id );
+		$texts = array();
+		if ( is_array( $meta ) ) {
+			foreach ( $meta as $key => $values ) {
+				if ( ! str_starts_with( $key, '_vmcf7_' ) || '_vmcf7_enabled' === $key ) {
+					continue;
+				}
+				$val = isset( $values[0] ) ? $values[0] : '';
+				if ( ! empty( $val ) ) {
+					$texts[] = $val;
+				}
+			}
+		}
+
+		if ( empty( $texts ) ) {
+			wp_send_json_error( array( 'message' => __( 'No custom validation messages written yet. Please write and save them in the main language first.', 'validation-muse-for-contact-form-7' ) ), 400 );
 		}
 
 		$translations = VMCF7_Flavor::ai_translate_form( $form_id, $language );
 
 		if ( empty( $translations ) ) {
-			wp_send_json_error( array( 'message' => 'No messages to translate or AI not available.' ), 400 );
+			wp_send_json_error( array( 'message' => __( 'AI translation service failed. Please check your network connection or provider limits.', 'validation-muse-for-contact-form-7' ) ), 400 );
 		}
 
 		wp_send_json_success( array( 'translations' => $translations ) );

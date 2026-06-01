@@ -132,6 +132,9 @@ class VMCF7_Loader {
 					case 'date':
 						$is_invalid = ! wpcf7_is_date( $value );
 						break;
+					case 'time':
+						$is_invalid = ! wpcf7_is_time( $value );
+						break;
 				}
 
 				if ( $is_invalid ) {
@@ -167,8 +170,11 @@ class VMCF7_Loader {
 				$invalid_fields[ $field_name ]['reason'] = $message;
 				$ref->setValue( $result, $invalid_fields );
 			}
-		} catch ( \ReflectionException $e ) { // phpcs:ignore Generic.CodeAnalysis.EmptyStatement.DetectedCatch
-			// Silently fail if Reflection is unavailable.
+		} catch ( \ReflectionException $e ) {
+			do_action( 'vmcf7_debug', 'Reflection failure: ' . $e->getMessage() );
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( 'Validation Muse ReflectionException: ' . $e->getMessage() );
+			}
 		}
 	}
 
@@ -188,6 +194,7 @@ class VMCF7_Loader {
 			'number',
 			'range',
 			'date',
+			'time',
 			'textarea',
 			'select',
 			'checkbox',

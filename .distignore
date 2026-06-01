@@ -1,0 +1,22 @@
+# Excluded from the wp.org release zip / SVN trunk.
+/.git
+/.github
+/.gitignore
+/.idea
+/.vscode
+/.claude
+/.ai-factory
+/.ai-factory.json
+/docs
+/tests
+/composer.json
+/composer.lock
+/phpunit.xml.dist
+/phpunit.xml
+/vendor
+/.phpunit.result.cache
+/.distignore
+# ship readme.txt + translated readme-*.txt; drop markdown
+*.md
+.DS_Store
+Thumbs.db

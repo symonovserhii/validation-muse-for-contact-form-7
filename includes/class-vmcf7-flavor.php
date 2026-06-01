@@ -25,6 +25,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class VMCF7_Flavor {
 
 	/**
+	 * Per-request cache for translations.
+	 *
+	 * @var array
+	 */
+	private static $cache = array();
+
+	/**
 	 * Check if Flavor plugin is active.
 	 *
 	 * @since 1.4.0
@@ -132,19 +139,35 @@ class VMCF7_Flavor {
 			$lang = \Flavor\Flv_Languages::get_current_language();
 		}
 
-		$key    = self::field_key( $field, $type );
+		$key       = self::field_key( $field, $type );
+		$cache_key = "{$form_id}_{$key}_{$lang}";
+
+		if ( array_key_exists( $cache_key, self::$cache ) ) {
+			return self::$cache[ $cache_key ];
+		}
+
 		$record = \Flavor\Flv_DB::get( 'post_meta', $form_id, $key, $lang );
 
 		if ( ! $record || empty( $record['translation'] ) ) {
+			self::$cache[ $cache_key ] = null;
 			return null;
 		}
 
 		// Only return confirmed translations (translated or reviewed).
 		$confirmed = array( \Flavor\Flv_Status::TRANSLATED, \Flavor\Flv_Status::REVIEWED );
 		if ( ! in_array( $record['status'], $confirmed, true ) ) {
+			$pending_status = defined( 'Flavor\Flv_Status::PENDING' ) ? \Flavor\Flv_Status::PENDING : 'pending';
+			if ( $record['status'] === $pending_status ) {
+				do_action( 'vmcf7_debug', "Pending translation accessed for key: {$key} (Language: {$lang})" );
+				self::$cache[ $cache_key ] = $record['translation'];
+				return $record['translation'];
+			}
+
+			self::$cache[ $cache_key ] = null;
 			return null;
 		}
 
+		self::$cache[ $cache_key ] = $record['translation'];
 		return $record['translation'];
 	}
 
@@ -166,7 +189,7 @@ class VMCF7_Flavor {
 		$result = array();
 
 		foreach ( $all as $record ) {
-			if ( 0 === strpos( $record['field_name'], 'vmcf7_' ) ) {
+			if ( str_starts_with( $record['field_name'], 'vmcf7_' ) ) {
 				$result[ $record['field_name'] ] = $record['translation'];
 			}
 		}
@@ -192,11 +215,15 @@ class VMCF7_Flavor {
 			return;
 		}
 
+		$key       = self::field_key( $field, $type );
+		$cache_key = "{$form_id}_{$key}_{$lang}";
+		self::$cache[ $cache_key ] = $value;
+
 		\Flavor\Flv_DB::save(
 			array(
 				'object_type' => 'post_meta',
 				'object_id'   => $form_id,
-				'field_name'  => self::field_key( $field, $type ),
+				'field_name'  => $key,
 				'language'    => $lang,
 				'translation' => $value,
 				'is_auto'     => $is_auto ? 1 : 0,
@@ -221,7 +248,11 @@ class VMCF7_Flavor {
 			return;
 		}
 
-		\Flavor\Flv_DB::delete_by_field( 'post_meta', $form_id, self::field_key( $field, $type ), $lang );
+		$key       = self::field_key( $field, $type );
+		$cache_key = "{$form_id}_{$key}_{$lang}";
+		unset( self::$cache[ $cache_key ] );
+
+		\Flavor\Flv_DB::delete_by_field( 'post_meta', $form_id, $key, $lang );
 	}
 
 	/**
@@ -243,7 +274,7 @@ class VMCF7_Flavor {
 		$texts = array();
 
 		foreach ( $meta as $key => $values ) {
-			if ( 0 !== strpos( $key, '_vmcf7_' ) || '_vmcf7_enabled' === $key ) {
+			if ( ! str_starts_with( $key, '_vmcf7_' ) || '_vmcf7_enabled' === $key ) {
 				continue;
 			}
 
@@ -269,6 +300,9 @@ class VMCF7_Flavor {
 			if ( empty( $translated_text ) ) {
 				continue;
 			}
+
+			$cache_key = "{$form_id}_{$flavor_key}_{$lang}";
+			self::$cache[ $cache_key ] = $translated_text;
 
 			\Flavor\Flv_DB::save(
 				array(

@@ -104,8 +104,16 @@
 						showNotice( response.data && response.data.message ? response.data.message : 'Translation failed.' );
 					}
 				},
-				error: function() {
-					showNotice( 'Translation request failed.' );
+				error: function( jqXHR, textStatus, errorThrown ) {
+					var message = 'Translation request failed.';
+					if ( jqXHR.responseJSON && jqXHR.responseJSON.data && jqXHR.responseJSON.data.message ) {
+						message = jqXHR.responseJSON.data.message;
+					} else if ( jqXHR.status === 0 ) {
+						message = 'Network error: Please check your internet connection.';
+					} else if ( textStatus === 'timeout' ) {
+						message = 'Request timeout: The server took too long to respond.';
+					}
+					showNotice( message );
 				},
 				complete: function() {
 					$button.prop( 'disabled', false ).text( originalText );
