@@ -82,6 +82,40 @@ namespace {
             return $this->uploaded_files;
         }
     }
+
+    class Test_SWV_Schema {
+        private $rules = array();
+        public function __construct( $rules = array() ) {
+            $this->rules = $rules;
+        }
+        public function rules() {
+            return $this->rules;
+        }
+        public function add_rule( $rule ) {
+            $this->rules[] = $rule;
+        }
+    }
+
+    if ( ! function_exists( 'wpcf7_swv_create_rule' ) ) {
+        function wpcf7_swv_create_rule( $name, $args ) {
+            return new \Contactable\SWV\Rule( $name, $args );
+        }
+    }
+}
+
+namespace Contactable\SWV {
+    class Rule {
+        protected $properties = array();
+        public function __construct( $name, $properties = array() ) {
+            $this->properties = array_merge( array( 'rule' => $name ), $properties );
+        }
+        public function to_array() {
+            return $this->properties;
+        }
+        public function get_property( $name ) {
+            return isset( $this->properties[ $name ] ) ? $this->properties[ $name ] : null;
+        }
+    }
 }
 
 // Define stubs for Flavor classes in their namespace.
@@ -611,37 +645,65 @@ namespace {
         }
 
         /**
-         * Test frontend rule serialization / injection.
+         * Test SWV rules injection.
          */
-        public function test_rule_serialization() {
+        public function test_add_swv_rules() {
             $loader = new VMCF7_Loader();
             $form   = new WPCF7_ContactForm( 123 );
             $tag    = new WPCF7_FormTag( 'your-phone', 'tel' );
 
             $form->tags = array( $tag );
 
-            \Brain\Monkey\Functions\expect( 'wpcf7_get_current_contact_form' )
-                ->andReturn( $form );
-
             \Brain\Monkey\Functions\expect( 'get_post_meta' )
                 ->andReturnUsing( function( $post_id, $key, $single ) {
                     if ( '_vmcf7_enabled' === $key ) {
                         return '1';
                     }
-                    if ( '_vmcf7_yourphone_regex' === $key ) {
-                        return '^[0-9]+$';
+                    if ( '_vmcf7_yourphone_required' === $key ) {
+                        return 'Phone required!';
                     }
-                    if ( '_vmcf7_yourphone_regex_message' === $key ) {
-                        return 'Only digits allowed!';
+                    if ( '_vmcf7_yourphone_min_length' === $key ) {
+                        return '5';
+                    }
+                    if ( '_vmcf7_yourphone_max_length' === $key ) {
+                        return '15';
+                    }
+                    if ( '_vmcf7_yourphone_length_message' === $key ) {
+                        return 'Length error {min}-{max}';
                     }
                     return '';
                 } );
 
-            $form_html = '<input type="text" name="your-phone" class="wpcf7-form-control wpcf7-text">';
-            $modified_html = $loader->inject_frontend_rules( $form_html );
+            // Let's create an existing required rule
+            $existing_req_rule = new \Contactable\SWV\Rule( 'required', array(
+                'field' => 'your-phone',
+                'error' => 'Default required error',
+            ) );
 
-            $this->assertStringContainsString( 'data-vmcf7-regex="^[0-9]+$"', $modified_html );
-            $this->assertStringContainsString( 'data-vmcf7-msg-regex="Only digits allowed!"', $modified_html );
+            $schema = new \Test_SWV_Schema( array( $existing_req_rule ) );
+
+            $loader->add_swv_rules( $schema, $form );
+
+            $rules = $schema->rules();
+            $this->assertCount( 3, $rules ); // existing overridden required, plus added minlength and maxlength
+
+            // Check overridden required error message
+            $req_props = $rules[0]->to_array();
+            $this->assertEquals( 'Phone required!', $req_props['error'] );
+
+            // Check added minlength rule
+            $min_props = $rules[1]->to_array();
+            $this->assertEquals( 'minlength', $min_props['rule'] );
+            $this->assertEquals( 'your-phone', $min_props['field'] );
+            $this->assertEquals( '5', $min_props['threshold'] );
+            $this->assertEquals( 'Length error 5-15', $min_props['error'] );
+
+            // Check added maxlength rule
+            $max_props = $rules[2]->to_array();
+            $this->assertEquals( 'maxlength', $max_props['rule'] );
+            $this->assertEquals( 'your-phone', $max_props['field'] );
+            $this->assertEquals( '15', $max_props['threshold'] );
+            $this->assertEquals( 'Length error 5-15', $max_props['error'] );
         }
 
         /**

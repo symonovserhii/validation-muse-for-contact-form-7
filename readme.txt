@@ -4,11 +4,11 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 8.0
-Stable tag: 1.6.0
+Stable tag: 1.6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Custom validation messages, regex, length constraints, required-if conditions, templates sharing, and instant frontend mirroring for Contact Form 7. Per-form, per-field, CF7 6.x SWV-compatible, multilingual.
+Custom validation messages, regex, length constraints, required-if conditions, templates sharing, and client-side mirroring via CF7 SWV. Per-form, per-field, CF7 6.x SWV-compatible, multilingual.
 
 == Description ==
 
@@ -21,7 +21,7 @@ Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-ba
 * **CF7 6.x SWV compatible** — works with the new Schema-based Validation engine, not just legacy hooks.
 * **Custom Regex & Length Rules** — define custom regular expression patterns, min length, and max length rules per field with their own error messages.
 * **Conditional "Required-If" Rules** — make fields required only when a companion field is filled/checked.
-* **Instant Client-Side Mirroring** — validation rules are validated instantly on the frontend via JavaScript before submission, featuring full accessibility (A11y) support.
+* **Client-Side SWV Integration** — standard validation rules (required, email, length) are injected into CF7's native SWV engine for instant frontend feedback with full accessibility (A11y) support.
 * **Rule Sets Import/Export & Templates** — export/import validation rules as JSON, copy them from other forms, and bulk apply global templates.
 * **Placeholder Tokens** — use `{field_label}`, `{min}`, and `{max}` in validation messages to generate dynamic texts.
 * **Per-form, per-field** — each form keeps its own messages; no global override.
@@ -99,6 +99,10 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 4. Invalid-format message for an email field rendered on the frontend.
 
 == Changelog ==
+
+= 1.6.1 =
+* Fix: duplicate/overwritten validation messages on frontend by integrating with CF7's native SWV engine.
+* Fix: admin panel drawers and preview cards rendered expanded due to CF7 editor panel stripping inline styles.
 
 = 1.6.0 =
 * New: custom regex and min/max-length validation rules per field, each with its own message.

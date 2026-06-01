@@ -44,8 +44,8 @@ class VMCF7_Loader {
 			add_filter( "wpcf7_validate_{$tag_type}*", array( $this, 'validate_field' ), 20, 2 );
 		}
 
-		// Inject frontend rules.
-		add_filter( 'wpcf7_form_elements', array( $this, 'inject_frontend_rules' ) );
+		// Inject custom rules into SWV schema.
+		add_filter( 'wpcf7_swv_create_schema', array( $this, 'add_swv_rules' ), 20, 2 );
 
 		// Initialize admin functionality.
 		if ( is_admin() ) {
@@ -104,13 +104,6 @@ class VMCF7_Loader {
 	 * @return void
 	 */
 	public function enqueue_assets() {
-		wp_enqueue_script(
-			'vmcf7-frontend',
-			VMCF7_URL . 'assets/js/vmcf7-frontend.js',
-			array( 'jquery' ),
-			VMCF7_VERSION,
-			true
-		);
 		wp_enqueue_style(
 			'vmcf7-frontend',
 			VMCF7_URL . 'assets/css/vmcf7-frontend.css',
@@ -552,94 +545,149 @@ class VMCF7_Loader {
 	}
 
 	/**
-	 * Inject custom rules into field elements as data attributes.
+	 * Inject custom rules and error messages into the SWV schema.
 	 *
-	 * @since 1.6.0
+	 * @since 1.6.1
 	 *
-	 * @param string $content The form HTML content.
-	 * @return string The modified form HTML content.
+	 * @param object $schema       The SWV schema.
+	 * @param object $contact_form The contact form.
+	 * @return object The modified schema.
 	 */
-	public function inject_frontend_rules( $content ) {
-		$form = wpcf7_get_current_contact_form();
-		if ( ! $form || ! $this->is_enabled( $form->id() ) ) {
-			return $content;
+	public function add_swv_rules( $schema, $contact_form ) {
+		if ( ! class_exists( '\\Contactable\\SWV\\Rule' ) ) {
+			return $schema;
 		}
 
-		$form_id = $form->id();
-		$tags = $form->scan_form_tags();
+		if ( ! $contact_form || ! $this->is_enabled( $contact_form->id() ) ) {
+			return $schema;
+		}
 
-		foreach ( $tags as $tag ) {
-			if ( empty( $tag->name ) ) {
+		$form_id   = $contact_form->id();
+		$form_tags = $contact_form->scan_form_tags();
+		$tags_map  = array();
+		foreach ( $form_tags as $tag ) {
+			if ( ! empty( $tag->name ) ) {
+				$tags_map[ $tag->name ] = $tag;
+			}
+		}
+
+		$existing_rules = array();
+
+		// Iterate over existing rules to override their messages/properties.
+		foreach ( $schema->rules() as $rule ) {
+			$rule_data = $rule->to_array();
+			$rule_name = isset( $rule_data['rule'] ) ? $rule_data['rule'] : '';
+
+			$field_name = '';
+			if ( method_exists( $rule, 'get_property' ) ) {
+				$field_name = $rule->get_property( 'field' );
+			}
+			if ( empty( $field_name ) && isset( $rule_data['field'] ) ) {
+				$field_name = $rule_data['field'];
+			}
+
+			if ( empty( $field_name ) || empty( $rule_name ) ) {
 				continue;
 			}
 
-			$field_name = $this->normalize_field_name( $tag->name );
-			$attrs = array();
+			$existing_rules[ $field_name ][ $rule_name ] = true;
+			$normalized_field = $this->normalize_field_name( $field_name );
+			$tag = isset( $tags_map[ $field_name ] ) ? $tags_map[ $field_name ] : null;
 
-			// 1. Required message
-			$req_msg = $this->get_custom_message( $form_id, $field_name, 'required' );
-			if ( ! empty( $req_msg ) ) {
-				$attrs['data-vmcf7-msg-required'] = $this->expand_placeholders( $req_msg, $form, $tag );
-			}
-
-			// 2. Invalid format message
-			$inv_msg = $this->get_custom_message( $form_id, $field_name, 'invalid' );
-			if ( ! empty( $inv_msg ) ) {
-				$attrs['data-vmcf7-msg-invalid'] = $this->expand_placeholders( $inv_msg, $form, $tag );
-			}
-
-			// 3. Regex pattern and message
-			$regex = get_post_meta( $form_id, "_vmcf7_{$field_name}_regex", true );
-			if ( ! empty( $regex ) ) {
-				$attrs['data-vmcf7-regex'] = $regex;
-				$regex_msg = $this->get_custom_message( $form_id, $field_name, 'regex_message' );
-				$attrs['data-vmcf7-msg-regex'] = $regex_msg ? $this->expand_placeholders( $regex_msg, $form, $tag ) : __( 'Invalid format', 'validation-muse-for-contact-form-7' );
-			}
-
-			// 4. Min/Max length
-			$min_len = get_post_meta( $form_id, "_vmcf7_{$field_name}_min_length", true );
-			$max_len = get_post_meta( $form_id, "_vmcf7_{$field_name}_max_length", true );
-			if ( '' !== $min_len || '' !== $max_len ) {
-				if ( '' !== $min_len ) {
-					$attrs['data-vmcf7-min-length'] = $min_len;
+			if ( 'required' === $rule_name || 'requiredfile' === $rule_name ) {
+				$required_message = $this->get_custom_message( $form_id, $normalized_field, 'required' );
+				if ( ! empty( $required_message ) && $tag ) {
+					$msg = $this->expand_placeholders( $required_message, $contact_form, $tag );
+					$this->set_swv_property( $rule, 'error', $msg );
 				}
-				if ( '' !== $max_len ) {
-					$attrs['data-vmcf7-max-length'] = $max_len;
+			} elseif ( in_array( $rule_name, array( 'email', 'url', 'tel', 'number', 'date', 'time' ), true ) ) {
+				$invalid_message = $this->get_custom_message( $form_id, $normalized_field, 'invalid' );
+				if ( ! empty( $invalid_message ) && $tag ) {
+					$msg = $this->expand_placeholders( $invalid_message, $contact_form, $tag );
+					$this->set_swv_property( $rule, 'error', $msg );
 				}
-				$len_msg = $this->get_custom_message( $form_id, $field_name, 'length_message' );
-				$attrs['data-vmcf7-msg-length'] = $len_msg ? $this->expand_placeholders( $len_msg, $form, $tag, $min_len, $max_len ) : __( 'Invalid length', 'validation-muse-for-contact-form-7' );
-			}
-
-			// 5. Required-if
-			$req_if_field = get_post_meta( $form_id, "_vmcf7_{$field_name}_required_if_field", true );
-			if ( ! empty( $req_if_field ) ) {
-				$attrs['data-vmcf7-required-if-field'] = sanitize_key( $req_if_field );
-				$req_if_msg = $this->get_custom_message( $form_id, $field_name, 'required_if_message' );
-				$attrs['data-vmcf7-msg-required-if'] = $req_if_msg ? $this->expand_placeholders( $req_if_msg, $form, $tag ) : ( $req_msg ? $this->expand_placeholders( $req_msg, $form, $tag ) : __( 'This field is required', 'validation-muse-for-contact-form-7' ) );
-			}
-
-			if ( empty( $attrs ) ) {
-				continue;
-			}
-
-			$attr_str = '';
-			foreach ( $attrs as $k => $v ) {
-				$attr_str .= sprintf( ' %s="%s"', esc_attr( $k ), esc_attr( $v ) );
-			}
-
-			if ( ! is_admin() ) {
-				if ( ! wp_script_is( 'vmcf7-frontend', 'enqueued' ) ) {
-					$this->enqueue_assets();
+			} elseif ( 'maxlength' === $rule_name ) {
+				$max_length     = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_max_length", true );
+				$min_length     = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_min_length", true );
+				$length_message = $this->get_custom_message( $form_id, $normalized_field, 'length_message' );
+				if ( '' !== $max_length ) {
+					$this->set_swv_property( $rule, 'threshold', (string) $max_length );
+				}
+				if ( ! empty( $length_message ) && $tag ) {
+					$msg = $this->expand_placeholders( $length_message, $contact_form, $tag, $min_length, $max_length );
+					$this->set_swv_property( $rule, 'error', $msg );
 				}
 			}
-
-			// Inject attributes into matched elements.
-			$pattern = '/(<(?:input|select|textarea)\b[^>]*\bname=["\']' . preg_quote( $tag->name, '/' ) . '(?:\[\])?["\'][^>]*)/is';
-			$content = preg_replace_callback( $pattern, function( $matches ) use ( $attr_str ) {
-				return $matches[1] . $attr_str;
-			}, $content );
 		}
 
-		return $content;
+		// Add custom rules (minlength, maxlength) if they don't exist.
+		foreach ( $tags_map as $field_name => $tag ) {
+			$normalized_field = $this->normalize_field_name( $field_name );
+			$min_length       = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_min_length", true );
+			$max_length       = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_max_length", true );
+			$length_message   = $this->get_custom_message( $form_id, $normalized_field, 'length_message' );
+
+			if ( '' !== $min_length && ! isset( $existing_rules[ $field_name ]['minlength'] ) ) {
+				if ( function_exists( 'wpcf7_swv_create_rule' ) ) {
+					$msg = ! empty( $length_message ) ? $length_message : __( 'Invalid length.', 'validation-muse-for-contact-form-7' );
+					$msg = $this->expand_placeholders( $msg, $contact_form, $tag, $min_length, $max_length );
+
+					$new_rule = wpcf7_swv_create_rule( 'minlength', array(
+						'field'     => $field_name,
+						'threshold' => (string) $min_length,
+						'error'     => $msg,
+					) );
+					if ( $new_rule ) {
+						$schema->add_rule( $new_rule );
+					}
+				}
+			}
+
+			if ( '' !== $max_length && ! isset( $existing_rules[ $field_name ]['maxlength'] ) ) {
+				if ( function_exists( 'wpcf7_swv_create_rule' ) ) {
+					$msg = ! empty( $length_message ) ? $length_message : __( 'Invalid length.', 'validation-muse-for-contact-form-7' );
+					$msg = $this->expand_placeholders( $msg, $contact_form, $tag, $min_length, $max_length );
+
+					$new_rule = wpcf7_swv_create_rule( 'maxlength', array(
+						'field'     => $field_name,
+						'threshold' => (string) $max_length,
+						'error'     => $msg,
+					) );
+					if ( $new_rule ) {
+						$schema->add_rule( $new_rule );
+					}
+				}
+			}
+		}
+
+		return $schema;
+	}
+
+	/**
+	 * Set a protected property on an SWV rule via Reflection.
+	 *
+	 * @since 1.6.1
+	 *
+	 * @param object $rule  The rule object.
+	 * @param string $key   The property key.
+	 * @param mixed  $value The property value.
+	 * @return void
+	 */
+	private function set_swv_property( $rule, $key, $value ) {
+		try {
+			$ref = new \ReflectionProperty( $rule, 'properties' );
+			$ref->setAccessible( true );
+
+			$properties = $ref->getValue( $rule );
+			if ( is_array( $properties ) ) {
+				$properties[ $key ] = $value;
+				$ref->setValue( $rule, $properties );
+			}
+		} catch ( \ReflectionException $e ) {
+			do_action( 'vmcf7_debug', 'Reflection failure: ' . $e->getMessage() );
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+				error_log( 'Validation Muse ReflectionException: ' . $e->getMessage() );
+			}
+		}
 	}
 }

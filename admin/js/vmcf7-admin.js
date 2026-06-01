@@ -69,10 +69,10 @@
 			$btn.attr( 'aria-expanded', ! isExpanded );
 			if ( isExpanded ) {
 				$btn.find( '.dashicons' ).removeClass( 'dashicons-arrow-up-alt2' ).addClass( 'dashicons-arrow-down-alt2' );
-				$advancedRow.hide();
+				$advancedRow.removeClass( 'is-open' );
 			} else {
 				$btn.find( '.dashicons' ).removeClass( 'dashicons-arrow-down-alt2' ).addClass( 'dashicons-arrow-up-alt2' );
-				$advancedRow.show();
+				$advancedRow.addClass( 'is-open' );
 			}
 		} );
 
@@ -89,10 +89,10 @@
 			$btn.attr( 'aria-expanded', ! isExpanded );
 			if ( isExpanded ) {
 				$btn.find( '.dashicons' ).removeClass( 'dashicons-arrow-up-alt2' ).addClass( 'dashicons-arrow-down-alt2' );
-				$advancedRow.hide();
+				$advancedRow.removeClass( 'is-open' );
 			} else {
 				$btn.find( '.dashicons' ).removeClass( 'dashicons-arrow-down-alt2' ).addClass( 'dashicons-arrow-up-alt2' );
-				$advancedRow.show();
+				$advancedRow.addClass( 'is-open' );
 			}
 		} );
 	}
@@ -161,7 +161,7 @@
 
 		// Copy From...
 		$copyBtn.on( 'click', function() {
-			$copySelectWrap.toggle();
+			$copySelectWrap.toggleClass( 'vmcf7-hidden' );
 		} );
 
 		$copyConfirmBtn.on( 'click', function() {
@@ -295,9 +295,9 @@
 			}
 
 			if ( warnings.length > 0 ) {
-				$warning.html( warnings.join( '<br>' ) ).show();
+				$warning.html( warnings.join( '<br>' ) ).removeClass( 'vmcf7-hidden' );
 			} else {
-				$warning.hide().empty();
+				$warning.addClass( 'vmcf7-hidden' ).empty();
 			}
 		} );
 
@@ -321,7 +321,7 @@
 			currentPreviewField = fieldName;
 
 			if ( ! fieldName ) {
-				$card.hide();
+				$card.addClass( 'vmcf7-hidden' );
 				return;
 			}
 
@@ -329,7 +329,7 @@
 			var label = getFieldLabelJS( fieldName );
 			$( '#vmcf7-preview-label-text' ).text( label );
 
-			$card.show();
+			$card.removeClass( 'vmcf7-hidden' );
 			updatePreviewCard();
 		} );
 
@@ -388,28 +388,40 @@
 				.replace( /{max}/g, maxVal );
 		}
 
+		// Field type drives which rows make sense (mirror panel.php).
+		var fieldType = $( '#vmcf7-preview-field-selector option:selected' ).data( 'type' ) || '';
+		var formatTypes = [ 'email', 'url', 'tel', 'number', 'range', 'date', 'time' ];
+		var supportsFormat = formatTypes.indexOf( String( fieldType ) ) !== -1;
+
 		// Populate card fields
 		var $previewErrors = $( '.vmcf7-preview-errors' );
-		
+
 		$previewErrors.find( '[data-msg-type="required"] .wpcf7-not-valid-tip' ).text( expand( reqVal ) );
-		$previewErrors.find( '[data-msg-type="invalid"] .wpcf7-not-valid-tip' ).text( expand( invVal ) );
+
+		// Invalid-format row only applies to fields that have a built-in format check.
+		if ( supportsFormat ) {
+			$previewErrors.find( '[data-msg-type="invalid"]' ).removeClass( 'vmcf7-hidden' )
+				.find( '.wpcf7-not-valid-tip' ).text( expand( invVal ) );
+		} else {
+			$previewErrors.find( '[data-msg-type="invalid"]' ).addClass( 'vmcf7-hidden' );
+		}
 
 		if ( regexVal ) {
-			$previewErrors.find( '[data-msg-type="regex_message"]' ).show().find( '.wpcf7-not-valid-tip' ).text( expand( regexMsg ) );
+			$previewErrors.find( '[data-msg-type="regex_message"]' ).removeClass( 'vmcf7-hidden' ).find( '.wpcf7-not-valid-tip' ).text( expand( regexMsg ) );
 		} else {
-			$previewErrors.find( '[data-msg-type="regex_message"]' ).hide();
+			$previewErrors.find( '[data-msg-type="regex_message"]' ).addClass( 'vmcf7-hidden' );
 		}
 
 		if ( minVal || maxVal ) {
-			$previewErrors.find( '[data-msg-type="length_message"]' ).show().find( '.wpcf7-not-valid-tip' ).text( expand( lenMsg ) );
+			$previewErrors.find( '[data-msg-type="length_message"]' ).removeClass( 'vmcf7-hidden' ).find( '.wpcf7-not-valid-tip' ).text( expand( lenMsg ) );
 		} else {
-			$previewErrors.find( '[data-msg-type="length_message"]' ).hide();
+			$previewErrors.find( '[data-msg-type="length_message"]' ).addClass( 'vmcf7-hidden' );
 		}
 
 		if ( reqIfField ) {
-			$previewErrors.find( '[data-msg-type="required_if_message"]' ).show().find( '.wpcf7-not-valid-tip' ).text( expand( reqIfMsg ) );
+			$previewErrors.find( '[data-msg-type="required_if_message"]' ).removeClass( 'vmcf7-hidden' ).find( '.wpcf7-not-valid-tip' ).text( expand( reqIfMsg ) );
 		} else {
-			$previewErrors.find( '[data-msg-type="required_if_message"]' ).hide();
+			$previewErrors.find( '[data-msg-type="required_if_message"]' ).addClass( 'vmcf7-hidden' );
 		}
 	}
 
@@ -525,9 +537,11 @@
 	 */
 	function showGlobalNotice( message, type ) {
 		var $notice = $( '.vmcf7-sharing-notice' );
-		$notice.removeClass( 'success error' ).addClass( type ).text( message ).show();
+		$notice.removeClass( 'success error vmcf7-hidden' ).addClass( type ).text( message ).show();
 		setTimeout( function() {
-			$notice.fadeOut( 300 );
+			$notice.fadeOut( 300, function() {
+				$notice.addClass( 'vmcf7-hidden' );
+			} );
 		}, 4000 );
 	}
 

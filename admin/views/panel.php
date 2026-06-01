@@ -38,13 +38,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<button type="button" id="vmcf7-import-btn" class="button button-secondary">
 					<span class="dashicons dashicons-upload"></span> <?php esc_html_e( 'Import JSON', 'validation-muse-for-contact-form-7' ); ?>
 				</button>
-				<input type="file" id="vmcf7-import-file" style="display:none;" accept=".json">
+				<input type="file" id="vmcf7-import-file" class="vmcf7-hidden" accept=".json">
 
 				<button type="button" id="vmcf7-copy-btn" class="button button-secondary">
 					<span class="dashicons dashicons-admin-page"></span> <?php esc_html_e( 'Copy Rules...', 'validation-muse-for-contact-form-7' ); ?>
 				</button>
 				
-				<span class="vmcf7-copy-select-wrap" style="display:none;">
+				<span class="vmcf7-copy-select-wrap vmcf7-hidden">
 					<select id="vmcf7-copy-source-form">
 						<option value=""><?php esc_html_e( '-- Source Form --', 'validation-muse-for-contact-form-7' ); ?></option>
 						<?php
@@ -76,15 +76,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 		</div>
 
-		<div class="vmcf7-sharing-notice" style="display:none;"></div>
+		<div class="vmcf7-sharing-notice vmcf7-hidden"></div>
 
 		<!-- Rules Table -->
 		<table class="vmcf7-fields-table" role="grid" aria-label="<?php esc_attr_e( 'Custom validation messages', 'validation-muse-for-contact-form-7' ); ?>">
 			<thead>
 				<tr>
-					<th scope="col" style="width:25%;"><?php esc_html_e( 'Field', 'validation-muse-for-contact-form-7' ); ?></th>
-					<th scope="col" style="width:37.5%;"><?php esc_html_e( 'Required Message', 'validation-muse-for-contact-form-7' ); ?></th>
-					<th scope="col" style="width:37.5%;"><?php esc_html_e( 'Invalid Format Message', 'validation-muse-for-contact-form-7' ); ?></th>
+					<th scope="col" class="vmcf7-col-25"><?php esc_html_e( 'Field', 'validation-muse-for-contact-form-7' ); ?></th>
+					<th scope="col" class="vmcf7-col-37"><?php esc_html_e( 'Required Message', 'validation-muse-for-contact-form-7' ); ?></th>
+					<th scope="col" class="vmcf7-col-37"><?php esc_html_e( 'Invalid Format Message', 'validation-muse-for-contact-form-7' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -116,7 +116,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								   class="large-text vmcf7-msg-input"
 								   data-rule-type="required"
 								   placeholder="<?php esc_attr_e( 'This field is required', 'validation-muse-for-contact-form-7' ); ?>">
-							<div class="vmcf7-lint-warning" style="display:none;"></div>
+							<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 						</td>
 						<td>
 							<?php if ( in_array( $vmcf7_field['type'], array( 'email', 'url', 'tel', 'number', 'range', 'date', 'time' ), true ) ) : ?>
@@ -136,7 +136,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 									   class="large-text vmcf7-msg-input"
 									   data-rule-type="invalid"
 									   placeholder="<?php echo esc_attr( $this->get_default_invalid_message( $vmcf7_field['type'] ) ); ?>">
-								<div class="vmcf7-lint-warning" style="display:none;"></div>
+								<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 							<?php else : ?>
 								<span class="description"><?php esc_html_e( 'Format validation not supported.', 'validation-muse-for-contact-form-7' ); ?></span>
 							<?php endif; ?>
@@ -144,7 +144,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</tr>
 					
 					<!-- Advanced Rules Drawer -->
-					<tr class="vmcf7-advanced-row" id="vmcf7-advanced-<?php echo esc_attr( $vmcf7_field['name'] ); ?>" style="display:none;">
+					<tr class="vmcf7-advanced-row" id="vmcf7-advanced-<?php echo esc_attr( $vmcf7_field['name'] ); ?>">
 						<td colspan="3">
 							<div class="vmcf7-advanced-rules-container">
 								<div class="vmcf7-rule-grid">
@@ -168,7 +168,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												   class="vmcf7-msg-input"
 												   data-rule-type="regex_message"
 												   placeholder="<?php esc_attr_e( 'Invalid format', 'validation-muse-for-contact-form-7' ); ?>">
-											<div class="vmcf7-lint-warning" style="display:none;"></div>
+											<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 										</div>
 									</div>
 
@@ -202,7 +202,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												   class="vmcf7-msg-input"
 												   data-rule-type="length_message"
 												   placeholder="<?php esc_attr_e( 'Must be between {min} and {max} characters', 'validation-muse-for-contact-form-7' ); ?>">
-											<div class="vmcf7-lint-warning" style="display:none;"></div>
+											<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 										</div>
 									</div>
 
@@ -226,7 +226,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												   class="vmcf7-msg-input"
 												   data-rule-type="required_if_message"
 												   placeholder="<?php esc_attr_e( 'This field is required', 'validation-muse-for-contact-form-7' ); ?>">
-											<div class="vmcf7-lint-warning" style="display:none;"></div>
+											<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 										</div>
 									</div>
 								</div>
@@ -253,7 +253,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</select>
 			</div>
 
-			<div class="vmcf7-preview-card" style="display:none;">
+			<div class="vmcf7-preview-card vmcf7-hidden">
 				<div class="vmcf7-preview-label">
 					<strong><?php esc_html_e( 'Extracted Field Label:', 'validation-muse-for-contact-form-7' ); ?></strong> 
 					<span id="vmcf7-preview-label-text"></span>
@@ -267,15 +267,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<strong><?php esc_html_e( 'Invalid Format:', 'validation-muse-for-contact-form-7' ); ?></strong>
 						<span class="wpcf7-not-valid-tip"></span>
 					</div>
-					<div class="vmcf7-preview-err-row" data-msg-type="regex_message">
+					<div class="vmcf7-preview-err-row vmcf7-hidden" data-msg-type="regex_message">
 						<strong><?php esc_html_e( 'Custom Regex Match Fails:', 'validation-muse-for-contact-form-7' ); ?></strong>
 						<span class="wpcf7-not-valid-tip"></span>
 					</div>
-					<div class="vmcf7-preview-err-row" data-msg-type="length_message">
+					<div class="vmcf7-preview-err-row vmcf7-hidden" data-msg-type="length_message">
 						<strong><?php esc_html_e( 'Min/Max Length Violated:', 'validation-muse-for-contact-form-7' ); ?></strong>
 						<span class="wpcf7-not-valid-tip"></span>
 					</div>
-					<div class="vmcf7-preview-err-row" data-msg-type="required_if_message">
+					<div class="vmcf7-preview-err-row vmcf7-hidden" data-msg-type="required_if_message">
 						<strong><?php esc_html_e( 'Conditional (Required-If) Fails:', 'validation-muse-for-contact-form-7' ); ?></strong>
 						<span class="wpcf7-not-valid-tip"></span>
 					</div>
@@ -329,9 +329,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 						   aria-label="<?php echo esc_attr( $vmcf7_lang_data['name'] ); ?> translations">
 						<thead>
 							<tr>
-								<th scope="col" style="width:25%;"><?php esc_html_e( 'Field', 'validation-muse-for-contact-form-7' ); ?></th>
-								<th scope="col" style="width:37.5%;"><?php esc_html_e( 'Required Message', 'validation-muse-for-contact-form-7' ); ?></th>
-								<th scope="col" style="width:37.5%;"><?php esc_html_e( 'Invalid Format Message', 'validation-muse-for-contact-form-7' ); ?></th>
+								<th scope="col" class="vmcf7-col-25"><?php esc_html_e( 'Field', 'validation-muse-for-contact-form-7' ); ?></th>
+								<th scope="col" class="vmcf7-col-37"><?php esc_html_e( 'Required Message', 'validation-muse-for-contact-form-7' ); ?></th>
+								<th scope="col" class="vmcf7-col-37"><?php esc_html_e( 'Invalid Format Message', 'validation-muse-for-contact-form-7' ); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -364,7 +364,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											   data-rule-type="required"
 											   data-flavor-key="<?php echo esc_attr( VMCF7_Flavor::field_key( $vmcf7_field['name'], 'required' ) ); ?>"
 											   placeholder="<?php echo esc_attr( $vmcf7_req_placeholder ? 'EN: ' . $vmcf7_req_placeholder : '' ); ?>">
-										<div class="vmcf7-lint-warning" style="display:none;"></div>
+										<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 									</td>
 									<td>
 										<?php if ( in_array( $vmcf7_field['type'], array( 'email', 'url', 'tel', 'number', 'range', 'date', 'time' ), true ) ) : ?>
@@ -375,7 +375,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 												   data-rule-type="invalid"
 												   data-flavor-key="<?php echo esc_attr( VMCF7_Flavor::field_key( $vmcf7_field['name'], 'invalid' ) ); ?>"
 												   placeholder="<?php echo esc_attr( $vmcf7_inv_placeholder ? 'EN: ' . $vmcf7_inv_placeholder : '' ); ?>">
-											<div class="vmcf7-lint-warning" style="display:none;"></div>
+											<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 										<?php else : ?>
 											<span class="description"><?php esc_html_e( 'Format translation not supported.', 'validation-muse-for-contact-form-7' ); ?></span>
 										<?php endif; ?>
@@ -383,7 +383,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								</tr>
 
 								<!-- Collapsible translations for custom rules -->
-								<tr class="vmcf7-advanced-trans-row" id="vmcf7-advanced-trans-<?php echo esc_attr( $vmcf7_field['name'] ); ?>-<?php echo esc_attr( $vmcf7_lang_code ); ?>" style="display:none;">
+								<tr class="vmcf7-advanced-trans-row" id="vmcf7-advanced-trans-<?php echo esc_attr( $vmcf7_field['name'] ); ?>-<?php echo esc_attr( $vmcf7_lang_code ); ?>">
 									<td colspan="3">
 										<div class="vmcf7-advanced-rules-container translation-rules">
 											<div class="vmcf7-rule-grid">
@@ -398,7 +398,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 															   data-rule-type="regex_message"
 															   data-flavor-key="<?php echo esc_attr( VMCF7_Flavor::field_key( $vmcf7_field['name'], 'regex_message' ) ); ?>"
 															   placeholder="<?php echo esc_attr( $vmcf7_field['regex_message'] ? 'EN: ' . $vmcf7_field['regex_message'] : '' ); ?>">
-														<div class="vmcf7-lint-warning" style="display:none;"></div>
+														<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 													</div>
 												</div>
 												<!-- Length -->
@@ -412,7 +412,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 															   data-rule-type="length_message"
 															   data-flavor-key="<?php echo esc_attr( VMCF7_Flavor::field_key( $vmcf7_field['name'], 'length_message' ) ); ?>"
 															   placeholder="<?php echo esc_attr( $vmcf7_field['length_message'] ? 'EN: ' . $vmcf7_field['length_message'] : '' ); ?>">
-														<div class="vmcf7-lint-warning" style="display:none;"></div>
+														<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 													</div>
 												</div>
 												<!-- Required-If -->
@@ -426,7 +426,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 															   data-rule-type="required_if_message"
 															   data-flavor-key="<?php echo esc_attr( VMCF7_Flavor::field_key( $vmcf7_field['name'], 'required_if_message' ) ); ?>"
 															   placeholder="<?php echo esc_attr( $vmcf7_field['required_if_message'] ? 'EN: ' . $vmcf7_field['required_if_message'] : '' ); ?>">
-														<div class="vmcf7-lint-warning" style="display:none;"></div>
+														<div class="vmcf7-lint-warning vmcf7-hidden"></div>
 													</div>
 												</div>
 											</div>
