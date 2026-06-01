@@ -137,37 +137,57 @@ class VMCF7_Admin {
 			}
 		}
 
+		$loader        = new VMCF7_Loader();
+		$allowed_types = $loader->get_validation_tag_types();
+
 		foreach ( $tags as $tag ) {
-			if ( $tag->is_required() ) {
-				$name = sanitize_key( $tag->name );
-
-				$field_data = array(
-					'name'             => $name,
-					'type'             => sanitize_key( $tag->basetype ),
-					'required_message' => $this->get_message( $form_id, $tag->name, 'required' ),
-					'invalid_message'  => $this->get_message( $form_id, $tag->name, 'invalid' ),
-				);
-
-				// Add per-language translations.
-				if ( ! empty( $flavor_translations ) ) {
-					$field_data['translations'] = array();
-
-					foreach ( $flavor_translations as $code => $translations ) {
-						$req_key = VMCF7_Flavor::field_key( $name, 'required' );
-						$inv_key = VMCF7_Flavor::field_key( $name, 'invalid' );
-
-						$field_data['translations'][ $code ] = array(
-							'required' => isset( $translations[ $req_key ] ) ? $translations[ $req_key ] : '',
-							'invalid'  => isset( $translations[ $inv_key ] ) ? $translations[ $inv_key ] : '',
-						);
-					}
-				}
-
-				$fields[] = $field_data;
+			if ( empty( $tag->name ) ) {
+				continue;
 			}
+			$basetype = sanitize_key( $tag->basetype );
+			if ( ! in_array( $basetype, $allowed_types, true ) ) {
+				continue;
+			}
+
+			$name = sanitize_key( $tag->name );
+			if ( isset( $fields[ $name ] ) ) {
+				continue;
+			}
+
+			$field_data = array(
+				'name'                => $name,
+				'type'                => $basetype,
+				'required'            => $tag->is_required(),
+				'required_message'    => $this->get_message( $form_id, $tag->name, 'required' ),
+				'invalid_message'     => $this->get_message( $form_id, $tag->name, 'invalid' ),
+				'regex'               => get_post_meta( $form_id, "_vmcf7_{$name}_regex", true ),
+				'regex_message'       => $this->get_message( $form_id, $tag->name, 'regex_message' ),
+				'min_length'          => get_post_meta( $form_id, "_vmcf7_{$name}_min_length", true ),
+				'max_length'          => get_post_meta( $form_id, "_vmcf7_{$name}_max_length", true ),
+				'length_message'      => $this->get_message( $form_id, $tag->name, 'length_message' ),
+				'required_if_field'   => get_post_meta( $form_id, "_vmcf7_{$name}_required_if_field", true ),
+				'required_if_message' => $this->get_message( $form_id, $tag->name, 'required_if_message' ),
+			);
+
+			// Add per-language translations.
+			if ( ! empty( $flavor_translations ) ) {
+				$field_data['translations'] = array();
+
+				foreach ( $flavor_translations as $code => $translations ) {
+					$field_data['translations'][ $code ] = array(
+						'required'            => isset( $translations[ VMCF7_Flavor::field_key( $name, 'required' ) ] ) ? $translations[ VMCF7_Flavor::field_key( $name, 'required' ) ] : '',
+						'invalid'             => isset( $translations[ VMCF7_Flavor::field_key( $name, 'invalid' ) ] ) ? $translations[ VMCF7_Flavor::field_key( $name, 'invalid' ) ] : '',
+						'regex_message'       => isset( $translations[ VMCF7_Flavor::field_key( $name, 'regex_message' ) ] ) ? $translations[ VMCF7_Flavor::field_key( $name, 'regex_message' ) ] : '',
+						'length_message'      => isset( $translations[ VMCF7_Flavor::field_key( $name, 'length_message' ) ] ) ? $translations[ VMCF7_Flavor::field_key( $name, 'length_message' ) ] : '',
+						'required_if_message' => isset( $translations[ VMCF7_Flavor::field_key( $name, 'required_if_message' ) ] ) ? $translations[ VMCF7_Flavor::field_key( $name, 'required_if_message' ) ] : '',
+					);
+				}
+			}
+
+			$fields[ $name ] = $field_data;
 		}
 
-		return $fields;
+		return array_values( $fields );
 	}
 
 	/**
@@ -244,15 +264,16 @@ class VMCF7_Admin {
 					continue;
 				}
 
-				$meta_key      = sprintf( '_vmcf7_%s_%s', $field_name, $type );
-				$clean_message = wp_kses_post( $message );
+				$meta_key = sprintf( '_vmcf7_%s_%s', $field_name, $type );
 
-				if ( '' === $clean_message ) {
+				$clean_value = $this->sanitize_rule_value( $type, $message );
+
+				if ( '' === $clean_value ) {
 					delete_post_meta( $form_id, $meta_key );
 					continue;
 				}
 
-				update_post_meta( $form_id, $meta_key, $clean_message );
+				update_post_meta( $form_id, $meta_key, $clean_value );
 			}
 		}
 
@@ -308,6 +329,27 @@ class VMCF7_Admin {
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Sanitize a rule value based on its type.
+	 *
+	 * @since 1.6.0
+	 *
+	 * @param string $type  The rule type.
+	 * @param mixed  $value The value to sanitize.
+	 * @return mixed The sanitized value.
+	 */
+	public function sanitize_rule_value( $type, $value ) {
+		if ( 'required_if_field' === $type ) {
+			return sanitize_key( $value );
+		} elseif ( 'min_length' === $type || 'max_length' === $type ) {
+			return '' !== trim( $value ) ? intval( $value ) : '';
+		} elseif ( 'regex' === $type ) {
+			return trim( $value );
+		} else {
+			return wp_kses_post( $value );
 		}
 	}
 
@@ -400,5 +442,389 @@ class VMCF7_Admin {
 		}
 
 		wp_send_json_success( array( 'translations' => $translations ) );
+	}
+
+	/**
+	 * AJAX handler to export rules as JSON.
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	/**
+	 * AJAX handler to export rules as JSON.
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	public function ajax_export_rules() {
+		check_ajax_referer( 'vmcf7_ajax_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'validation-muse-for-contact-form-7' ) ), 403 );
+		}
+
+		$form_id = isset( $_GET['form_id'] ) ? absint( $_GET['form_id'] ) : 0;
+		if ( ! $form_id ) {
+			wp_send_json_error( array( 'message' => __( 'Missing form ID.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		$meta = get_post_meta( $form_id );
+		$rules = array();
+		if ( is_array( $meta ) ) {
+			foreach ( $meta as $key => $values ) {
+				if ( str_starts_with( $key, '_vmcf7_' ) ) {
+					$rules[ $key ] = isset( $values[0] ) ? $values[0] : '';
+				}
+			}
+		}
+
+		$translations = array();
+		if ( VMCF7_Flavor::is_active() ) {
+			foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+				$translations[ $code ] = VMCF7_Flavor::export_language_set( $form_id, $code );
+			}
+		}
+
+		$export_data = array(
+			'rules'        => $rules,
+			'translations' => $translations,
+		);
+
+		header( 'Content-Type: application/json; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename="vmcf7-rules-form-' . $form_id . '.json"' );
+		echo wp_json_encode( $export_data );
+		exit;
+	}
+
+	/**
+	 * AJAX handler to import rules from JSON file.
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	public function ajax_import_rules() {
+		check_ajax_referer( 'vmcf7_ajax_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'validation-muse-for-contact-form-7' ) ), 403 );
+		}
+
+		$form_id = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+		if ( ! $form_id ) {
+			wp_send_json_error( array( 'message' => __( 'Missing form ID.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		if ( empty( $_FILES['import_file'] ) || empty( $_FILES['import_file']['tmp_name'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'No file uploaded.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		$file_name = isset( $_FILES['import_file']['name'] ) ? $_FILES['import_file']['name'] : '';
+		$ext = pathinfo( $file_name, PATHINFO_EXTENSION );
+		if ( 'json' !== strtolower( $ext ) ) {
+			wp_send_json_error( array( 'message' => __( 'Only JSON files are allowed.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		$tmp_name  = $_FILES['import_file']['tmp_name'];
+		$mime_type = '';
+		if ( function_exists( 'finfo_open' ) ) {
+			$finfo     = finfo_open( FILEINFO_MIME_TYPE );
+			$mime_type = finfo_file( $finfo, $tmp_name );
+			finfo_close( $finfo );
+		} elseif ( function_exists( 'mime_content_type' ) ) {
+			$mime_type = mime_content_type( $tmp_name );
+		} else {
+			$mime_type = isset( $_FILES['import_file']['type'] ) ? $_FILES['import_file']['type'] : '';
+		}
+
+		$allowed_mimes = array( 'application/json', 'text/plain', 'text/json', 'application/x-json' );
+		if ( ! in_array( $mime_type, $allowed_mimes, true ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid file type. Only JSON is allowed.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		$json_content = file_get_contents( $tmp_name );
+		$data         = json_decode( $json_content, true );
+
+		if ( ! is_array( $data ) || ! isset( $data['rules'] ) ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid JSON format.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		// Clear target rules
+		$meta = get_post_meta( $form_id );
+		if ( is_array( $meta ) ) {
+			foreach ( $meta as $key => $values ) {
+				if ( str_starts_with( $key, '_vmcf7_' ) ) {
+					delete_post_meta( $form_id, $key );
+				}
+			}
+		}
+
+		// Clear translations
+		if ( VMCF7_Flavor::is_active() ) {
+			foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+				$old_trans = VMCF7_Flavor::get_all_translations( $form_id, $code );
+				foreach ( $old_trans as $field_key => $trans_val ) {
+					if ( preg_match( '/^vmcf7_(.+?)_(required|invalid|regex_message|length_message|required_if_message)$/', $field_key, $matches ) ) {
+						VMCF7_Flavor::delete_translation( $form_id, $matches[1], $matches[2], $code );
+					}
+				}
+			}
+		}
+
+		// Save new rules
+		foreach ( $data['rules'] as $key => $value ) {
+			if ( str_starts_with( $key, '_vmcf7_' ) ) {
+				if ( '_vmcf7_enabled' === $key ) {
+					update_post_meta( $form_id, '_vmcf7_enabled', '1' === $value || 1 === $value || '1' === (string) $value ? '1' : '0' );
+				} else {
+					if ( preg_match( '/^_vmcf7_(.+?)_(required|invalid|regex|regex_message|min_length|max_length|length_message|required_if_field|required_if_message)$/', $key, $matches ) ) {
+						$type = $matches[2];
+						$clean_val = $this->sanitize_rule_value( $type, $value );
+						update_post_meta( $form_id, $key, $clean_val );
+					}
+				}
+			}
+		}
+
+		// Save translations
+		if ( VMCF7_Flavor::is_active() && isset( $data['translations'] ) && is_array( $data['translations'] ) ) {
+			foreach ( $data['translations'] as $code => $translations ) {
+				VMCF7_Flavor::import_language_set( $form_id, $code, $translations );
+			}
+		}
+
+		wp_send_json_success( array( 'message' => __( 'Rules imported successfully.', 'validation-muse-for-contact-form-7' ) ) );
+	}
+
+	/**
+	 * AJAX handler to copy rules from another form.
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	public function ajax_copy_rules() {
+		check_ajax_referer( 'vmcf7_ajax_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'validation-muse-for-contact-form-7' ) ), 403 );
+		}
+
+		$from_id = isset( $_POST['from_form_id'] ) ? absint( $_POST['from_form_id'] ) : 0;
+		$to_id   = isset( $_POST['to_form_id'] ) ? absint( $_POST['to_form_id'] ) : 0;
+
+		if ( ! $from_id || ! $to_id ) {
+			wp_send_json_error( array( 'message' => __( 'Missing source or target form ID.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		// Clear target rules
+		$meta = get_post_meta( $to_id );
+		if ( is_array( $meta ) ) {
+			foreach ( $meta as $key => $values ) {
+				if ( str_starts_with( $key, '_vmcf7_' ) ) {
+					delete_post_meta( $to_id, $key );
+				}
+			}
+		}
+
+		// Copy rules from source to target
+		$source_meta = get_post_meta( $from_id );
+		if ( is_array( $source_meta ) ) {
+			foreach ( $source_meta as $key => $values ) {
+				if ( str_starts_with( $key, '_vmcf7_' ) ) {
+					$val = isset( $values[0] ) ? $values[0] : '';
+					if ( '_vmcf7_enabled' === $key ) {
+						update_post_meta( $to_id, '_vmcf7_enabled', '1' === $val || 1 === $val || '1' === (string) $val ? '1' : '0' );
+					} else {
+						if ( preg_match( '/^_vmcf7_(.+?)_(required|invalid|regex|regex_message|min_length|max_length|length_message|required_if_field|required_if_message)$/', $key, $matches ) ) {
+							$type = $matches[2];
+							$clean_val = $this->sanitize_rule_value( $type, $val );
+							update_post_meta( $to_id, $key, $clean_val );
+						}
+					}
+				}
+			}
+		}
+
+		// Copy Flavor translations
+		if ( VMCF7_Flavor::is_active() ) {
+			foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+				// Clear target translations
+				$old_trans = VMCF7_Flavor::get_all_translations( $to_id, $code );
+				foreach ( $old_trans as $field_key => $trans_val ) {
+					if ( preg_match( '/^vmcf7_(.+?)_(required|invalid|regex_message|length_message|required_if_message)$/', $field_key, $matches ) ) {
+						VMCF7_Flavor::delete_translation( $to_id, $matches[1], $matches[2], $code );
+					}
+				}
+
+				// Save new translations
+				$new_trans = VMCF7_Flavor::export_language_set( $from_id, $code );
+				VMCF7_Flavor::import_language_set( $to_id, $code, $new_trans );
+			}
+		}
+
+		wp_send_json_success( array( 'message' => __( 'Rules copied successfully.', 'validation-muse-for-contact-form-7' ) ) );
+	}
+
+	/**
+	 * AJAX handler for bulk actions (save default template, apply default, bulk apply to all).
+	 *
+	 * @since 1.6.0
+	 * @return void
+	 */
+	public function ajax_bulk_apply() {
+		check_ajax_referer( 'vmcf7_ajax_nonce', 'nonce' );
+
+		if ( ! current_user_can( 'wpcf7_edit_contact_forms' ) ) {
+			wp_send_json_error( array( 'message' => __( 'Permission denied.', 'validation-muse-for-contact-form-7' ) ), 403 );
+		}
+
+		$form_id     = isset( $_POST['form_id'] ) ? absint( $_POST['form_id'] ) : 0;
+		$action_type = isset( $_POST['action_type'] ) ? sanitize_key( $_POST['action_type'] ) : '';
+
+		if ( ! $form_id || ! $action_type ) {
+			wp_send_json_error( array( 'message' => __( 'Missing form ID or action type.', 'validation-muse-for-contact-form-7' ) ), 400 );
+		}
+
+		if ( 'save_default' === $action_type ) {
+			$meta  = get_post_meta( $form_id );
+			$rules = array();
+			if ( is_array( $meta ) ) {
+				foreach ( $meta as $key => $values ) {
+					if ( str_starts_with( $key, '_vmcf7_' ) ) {
+						$rules[ $key ] = $values[0];
+					}
+				}
+			}
+
+			$translations = array();
+			if ( VMCF7_Flavor::is_active() ) {
+				foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+					$translations[ $code ] = VMCF7_Flavor::export_language_set( $form_id, $code );
+				}
+			}
+
+			update_option( 'vmcf7_default_template', array(
+				'rules'        => $rules,
+				'translations' => $translations,
+			) );
+
+			wp_send_json_success( array( 'message' => __( 'Default template saved successfully.', 'validation-muse-for-contact-form-7' ) ) );
+		}
+
+		if ( 'apply_default' === $action_type ) {
+			$template = get_option( 'vmcf7_default_template' );
+			if ( ! is_array( $template ) || ! isset( $template['rules'] ) ) {
+				wp_send_json_error( array( 'message' => __( 'No default template saved yet.', 'validation-muse-for-contact-form-7' ) ), 400 );
+			}
+
+			$meta = get_post_meta( $form_id );
+			if ( is_array( $meta ) ) {
+				foreach ( $meta as $key => $values ) {
+					if ( str_starts_with( $key, '_vmcf7_' ) ) {
+						delete_post_meta( $form_id, $key );
+					}
+				}
+			}
+
+			foreach ( $template['rules'] as $key => $value ) {
+				if ( '_vmcf7_enabled' === $key ) {
+					update_post_meta( $form_id, '_vmcf7_enabled', '1' === $value || 1 === $value || '1' === (string) $value ? '1' : '0' );
+				} else {
+					if ( preg_match( '/^_vmcf7_(.+?)_(required|invalid|regex|regex_message|min_length|max_length|length_message|required_if_field|required_if_message)$/', $key, $matches ) ) {
+						$type = $matches[2];
+						$clean_val = $this->sanitize_rule_value( $type, $value );
+						update_post_meta( $form_id, $key, $clean_val );
+					}
+				}
+			}
+
+			if ( VMCF7_Flavor::is_active() && isset( $template['translations'] ) ) {
+				foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+					$old_trans = VMCF7_Flavor::get_all_translations( $form_id, $code );
+					foreach ( $old_trans as $field_key => $trans_val ) {
+						if ( preg_match( '/^vmcf7_(.+?)_(required|invalid|regex_message|length_message|required_if_message)$/', $field_key, $matches ) ) {
+							VMCF7_Flavor::delete_translation( $form_id, $matches[1], $matches[2], $code );
+						}
+					}
+				}
+
+				foreach ( $template['translations'] as $code => $translations ) {
+					VMCF7_Flavor::import_language_set( $form_id, $code, $translations );
+				}
+			}
+
+			wp_send_json_success( array( 'message' => __( 'Default template applied successfully.', 'validation-muse-for-contact-form-7' ) ) );
+		}
+
+		if ( 'bulk_apply_all' === $action_type ) {
+			$forms = get_posts( array(
+				'post_type'      => 'wpcf7_contact_form',
+				'posts_per_page' => -1,
+				'exclude'        => array( $form_id ),
+			) );
+
+			if ( empty( $forms ) ) {
+				wp_send_json_success( array( 'message' => __( 'No other forms to apply templates to.', 'validation-muse-for-contact-form-7' ) ) );
+			}
+
+			$current_meta = get_post_meta( $form_id );
+			$rules        = array();
+			if ( is_array( $current_meta ) ) {
+				foreach ( $current_meta as $key => $values ) {
+					if ( str_starts_with( $key, '_vmcf7_' ) ) {
+						$rules[ $key ] = $values[0];
+					}
+				}
+			}
+
+			$translations = array();
+			if ( VMCF7_Flavor::is_active() ) {
+				foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+					$translations[ $code ] = VMCF7_Flavor::export_language_set( $form_id, $code );
+				}
+			}
+
+			foreach ( $forms as $f ) {
+				$other_id   = $f->ID;
+				$other_meta = get_post_meta( $other_id );
+				if ( is_array( $other_meta ) ) {
+					foreach ( $other_meta as $key => $values ) {
+						if ( str_starts_with( $key, '_vmcf7_' ) ) {
+							delete_post_meta( $other_id, $key );
+						}
+					}
+				}
+
+				foreach ( $rules as $key => $value ) {
+					if ( '_vmcf7_enabled' === $key ) {
+						update_post_meta( $other_id, '_vmcf7_enabled', '1' === $value || 1 === $value || '1' === (string) $value ? '1' : '0' );
+					} else {
+						if ( preg_match( '/^_vmcf7_(.+?)_(required|invalid|regex|regex_message|min_length|max_length|length_message|required_if_field|required_if_message)$/', $key, $matches ) ) {
+							$type = $matches[2];
+							$clean_val = $this->sanitize_rule_value( $type, $value );
+							update_post_meta( $other_id, $key, $clean_val );
+						}
+					}
+				}
+
+				if ( VMCF7_Flavor::is_active() ) {
+					foreach ( VMCF7_Flavor::get_target_languages() as $code => $lang_data ) {
+						$old_trans = VMCF7_Flavor::get_all_translations( $other_id, $code );
+						foreach ( $old_trans as $field_key => $trans_val ) {
+							if ( preg_match( '/^vmcf7_(.+?)_(required|invalid|regex_message|length_message|required_if_message)$/', $field_key, $matches ) ) {
+								VMCF7_Flavor::delete_translation( $other_id, $matches[1], $matches[2], $code );
+							}
+						}
+					}
+
+					foreach ( $translations as $code => $other_trans ) {
+						VMCF7_Flavor::import_language_set( $other_id, $code, $other_trans );
+					}
+				}
+			}
+
+			wp_send_json_success( array( 'message' => sprintf( __( 'Rules applied to %d other forms successfully.', 'validation-muse-for-contact-form-7' ), count( $forms ) ) ) );
+		}
+
+		wp_send_json_error( array( 'message' => __( 'Invalid bulk action type.', 'validation-muse-for-contact-form-7' ) ), 400 );
 	}
 }

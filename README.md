@@ -2,27 +2,34 @@
 
 [![Version](https://img.shields.io/wordpress/plugin/v/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Rating](https://img.shields.io/wordpress/plugin/stars/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Active installs](https://img.shields.io/wordpress/plugin/installs/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-Requires at least: **6.0** · Tested up to: **7.0** · Requires PHP: **8.0** · Stable tag: **1.5.0**
+Requires at least: **6.0** · Tested up to: **7.0** · Requires PHP: **8.0** · Stable tag: **1.6.0**
 
-Custom error and required-field messages for Contact Form 7. Per-form, per-field, CF7 6.x SWV-compatible, multilingual.
+Custom validation messages, regex, length constraints, required-if conditions, templates sharing, and instant frontend mirroring for Contact Form 7. Per-form, per-field, CF7 6.x SWV-compatible, multilingual.
 
 ## Description
-**Validation Muse** lets you write your own error messages for every Contact Form 7 field — directly in the form editor, per form, per field. No code, no global settings page, no JavaScript hacks.
+**Validation Muse** lets you write your own validation rules and error messages for every Contact Form 7 field — directly in the form editor, per form, per field. No code, no global settings page, no JavaScript hacks.
 
 Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-based Validation (SWV)**. Validation Muse runs its filters at priority 20 (after CF7 core) and uses Reflection to replace SWV error text on already-invalidated fields, so your custom copy actually shows up — even on the new validation engine.
 
 ### Why Validation Muse
 * **CF7 6.x SWV compatible** — works with the new Schema-based Validation engine, not just legacy hooks.
+* **Custom Regex & Length Rules** — define custom regular expression patterns, min length, and max length rules per field with their own error messages.
+* **Conditional "Required-If" Rules** — make fields required only when a companion field is filled/checked.
+* **Instant Client-Side Mirroring** — validation rules are validated instantly on the frontend via JavaScript before submission, featuring full accessibility (A11y) support.
+* **Rule Sets Import/Export & Templates** — export/import validation rules as JSON, copy them from other forms, and bulk apply global templates.
+* **Placeholder Tokens** — use `{field_label}`, `{min}`, and `{max}` in validation messages to generate dynamic texts.
 * **Per-form, per-field** — each form keeps its own messages; no global override.
 * **Stored in post meta** — messages live with the form, compatible with CF7 form duplication and third-party CF7 import/export plugins.
-* **Multilingual via Flavor** — when the Flavor translation plugin is active, language tabs and a one-click AI Translate button appear in the editor automatically. Zero overhead when Flavor is not installed.
+* **Multilingual via WPML, Polylang & Flavor** — translates rules using standard WPML/Polylang hooks, and features language tabs + one-click AI Translate when Flavor is active.
 * **Developer-friendly** — extensibility hooks `vmcf7_loaded` and `vmcf7_validation_tag_types` let you add custom field types.
 * **Lightweight** — no admin bloat, no tracking, no upsells.
 
 ### Supported field types
-* Required-field messages: any required tag (text, textarea, select, checkbox, radio, file, etc.)
-* Invalid-format messages: `email`, `url`, `tel`, `number` (including `range`), `date`, and `time`.
+* Required-field messages: any required tag (`text`, `textarea`, `select`, `checkbox`, `radio`, `file`, etc.).
+* Invalid-format messages: `email`, `url`, `tel`, `number` (including `range`), `date`, and `time` fields.
+* Custom error messages on validation failure: `file` (size/type checks), `acceptance` (unchecked/unaccepted state), and `quiz` (incorrect answer).
 * HTML inside messages is allowed and sanitized through `wp_kses_post()`.
+* Custom Regex and Min/Max Length rules support all input fields (excluding acceptance and quiz).
 
 ### Translations
 The plugin ships with a `.pot` file and is already translated into Dutch, German, Russian, Spanish (Chile/Spain). [Help translate it into your language.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
@@ -43,8 +50,12 @@ Validation Muse is the only CF7 validation plugin that (1) is compatible with CF
 ### Can I translate validation messages per language?
 Yes — install the Flavor translation plugin and Validation Muse will show language tabs in the form editor plus an *AI Translate* button. Translations are stored in Flavor's database; uninstalling Validation Muse cleans them up.
 
-### Which field types support custom invalid messages?
-`email`, `url`, `tel`, `number` (including `range`), `date`, and `time`. Any required field of any type can have a custom required-field message.
+### Which field types support custom invalid or validation failure messages?
+* `email`, `url`, `tel`, `number` (including `range`), `date`, and `time` support custom invalid-format messages.
+* `file` supports custom file size/type validation error messages.
+* `acceptance` supports custom error messages when the checkbox is not accepted.
+* `quiz` supports custom error messages when the answer is incorrect.
+* Any required field of any type can have a custom required-field message.
 
 ### Where are the messages stored?
 In each form's post meta. They live with the form, so duplicating a form (built into CF7) keeps the messages. CF7 has no native export, but third-party CF7 import/export plugins read post meta — so migrations across sites work without a separate import step.
@@ -68,6 +79,14 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 4. Invalid-format message for an email field rendered on the frontend.
 
 ## Changelog
+### 1.6.0
+* New: custom regex and min/max-length validation rules per field, each with its own message.
+* New: validation messages for `file`, `acceptance`, and `quiz` fields; conditional "required-if" messages.
+* New: message placeholder tokens `{field_label}`, `{min}`, `{max}`.
+* New: client-side inline validation mirroring the server messages, with `aria-describedby` accessibility.
+* New: live message preview, copy messages between forms, JSON import/export of message sets, and editor lint.
+* New: WPML/Polylang string registration alongside the Flavor bridge; translation import/export.
+
 ### 1.5.0
 * Minimum PHP raised to 8.0; minimum WordPress raised to 6.0; tested up to WordPress 7.0.
 * New: custom validation messages for `time` fields.

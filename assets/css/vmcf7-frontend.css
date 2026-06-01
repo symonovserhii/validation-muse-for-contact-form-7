@@ -1,0 +1,33 @@
+/**
+ * Frontend styles for Validation Muse for Contact Form 7 validation messages.
+ *
+ * @package ValidationMuse
+ * @since   1.6.0
+ */
+
+.wpcf7-form .wpcf7-not-valid-tip {
+	display: block;
+	color: #dc3232;
+	font-size: 0.85em;
+	font-weight: 600;
+	margin-top: 5px;
+	animation: vmcf7-fade-in 0.25s ease-out;
+}
+
+.wpcf7-form input.wpcf7-not-valid,
+.wpcf7-form select.wpcf7-not-valid,
+.wpcf7-form textarea.wpcf7-not-valid {
+	border-color: #dc3232 !important;
+	box-shadow: 0 0 2px rgba(220, 50, 50, 0.4);
+}
+
+@keyframes vmcf7-fade-in {
+	from {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}

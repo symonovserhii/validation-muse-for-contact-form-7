@@ -9,11 +9,19 @@ namespace {
     // Define stubs for CF7 classes.
     class WPCF7_ContactForm {
         private $id;
+        public $props = array();
+        public $tags = array();
         public function __construct( $id ) {
             $this->id = $id;
         }
         public function id() {
             return $this->id;
+        }
+        public function prop( $name ) {
+            return isset( $this->props[ $name ] ) ? $this->props[ $name ] : '';
+        }
+        public function scan_form_tags() {
+            return $this->tags;
         }
     }
 
@@ -21,6 +29,7 @@ namespace {
         public $name;
         public $basetype;
         private $required;
+        public $options = array();
         public function __construct( $name, $basetype, $required = false ) {
             $this->name     = $name;
             $this->basetype = $basetype;
@@ -28,6 +37,9 @@ namespace {
         }
         public function is_required() {
             return $this->required;
+        }
+        public function get_id_option() {
+            return isset( $this->options['id'] ) ? $this->options['id'] : '';
         }
     }
 
@@ -168,6 +180,23 @@ namespace {
                 'esc_html__' => function( $text, $domain = 'default' ) {
                     return $text;
                 },
+                'esc_attr' => function( $val ) {
+                    return htmlspecialchars( (string) $val, ENT_QUOTES, 'UTF-8' );
+                },
+                'esc_html' => function( $val ) {
+                    return htmlspecialchars( (string) $val, ENT_QUOTES, 'UTF-8' );
+                },
+                'wp_strip_all_tags' => function( $val ) {
+                    return strip_tags( (string) $val );
+                },
+                'is_admin' => function() {
+                    return false;
+                },
+                'wp_script_is' => function( $handle, $list = 'enqueued' ) {
+                    return false;
+                },
+                'wp_enqueue_script' => function( $handle, $src = '', $deps = array(), $ver = false, $in_footer = false ) {},
+                'wp_enqueue_style' => function( $handle, $src = '', $deps = array(), $ver = false, $media = 'all' ) {},
             ) );
 
             // Clear Flavor DB mock.
@@ -443,6 +472,285 @@ namespace {
             $admin = new VMCF7_Admin();
             $this->assertEquals( 'Please enter a valid time', $admin->get_default_invalid_message( 'time' ) );
             $this->assertEquals( 'Please enter a valid email address', $admin->get_default_invalid_message( 'email' ) );
+        }
+
+        /**
+         * Test regex validation evaluator.
+         */
+        public function test_regex_validation() {
+            $this->assertTrue( \VMCF7_Rules::evaluate_regex( '12345', '^[0-9]+$' ) );
+            $this->assertFalse( \VMCF7_Rules::evaluate_regex( 'abc', '^[0-9]+$' ) );
+            $this->assertFalse( \VMCF7_Rules::evaluate_regex( '', '^[0-9]+$' ) );
+        }
+
+        /**
+         * Test length validation evaluator.
+         */
+        public function test_length_validation() {
+            $res = \VMCF7_Rules::evaluate_length( 'hello', 3, 10 );
+            $this->assertTrue( $res['valid'] );
+
+            $res = \VMCF7_Rules::evaluate_length( 'hi', 3, 10 );
+            $this->assertFalse( $res['valid'] );
+            $this->assertEquals( 'min', $res['type'] );
+
+            $res = \VMCF7_Rules::evaluate_length( 'hello world', 3, 5 );
+            $this->assertFalse( $res['valid'] );
+            $this->assertEquals( 'max', $res['type'] );
+        }
+
+        /**
+         * Test token expansion and label extraction.
+         */
+        public function test_token_expansion() {
+            $loader = new VMCF7_Loader();
+            $form   = new WPCF7_ContactForm( 123 );
+            $tag    = new WPCF7_FormTag( 'your-name', 'text' );
+
+            $form->props = array(
+                'form' => '<label> Your Custom Name <br /> [text your-name] </label>'
+            );
+
+            \Brain\Monkey\Functions\expect( 'wpcf7_get_current_contact_form' )
+                ->andReturn( $form );
+
+            \Brain\Monkey\Functions\expect( 'get_post_meta' )
+                ->andReturnUsing( function( $post_id, $key, $single ) {
+                    if ( '_vmcf7_enabled' === $key ) {
+                        return '1';
+                    }
+                    if ( '_vmcf7_yourname_required' === $key ) {
+                        return '{field_label} is required!';
+                    }
+                    return '';
+                } );
+
+            $submission = new WPCF7_Submission();
+            $submission->set_posted_data( array( 'your-name' => '' ) );
+            WPCF7_Submission::set_instance( $submission );
+
+            $result = new WPCF7_Validation();
+            $result = $loader->validate_field( $result, $tag );
+
+            $invalid_fields = $result->get_invalid_fields();
+            $this->assertArrayNotHasKey( 'your-name', $invalid_fields );
+            // Wait, tag is not required in constructor ($required = false), but loader checks empty.
+            // Oh, since tag is not required, loader doesn't flag it as invalid for normal required check,
+            // EXCEPT if tag is required, or it's a required-if field.
+            // Let's test with a required tag.
+            $tag_req = new WPCF7_FormTag( 'your-name', 'text', true );
+            $result_req = new WPCF7_Validation();
+            $result_req = $loader->validate_field( $result_req, $tag_req );
+            $invalid_fields_req = $result_req->get_invalid_fields();
+            $this->assertArrayHasKey( 'your-name', $invalid_fields_req );
+            $this->assertEquals( 'Your Custom Name is required!', $invalid_fields_req['your-name']['reason'] );
+        }
+
+        /**
+         * Test conditional required-if validation logic.
+         */
+        public function test_required_if_validation() {
+            $loader = new VMCF7_Loader();
+            $form   = new WPCF7_ContactForm( 123 );
+            $tag    = new WPCF7_FormTag( 'your-email', 'email' );
+
+            $form->props = array(
+                'form' => '[email your-email]'
+            );
+
+            \Brain\Monkey\Functions\expect( 'wpcf7_get_current_contact_form' )
+                ->andReturn( $form );
+
+            \Brain\Monkey\Functions\expect( 'get_post_meta' )
+                ->andReturnUsing( function( $post_id, $key, $single ) {
+                    if ( '_vmcf7_enabled' === $key ) {
+                        return '1';
+                    }
+                    if ( '_vmcf7_youremail_required_if_field' === $key ) {
+                        return 'subscribe-checkbox';
+                    }
+                    if ( '_vmcf7_youremail_required_if_message' === $key ) {
+                        return 'Email is required if you subscribe!';
+                    }
+                    return '';
+                } );
+
+            $submission = new WPCF7_Submission();
+            // Companion field is empty -> not required
+            $submission->set_posted_data( array( 'your-email' => '', 'subscribe-checkbox' => '' ) );
+            WPCF7_Submission::set_instance( $submission );
+
+            $result = new WPCF7_Validation();
+            $result = $loader->validate_field( $result, $tag );
+            $this->assertArrayNotHasKey( 'your-email', $result->get_invalid_fields() );
+
+            // Companion field is filled -> required -> invalid because empty
+            $submission = new WPCF7_Submission();
+            $submission->set_posted_data( array( 'your-email' => '', 'subscribe-checkbox' => '1' ) );
+            WPCF7_Submission::set_instance( $submission );
+
+            $result = new WPCF7_Validation();
+            $result = $loader->validate_field( $result, $tag );
+            $invalid_fields = $result->get_invalid_fields();
+            $this->assertArrayHasKey( 'your-email', $invalid_fields );
+            $this->assertEquals( 'Email is required if you subscribe!', $invalid_fields['your-email']['reason'] );
+        }
+
+        /**
+         * Test WPML/Polylang i18n compatibility.
+         */
+        public function test_i18n_compat_no_op() {
+            $compat = new VMCF7_I18n_Compat();
+
+            \Brain\Monkey\Functions\expect( 'get_post_meta' )
+                ->andReturn( 'Original message' );
+
+            // When filters run without any active multilanguage plugins, they should return original messages.
+            $translated = $compat->translate_message( 'Original message', 123, 'test-field', 'required' );
+            $this->assertEquals( 'Original message', $translated );
+        }
+
+        /**
+         * Test frontend rule serialization / injection.
+         */
+        public function test_rule_serialization() {
+            $loader = new VMCF7_Loader();
+            $form   = new WPCF7_ContactForm( 123 );
+            $tag    = new WPCF7_FormTag( 'your-phone', 'tel' );
+
+            $form->tags = array( $tag );
+
+            \Brain\Monkey\Functions\expect( 'wpcf7_get_current_contact_form' )
+                ->andReturn( $form );
+
+            \Brain\Monkey\Functions\expect( 'get_post_meta' )
+                ->andReturnUsing( function( $post_id, $key, $single ) {
+                    if ( '_vmcf7_enabled' === $key ) {
+                        return '1';
+                    }
+                    if ( '_vmcf7_yourphone_regex' === $key ) {
+                        return '^[0-9]+$';
+                    }
+                    if ( '_vmcf7_yourphone_regex_message' === $key ) {
+                        return 'Only digits allowed!';
+                    }
+                    return '';
+                } );
+
+            $form_html = '<input type="text" name="your-phone" class="wpcf7-form-control wpcf7-text">';
+            $modified_html = $loader->inject_frontend_rules( $form_html );
+
+            $this->assertStringContainsString( 'data-vmcf7-regex="^[0-9]+$"', $modified_html );
+            $this->assertStringContainsString( 'data-vmcf7-msg-regex="Only digits allowed!"', $modified_html );
+        }
+
+        /**
+         * Test import/export round-trip.
+         */
+        public function test_import_export_round_trip() {
+            $admin = new VMCF7_Admin();
+            $form_id = 456;
+
+            // 1. Prepare simulated rules meta in DB.
+            $original_rules = array(
+                '_vmcf7_enabled' => array( '1' ),
+                '_vmcf7_yourname_required' => array( 'Name is required!' ),
+                '_vmcf7_yourname_regex' => array( '^[a-zA-Z]+$' ),
+                '_vmcf7_yourname_min_length' => array( '3' ),
+                '_vmcf7_yourname_max_length' => array( '20' ),
+                '_vmcf7_yourname_required_if_field' => array( 'somefield' ),
+            );
+
+            // Mock get_post_meta to return these rules.
+            \Brain\Monkey\Functions\expect( 'get_post_meta' )
+                ->with( $form_id )
+                ->andReturn( $original_rules );
+
+            // 2. Perform the export step (simulate ajax_export_rules array construction).
+            $meta = $original_rules;
+            $rules = array();
+            foreach ( $meta as $key => $values ) {
+                if ( str_starts_with( $key, '_vmcf7_' ) ) {
+                    $rules[ $key ] = isset( $values[0] ) ? $values[0] : '';
+                }
+            }
+            $export_data = array(
+                'rules'        => $rules,
+                'translations' => array(),
+            );
+
+            // 3. Write exported data to a JSON temp file.
+            $temp_file = tempnam( sys_get_temp_dir(), 'vmcf7_import_test' );
+            file_put_contents( $temp_file, json_encode( $export_data ) );
+
+            $_FILES['import_file'] = array(
+                'name'     => 'export.json',
+                'type'     => 'application/json',
+                'tmp_name' => $temp_file,
+                'error'    => 0,
+                'size'     => filesize( $temp_file ),
+            );
+
+            $_POST['form_id'] = $form_id;
+
+            // 4. Mock functions for the import.
+            \Brain\Monkey\Functions\expect( 'check_ajax_referer' )
+                ->once()
+                ->with( 'vmcf7_ajax_nonce', 'nonce' )
+                ->andReturn( true );
+
+            \Brain\Monkey\Functions\expect( 'current_user_can' )
+                ->once()
+                ->with( 'wpcf7_edit_contact_forms' )
+                ->andReturn( true );
+
+            $deleted_keys = array();
+            \Brain\Monkey\Functions\expect( 'delete_post_meta' )
+                ->andReturnUsing( function( $id, $key ) use ( &$deleted_keys ) {
+                    $deleted_keys[] = $key;
+                    return true;
+                } );
+
+            $saved_meta = array();
+            \Brain\Monkey\Functions\expect( 'update_post_meta' )
+                ->andReturnUsing( function( $id, $key, $value ) use ( &$saved_meta ) {
+                    $saved_meta[ $key ] = $value;
+                    return true;
+                } );
+
+            \Brain\Monkey\Functions\expect( 'wp_send_json_success' )
+                ->once()
+                ->andReturnUsing( function( $response ) {
+                    throw new \Exception( 'JSON_SUCCESS' );
+                } );
+
+            // 5. Execute import and assert success.
+            try {
+                $admin->ajax_import_rules();
+                $this->fail( 'Expected ajax_import_rules to call wp_send_json_success.' );
+            } catch ( \Exception $e ) {
+                $this->assertEquals( 'JSON_SUCCESS', $e->getMessage() );
+            }
+
+            // 6. Assertions.
+            // Check that old rules were cleared.
+            $this->assertContains( '_vmcf7_enabled', $deleted_keys );
+            $this->assertContains( '_vmcf7_yourname_required', $deleted_keys );
+
+            // Check that rules were successfully re-imported and sanitized.
+            $this->assertEquals( '1', $saved_meta['_vmcf7_enabled'] );
+            $this->assertEquals( 'Name is required!', $saved_meta['_vmcf7_yourname_required'] );
+            $this->assertEquals( '^[a-zA-Z]+$', $saved_meta['_vmcf7_yourname_regex'] );
+            $this->assertEquals( 3, $saved_meta['_vmcf7_yourname_min_length'] );
+            $this->assertEquals( 20, $saved_meta['_vmcf7_yourname_max_length'] );
+            $this->assertEquals( 'somefield', $saved_meta['_vmcf7_yourname_required_if_field'] );
+
+            // Clean up files and superglobals.
+            if ( file_exists( $temp_file ) ) {
+                unlink( $temp_file );
+            }
+            unset( $_FILES['import_file'] );
+            unset( $_POST['form_id'] );
         }
     }
 }

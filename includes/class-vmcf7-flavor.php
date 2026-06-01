@@ -198,6 +198,39 @@ class VMCF7_Flavor {
 	}
 
 	/**
+	 * Export translation sets for Flavor.
+	 *
+	 * @since 1.6.0
+	 * @param int    $form_id Form ID.
+	 * @param string $lang    Language code.
+	 * @return array Translation set.
+	 */
+	public static function export_language_set( $form_id, $lang ) {
+		return self::get_all_translations( $form_id, $lang );
+	}
+
+	/**
+	 * Import translation sets for Flavor.
+	 *
+	 * @since 1.6.0
+	 * @param int    $form_id      Form ID.
+	 * @param string $lang         Language code.
+	 * @param array  $translations Translations to import.
+	 * @return void
+	 */
+	public static function import_language_set( $form_id, $lang, $translations ) {
+		if ( ! self::is_active() || ! is_array( $translations ) ) {
+			return;
+		}
+
+		foreach ( $translations as $field_key => $value ) {
+			if ( preg_match( '/^vmcf7_(.+?)_(required|invalid|regex_message|length_message|required_if_message)$/', $field_key, $matches ) ) {
+				self::save_translation( $form_id, $matches[1], $matches[2], $lang, $value );
+			}
+		}
+	}
+
+	/**
 	 * Save a translation for a validation message.
 	 *
 	 * @since 1.4.0
