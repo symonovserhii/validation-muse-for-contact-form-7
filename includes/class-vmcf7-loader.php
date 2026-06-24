@@ -33,6 +33,10 @@ class VMCF7_Loader {
 		require_once VMCF7_PATH . 'includes/class-vmcf7-admin.php';
 		require_once VMCF7_PATH . 'includes/class-vmcf7-rules.php';
 		require_once VMCF7_PATH . 'includes/class-vmcf7-i18n-compat.php';
+		require_once VMCF7_PATH . 'includes/class-vmcf7-migrations.php';
+
+		// Run one-time data migrations (self-guarded, cheap once applied).
+		VMCF7_Migrations::maybe_run();
 
 		$i18n = new VMCF7_I18n_Compat();
 		$i18n->init();

@@ -4,7 +4,7 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 8.0
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 4. Invalid-format message for an email field rendered on the frontend.
 
 == Changelog ==
+
+= 1.6.2 =
+* Fix: messages saved by versions prior to the plugin rename (stored under the legacy `_cf7cv_` meta prefix) were invisible to the current code. A one-time migration now renames them to the `_vmcf7_` prefix automatically, restoring lost messages. Collision-safe and runs once.
 
 = 1.6.1 =
 * Fix: duplicate/overwritten validation messages on frontend by integrating with CF7's native SWV engine.
