@@ -6,7 +6,8 @@
 /.vscode
 /.claude
 /.ai-factory
-/.ai-factory.json
+/.mcp.json
+/skills-lock.json
 /docs
 /tests
 /composer.json
