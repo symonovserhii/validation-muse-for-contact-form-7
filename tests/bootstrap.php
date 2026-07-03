@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Define plugin constants so they are available in tests.
 if ( ! defined( 'VMCF7_VERSION' ) ) {
-    define( 'VMCF7_VERSION', '1.4.3' );
+    define( 'VMCF7_VERSION', '1.6.3' );
 }
 if ( ! defined( 'VMCF7_FILE' ) ) {
     define( 'VMCF7_FILE', dirname( __DIR__ ) . '/validation-muse-for-contact-form-7.php' );

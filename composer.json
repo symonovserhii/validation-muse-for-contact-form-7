@@ -9,6 +9,9 @@
             "homepage": "https://github.com/symonovserhii"
         }
     ],
+    "require": {
+        "php": ">=8.0"
+    },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "brain/monkey": "^2.6"
@@ -17,10 +20,5 @@
         "classmap": [
             "includes/"
         ]
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
     }
 }

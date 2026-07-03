@@ -3,89 +3,414 @@
 # This file is distributed under the same license as the plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Validation Muse for Contact Form 7 1.2.1\n"
+"Project-Id-Version: Validation Muse for Contact Form 7 1.6.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/validation-muse-for-contact-form-7\n"
-"POT-Creation-Date: 2026-01-31 00:00:00+0000\n"
-"PO-Revision-Date: 2026-01-31 00:00:00+0000\n"
+"POT-Creation-Date: 2026-07-03T12:57:46+00:00\n"
+"PO-Revision-Date: 2026-07-03 00:00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit\n"
 "X-Domain: validation-muse-for-contact-form-7\n"
+"X-Generator: Poedit\n"
 
-#: validation-muse-for-contact-form-7.php:71
-#: validation-muse-for-contact-form-7.php:72
-msgid "This plugin requires Contact Form 7 to be installed and activated."
-msgstr "Dieses Plugin erfordert, dass Contact Form 7 installiert und aktiviert ist."
+#. Plugin Name of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "Validation Muse for Contact Form 7"
+msgstr ""
 
-#: validation-muse-for-contact-form-7.php:72
-msgid "Plugin dependency check"
-msgstr "Plugin-Abhängigkeitsprüfung"
+#. Plugin URI of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "https://plugins.symonov.com/validation-muse-for-cf7/"
+msgstr ""
 
-#: validation-muse-for-contact-form-7.php:116
-msgid "Validation Muse requires Contact Form 7 to be installed and activated. %1$sInstall Contact Form 7%2$s"
-msgstr "Validation Muse erfordert, dass Contact Form 7 installiert und aktiviert ist. %1$sContact Form 7 installieren%2$s"
+#. Description of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "Customize validation messages for each Contact Form 7 field."
+msgstr ""
 
-#: includes/class-vmcf7-admin.php:84
-msgid "Custom Validation"
-msgstr "Benutzerdefinierte Validierung"
+#. Author of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "simmotorlp"
+msgstr ""
 
-#: includes/class-vmcf7-admin.php:234
-msgid "Please enter a valid email address"
-msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
-
-#: includes/class-vmcf7-admin.php:235
-msgid "Please enter a valid URL"
-msgstr "Bitte geben Sie eine gültige URL ein"
-
-#: includes/class-vmcf7-admin.php:236
-msgid "Please enter a valid phone number"
-msgstr "Bitte geben Sie eine gültige Telefonnummer ein"
-
-#: includes/class-vmcf7-admin.php:237
-#: includes/class-vmcf7-admin.php:238
-msgid "Please enter a valid number"
-msgstr "Bitte geben Sie eine gültige Zahl ein"
-
-#: includes/class-vmcf7-admin.php:239
-msgid "Please enter a valid date"
-msgstr "Bitte geben Sie ein gültiges Datum ein"
+#. Author URI of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "https://github.com/symonovserhii"
+msgstr ""
 
 #: admin/views/panel.php:27
 msgid "Enable custom validation messages for this form"
-msgstr "Benutzerdefinierte Validierungsmeldungen für dieses Formular aktivieren"
+msgstr ""
+"Benutzerdefinierte Validierungsmeldungen für dieses Formular aktivieren"
 
-#: admin/views/panel.php:32
+#: admin/views/panel.php:36
+msgid "Export JSON"
+msgstr "JSON exportieren"
+
+#: admin/views/panel.php:39
+msgid "Import JSON"
+msgstr "JSON importieren"
+
+#: admin/views/panel.php:44
+msgid "Copy Rules..."
+msgstr "Regeln kopieren …"
+
+#: admin/views/panel.php:49
+msgid "-- Source Form --"
+msgstr "-- Quellformular --"
+
+#: admin/views/panel.php:62
+msgid "Copy"
+msgstr "Kopieren"
+
+#: admin/views/panel.php:67
+msgid "Save these rules as a reusable global default template"
+msgstr "Diese Regeln als wiederverwendbare globale Standardvorlage speichern"
+
+#: admin/views/panel.php:68
+msgid "Save as Default"
+msgstr "Als Standard speichern"
+
+#: admin/views/panel.php:70
+msgid "Apply the saved global default template to this form"
+msgstr "Die gespeicherte globale Standardvorlage auf dieses Formular anwenden"
+
+#: admin/views/panel.php:71
+msgid "Apply Default"
+msgstr "Standard anwenden"
+
+#: admin/views/panel.php:73
+msgid "Bulk copy these rules to all other contact forms"
+msgstr "Diese Regeln massenhaft auf alle anderen Kontaktformulare kopieren"
+
+#: admin/views/panel.php:74
+msgid "Apply to All Forms"
+msgstr "Auf alle Formulare anwenden"
+
+#: admin/views/panel.php:82
 msgid "Custom validation messages"
 msgstr "Benutzerdefinierte Validierungsmeldungen"
 
-#: admin/views/panel.php:35
+#: admin/views/panel.php:85 admin/views/panel.php:332
 msgid "Field"
 msgstr "Feld"
 
-#: admin/views/panel.php:36
+#: admin/views/panel.php:86 admin/views/panel.php:333
 msgid "Required Message"
 msgstr "Pflichtfeld-Meldung"
 
-#: admin/views/panel.php:37
+#: admin/views/panel.php:87 admin/views/panel.php:334
 msgid "Invalid Format Message"
 msgstr "Ungültiges-Format-Meldung"
 
-#: admin/views/panel.php:52
+#: admin/views/panel.php:96
+msgid "Show Regex / Length / Conditional validation rules"
+msgstr "Regex-/Längen-/bedingte Validierungsregeln anzeigen"
+
+#: admin/views/panel.php:97 admin/views/panel.php:354
+msgid "Rules"
+msgstr "Regeln"
+
+#. translators: %s: field name
+#: admin/views/panel.php:107
+#, php-format
 msgid "Required message for %s"
 msgstr "Pflichtfeld-Meldung für %s"
 
-#: admin/views/panel.php:62
+#: admin/views/panel.php:118 admin/views/panel.php:228
+#: includes/class-vmcf7-loader.php:162
 msgid "This field is required"
 msgstr "Dieses Feld ist erforderlich"
 
-#: admin/views/panel.php:70
+#. translators: %s: field name
+#: admin/views/panel.php:127
+#, php-format
 msgid "Invalid format message for %s"
 msgstr "Ungültiges-Format-Meldung für %s"
 
-#: admin/views/panel.php:89
-msgid "No required fields found in this form."
-msgstr "Keine Pflichtfelder in diesem Formular gefunden."
+#: admin/views/panel.php:141
+msgid "Format validation not supported."
+msgstr "Format-Validierung nicht unterstützt."
+
+#: admin/views/panel.php:153
+msgid "Custom Regex Validation"
+msgstr "Eigene Regex-Validierung"
+
+#: admin/views/panel.php:155
+msgid "Pattern (without delimiters)"
+msgstr "Muster (ohne Begrenzungszeichen)"
+
+#: admin/views/panel.php:163 admin/views/panel.php:197
+#: admin/views/panel.php:221
+msgid "Error Message"
+msgstr "Fehlermeldung"
+
+#: admin/views/panel.php:170
+msgid "Invalid format"
+msgstr "Ungültiges Format"
+
+#: admin/views/panel.php:177
+msgid "Length Restriction"
+msgstr "Längenbeschränkung"
+
+#: admin/views/panel.php:180
+msgid "Min Characters"
+msgstr "Min. Zeichen"
+
+#: admin/views/panel.php:188
+msgid "Max Characters"
+msgstr "Max. Zeichen"
+
+#: admin/views/panel.php:204
+msgid "Must be between {min} and {max} characters"
+msgstr "Muss zwischen {min} und {max} Zeichen lang sein"
+
+#: admin/views/panel.php:211
+msgid "Conditional Validation (Required-If)"
+msgstr "Bedingte Validierung (Pflicht-wenn)"
+
+#: admin/views/panel.php:213
+msgid "Companion Field Name"
+msgstr "Name des Begleitfelds"
+
+#: admin/views/panel.php:242
+msgid "Live Message Preview"
+msgstr "Live-Vorschau der Meldung"
+
+#: admin/views/panel.php:243
+msgid ""
+"Select a field to preview how its custom messages will render (evaluates "
+"placeholder tokens like {field_label}, {min}, {max})."
+msgstr ""
+"Wählen Sie ein Feld aus, um zu sehen, wie seine eigenen Meldungen "
+"dargestellt werden (wertet Platzhalter-Tokens wie {field_label}, {min}, "
+"{max} aus)."
+
+#: admin/views/panel.php:247
+msgid "-- Choose Field --"
+msgstr "-- Feld wählen --"
+
+#: admin/views/panel.php:258
+msgid "Extracted Field Label:"
+msgstr "Extrahiertes Feld-Label:"
+
+#: admin/views/panel.php:263
+msgid "Required Field:"
+msgstr "Pflichtfeld:"
+
+#: admin/views/panel.php:267
+msgid "Invalid Format:"
+msgstr "Ungültiges Format:"
+
+#: admin/views/panel.php:271
+msgid "Custom Regex Match Fails:"
+msgstr "Eigene Regex schlägt fehl:"
+
+#: admin/views/panel.php:275
+msgid "Min/Max Length Violated:"
+msgstr "Min/Max-Länge verletzt:"
+
+#: admin/views/panel.php:279
+msgid "Conditional (Required-If) Fails:"
+msgstr "Bedingung (Pflicht-wenn) schlägt fehl:"
+
+#: admin/views/panel.php:287
+msgid "No supported fields found in this form layout."
+msgstr "Keine unterstützten Felder in diesem Formular-Layout gefunden."
+
+#: admin/views/panel.php:297
+msgid "Message Translations (Flavor)"
+msgstr "Meldungsübersetzungen (Flavor)"
+
+#: admin/views/panel.php:317
+msgid "AI Translate"
+msgstr "AI Translate"
+
+#: admin/views/panel.php:353
+msgid "Translate Regex / Length / Conditional error messages"
+msgstr "Regex-/Längen-/bedingte Fehlermeldungen übersetzen"
+
+#: admin/views/panel.php:380
+msgid "Format translation not supported."
+msgstr "Format-Übersetzung nicht unterstützt."
+
+#: admin/views/panel.php:392
+msgid "Translate Custom Regex Error"
+msgstr "Eigene Regex-Fehlermeldung übersetzen"
+
+#: admin/views/panel.php:406
+msgid "Translate Length Error"
+msgstr "Längen-Fehlermeldung übersetzen"
+
+#: admin/views/panel.php:420
+msgid "Translate Conditional Error"
+msgstr "Bedingte Fehlermeldung übersetzen"
+
+#: includes/class-vmcf7-admin.php:92
+msgid "Custom Validation"
+msgstr "Benutzerdefinierte Validierung"
+
+#: includes/class-vmcf7-admin.php:366
+msgid "Please enter a valid email address"
+msgstr "Bitte geben Sie eine gültige E-Mail-Adresse ein"
+
+#: includes/class-vmcf7-admin.php:367
+msgid "Please enter a valid URL"
+msgstr "Bitte geben Sie eine gültige URL ein"
+
+#: includes/class-vmcf7-admin.php:368
+msgid "Please enter a valid phone number"
+msgstr "Bitte geben Sie eine gültige Telefonnummer ein"
+
+#: includes/class-vmcf7-admin.php:369 includes/class-vmcf7-admin.php:370
+msgid "Please enter a valid number"
+msgstr "Bitte geben Sie eine gültige Zahl ein"
+
+#: includes/class-vmcf7-admin.php:371
+msgid "Please enter a valid date"
+msgstr "Bitte geben Sie ein gültiges Datum ein"
+
+#: includes/class-vmcf7-admin.php:372
+msgid "Please enter a valid time"
+msgstr "Bitte geben Sie eine gültige Uhrzeit ein"
+
+#: includes/class-vmcf7-admin.php:389 includes/class-vmcf7-admin.php:463
+#: includes/class-vmcf7-admin.php:509 includes/class-vmcf7-admin.php:608
+#: includes/class-vmcf7-admin.php:677
+msgid "Permission denied."
+msgstr "Zugriff verweigert."
+
+#: includes/class-vmcf7-admin.php:393
+msgid "Flavor plugin is not active."
+msgstr "Das Flavor-Plugin ist nicht aktiv."
+
+#: includes/class-vmcf7-admin.php:397
+msgid ""
+"AI translation provider is not configured. Please check Flavor settings."
+msgstr ""
+"Der AI-Übersetzungsanbieter ist nicht konfiguriert. Bitte prüfen Sie die "
+"Flavor-Einstellungen."
+
+#: includes/class-vmcf7-admin.php:404
+msgid "Missing form ID or language."
+msgstr "Formular-ID oder Sprache fehlt."
+
+#: includes/class-vmcf7-admin.php:410
+msgid "Invalid form ID."
+msgstr "Ungültige Formular-ID."
+
+#: includes/class-vmcf7-admin.php:416
+msgid "Invalid target language."
+msgstr "Ungültige Zielsprache."
+
+#: includes/class-vmcf7-admin.php:435
+msgid ""
+"No custom validation messages written yet. Please write and save them in the"
+" main language first."
+msgstr ""
+"Es wurden noch keine eigenen Validierungsmeldungen geschrieben. Bitte "
+"schreiben und speichern Sie sie zuerst in der Hauptsprache."
+
+#: includes/class-vmcf7-admin.php:441
+msgid ""
+"AI translation service failed. Please check your network connection or "
+"provider limits."
+msgstr ""
+"Der AI-Übersetzungsdienst ist fehlgeschlagen. Bitte prüfen Sie Ihre "
+"Netzwerkverbindung oder die Limits Ihres Anbieters."
+
+#: includes/class-vmcf7-admin.php:468 includes/class-vmcf7-admin.php:514
+msgid "Missing form ID."
+msgstr "Formular-ID fehlt."
+
+#: includes/class-vmcf7-admin.php:518
+msgid "No file uploaded."
+msgstr "Keine Datei hochgeladen."
+
+#: includes/class-vmcf7-admin.php:524
+msgid "Only JSON files are allowed."
+msgstr "Nur JSON-Dateien sind erlaubt."
+
+#: includes/class-vmcf7-admin.php:541
+msgid "Invalid file type. Only JSON is allowed."
+msgstr "Ungültiger Dateityp. Nur JSON ist erlaubt."
+
+#: includes/class-vmcf7-admin.php:548
+msgid "Invalid JSON format."
+msgstr "Ungültiges JSON-Format."
+
+#: includes/class-vmcf7-admin.php:595
+msgid "Rules imported successfully."
+msgstr "Regeln erfolgreich importiert."
+
+#: includes/class-vmcf7-admin.php:615
+msgid "Missing source or target form ID."
+msgstr "Quell- oder Zielformular-ID fehlt."
+
+#: includes/class-vmcf7-admin.php:664
+msgid "Rules copied successfully."
+msgstr "Regeln erfolgreich kopiert."
+
+#: includes/class-vmcf7-admin.php:684
+msgid "Missing form ID or action type."
+msgstr "Formular-ID oder Aktionstyp fehlt."
+
+#: includes/class-vmcf7-admin.php:710
+msgid "Default template saved successfully."
+msgstr "Standardvorlage erfolgreich gespeichert."
+
+#: includes/class-vmcf7-admin.php:716
+msgid "No default template saved yet."
+msgstr "Es wurde noch keine Standardvorlage gespeichert."
+
+#: includes/class-vmcf7-admin.php:755
+msgid "Default template applied successfully."
+msgstr "Standardvorlage erfolgreich angewendet."
+
+#: includes/class-vmcf7-admin.php:766
+msgid "No other forms to apply templates to."
+msgstr "Keine anderen Formulare, um Vorlagen anzuwenden."
+
+#. translators: %d: number of forms the rules were applied to.
+#: includes/class-vmcf7-admin.php:825
+#, php-format
+msgid "Rules applied to %d other forms successfully."
+msgstr "Regeln erfolgreich auf %d andere Formulare angewendet."
+
+#: includes/class-vmcf7-admin.php:828
+msgid "Invalid bulk action type."
+msgstr "Ungültiger Massenaktionstyp."
+
+#: includes/class-vmcf7-loader.php:193
+msgid "Invalid format."
+msgstr "Ungültiges Format."
+
+#: includes/class-vmcf7-loader.php:207 includes/class-vmcf7-loader.php:636
+#: includes/class-vmcf7-loader.php:652
+msgid "Invalid length."
+msgstr "Ungültige Länge."
+
+#: validation-muse-for-contact-form-7.php:72
+msgid "This plugin requires Contact Form 7 to be installed and activated."
+msgstr ""
+"Dieses Plugin erfordert, dass Contact Form 7 installiert und aktiviert ist."
+
+#: validation-muse-for-contact-form-7.php:73
+msgid "Plugin dependency check"
+msgstr "Plugin-Abhängigkeitsprüfung"
+
+#. translators: 1: opening link tag, 2: closing link tag.
+#: validation-muse-for-contact-form-7.php:117
+#, php-format
+msgid ""
+"Validation Muse requires Contact Form 7 to be installed and activated. "
+"%1$sInstall Contact Form 7%2$s"
+msgstr ""
+"Validation Muse erfordert, dass Contact Form 7 installiert und aktiviert "
+"ist. %1$sContact Form 7 installieren%2$s"
+
+#~ msgid "No required fields found in this form."
+#~ msgstr "Keine Pflichtfelder in diesem Formular gefunden."

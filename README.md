@@ -2,9 +2,9 @@
 
 [![Version](https://img.shields.io/wordpress/plugin/v/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Rating](https://img.shields.io/wordpress/plugin/stars/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Active installs](https://img.shields.io/wordpress/plugin/installs/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-Requires at least: **6.0** · Tested up to: **7.0** · Requires PHP: **8.0** · Stable tag: **1.6.0**
+Requires at least: **6.0** · Tested up to: **7.0** · Requires PHP: **8.0** · Stable tag: **1.6.3**
 
-Custom validation messages, regex, length constraints, required-if conditions, templates sharing, and instant frontend mirroring for Contact Form 7. Per-form, per-field, CF7 6.x SWV-compatible, multilingual.
+Custom validation rules & messages for Contact Form 7 — regex, length, required-if, per field, CF7 6.x SWV-compatible, multilingual.
 
 ## Description
 **Validation Muse** lets you write your own validation rules and error messages for every Contact Form 7 field — directly in the form editor, per form, per field. No code, no global settings page, no JavaScript hacks.
@@ -15,7 +15,7 @@ Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-ba
 * **CF7 6.x SWV compatible** — works with the new Schema-based Validation engine, not just legacy hooks.
 * **Custom Regex & Length Rules** — define custom regular expression patterns, min length, and max length rules per field with their own error messages.
 * **Conditional "Required-If" Rules** — make fields required only when a companion field is filled/checked.
-* **Instant Client-Side Mirroring** — validation rules are validated instantly on the frontend via JavaScript before submission, featuring full accessibility (A11y) support.
+* **Client-Side SWV Integration** — standard validation rules (required, email, length) are injected into CF7's native SWV engine for instant frontend feedback with full accessibility (A11y) support.
 * **Rule Sets Import/Export & Templates** — export/import validation rules as JSON, copy them from other forms, and bulk apply global templates.
 * **Placeholder Tokens** — use `{field_label}`, `{min}`, and `{max}` in validation messages to generate dynamic texts.
 * **Per-form, per-field** — each form keeps its own messages; no global override.
@@ -32,7 +32,7 @@ Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-ba
 * Custom Regex and Min/Max Length rules support all input fields (excluding acceptance and quiz).
 
 ### Translations
-The plugin ships with a `.pot` file and is already translated into Dutch, German, Russian, Spanish (Chile/Spain). [Help translate it into your language.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
+The plugin ships with a `.pot` file and is already translated into German, Spanish, French, Portuguese (Brazil), Russian, and Ukrainian. [Help translate it into your language.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
 
 ## Installation
 1. Install from **Plugins → Add New** and search for *Validation Muse for Contact Form 7*, or upload the `validation-muse-for-contact-form-7` folder to `/wp-content/plugins/`.
@@ -42,13 +42,13 @@ The plugin ships with a `.pot` file and is already translated into Dutch, German
 
 ## Frequently Asked Questions
 ### Does this work with Contact Form 7 6.x and Schema-based Validation (SWV)?
-Yes. Since version 1.3.0, Validation Muse hooks at priority 20 (after CF7 core) and uses Reflection to replace SWV error text on already-invalidated fields. Your custom messages override both the legacy and SWV defaults.
+Yes. Since version 1.3.0, Validation Muse hooks at priority 20 (after CF7 core) and uses Reflection to replace SWV error text on already-invalidated fields. Since 1.6.1, standard rules (required, email/url/tel/number/date/time, min/max length) are also injected directly into CF7's own SWV schema, so client-side (frontend JS) validation shows your custom messages instantly — through CF7's native validation engine, with no extra script from this plugin.
 
 ### How is this different from other CF7 validation plugins?
-Validation Muse is the only CF7 validation plugin that (1) is compatible with CF7 6.x SWV out of the box, (2) stores messages in form post meta so they live with the form (compatible with CF7 form duplication and import/export plugins), and (3) integrates with the Flavor translation plugin for per-language messages with one-click AI translation.
+Validation Muse is the only CF7 validation plugin that (1) is compatible with CF7 6.x SWV out of the box — both server-side and in CF7's own client-side validation, (2) stores messages in form post meta so they live with the form (compatible with CF7 form duplication and import/export plugins), and (3) integrates with the Flavor translation plugin for per-language messages with one-click AI translation.
 
 ### Can I translate validation messages per language?
-Yes — install the Flavor translation plugin and Validation Muse will show language tabs in the form editor plus an *AI Translate* button. Translations are stored in Flavor's database; uninstalling Validation Muse cleans them up.
+Yes — install the Flavor translation plugin and Validation Muse will show language tabs in the form editor plus an *AI Translate* button. Translations are stored in Flavor's database; uninstalling Validation Muse cleans them up. WPML and Polylang are also supported natively, without Flavor.
 
 ### Which field types support custom invalid or validation failure messages?
 * `email`, `url`, `tel`, `number` (including `range`), `date`, and `time` support custom invalid-format messages.
@@ -79,6 +79,18 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 4. Invalid-format message for an email field rendered on the frontend.
 
 ## Changelog
+### 1.6.3
+* i18n: fully regenerated the `.pot` translation template — the catalog was frozen since 1.2.0 and covered only about 20% of the plugin's translatable strings (regex/length rules, rule templates, AI Translate errors, and more were never extractable before). All six shipped languages (German, Spanish, French, Portuguese, Russian, Ukrainian) are now fully translated against the current UI.
+* Docs: synced all translated readme files — feature list, supported field types, and FAQ now reflect 1.6.0–1.6.2 functionality (custom regex/length rules, required-if, native SWV client-side validation, rule templates); their Changelog/Upgrade Notice sections, previously stuck at 1.4.2, now cover every release up to 1.6.2.
+* Fix: added a missing `translators:` comment for a placeholder string (i18n code quality, no behavior change).
+
+### 1.6.2
+* Fix: messages saved by versions prior to the plugin rename (stored under the legacy `_cf7cv_` meta prefix) were invisible to the current code. A one-time migration now renames them to the `_vmcf7_` prefix automatically, restoring lost messages. Collision-safe and runs once.
+
+### 1.6.1
+* Fix: duplicate/overwritten validation messages on frontend by integrating with CF7's native SWV engine.
+* Fix: admin panel drawers and preview cards rendered expanded due to CF7 editor panel stripping inline styles.
+
 ### 1.6.0
 * New: custom regex and min/max-length validation rules per field, each with its own message.
 * New: validation messages for `file`, `acceptance`, and `quiz` fields; conditional "required-if" messages.
@@ -148,6 +160,21 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 ## Upgrade Notice
+### 1.6.3
+Documentation and translation release — no functional or behavior changes. Fully refreshes translated readmes and the .pot/.po/.mo translation catalog.
+
+### 1.6.2
+Recovers validation messages saved by pre-1.2.0 versions (legacy `_cf7cv_` meta prefix) via a one-time, automatic migration. Safe, no action needed.
+
+### 1.6.1
+Fixes duplicate/overwritten validation messages on the frontend and admin panel layout regressions from 1.6.0. Recommended for all 1.6.0 users.
+
+### 1.6.0
+Adds custom regex/length rules, more field types, required-if messages, client-side mirroring, live preview, rule import/export/templates, and WPML/Polylang support. No data migration required.
+
+### 1.5.0
+Raises the minimum PHP to 8.0 and minimum WordPress to 6.0. Check your hosting environment before upgrading.
+
 ### 1.4.2
 Plugin URI now points to the dedicated landing page on plugins.symonov.com. No code changes.
 

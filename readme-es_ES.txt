@@ -4,7 +4,7 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
 Tested up to: 7.0
 Requires PHP: 8.0
-Stable tag: 1.6.1
+Stable tag: 1.6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,21 +19,28 @@ La mayoría de plugins de validación de CF7 dejaron de funcionar cuando Contact
 = Por qué Validation Muse =
 
 * **Compatible con CF7 6.x SWV** — funciona con el nuevo motor Schema-based Validation, no solo con los hooks legacy.
+* **Reglas personalizadas de regex y longitud** — define patrones de expresión regular, longitud mínima y máxima por campo, cada una con su propio mensaje de error.
+* **Reglas condicionales "Required-If"** — haz que los campos sean obligatorios solo cuando un campo compañero esté completado/marcado.
+* **Integración SWV del lado del cliente** — las reglas de validación estándar (required, email, length) se inyectan en el motor SWV nativo de CF7 para feedback instantáneo en el frontend con soporte completo de accesibilidad (A11y).
+* **Import/export y plantillas de conjuntos de reglas** — exporta/importa reglas de validación como JSON, cópialas de otros formularios, y aplica plantillas globales en bloque.
+* **Tokens de marcador de posición** — usa `{field_label}`, `{min}` y `{max}` en los mensajes de validación para generar textos dinámicos.
 * **Por formulario, por campo** — cada formulario guarda sus propios mensajes; sin sobrescritura global.
 * **Almacenado en post meta** — los mensajes viven con el formulario, compatibles con la duplicación de formularios de CF7 y con plugins de import/export de terceros.
-* **Multilingüe vía Flavor** — cuando el plugin de traducción Flavor está activo, las pestañas de idioma y un botón AI Translate aparecen automáticamente en el editor. Cero overhead cuando Flavor no está instalado.
+* **Multilingüe vía WPML, Polylang y Flavor** — traduce las reglas usando los hooks estándar de WPML/Polylang, y cuenta con pestañas de idioma + botón AI Translate de un click cuando Flavor está activo.
 * **Amigable para desarrolladores** — los hooks de extensibilidad `vmcf7_loaded` y `vmcf7_validation_tag_types` permiten añadir tipos de campo personalizados.
 * **Ligero** — sin saturación admin, sin tracking, sin upsells.
 
 = Tipos de campo soportados =
 
-* Mensajes de campo obligatorio: cualquier tag required (text, textarea, select, checkbox, radio, file, etc.).
-* Mensajes de formato inválido: `email`, `url`, `tel`, `number` (incluyendo `range`) y `date`.
+* Mensajes de campo obligatorio: cualquier tag required (`text`, `textarea`, `select`, `checkbox`, `radio`, `file`, etc.).
+* Mensajes de formato inválido: `email`, `url`, `tel`, `number` (incluyendo `range`), `date` y `time`.
+* Mensajes de error personalizados en fallos de validación: `file` (comprobaciones de tamaño/tipo), `acceptance` (estado no aceptado) y `quiz` (respuesta incorrecta).
 * HTML dentro de los mensajes está permitido y se sanitiza vía `wp_kses_post()`.
+* Las reglas personalizadas de regex y longitud mín/máx funcionan en todos los campos de entrada (excepto acceptance y quiz).
 
 = Traducciones =
 
-El plugin incluye un archivo `.pot` y ya está traducido al neerlandés, alemán, ruso, español (Chile/España). [Ayuda a traducirlo a tu idioma.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
+El plugin incluye un archivo `.pot` y ya está traducido al alemán, español, francés, portugués (Brasil), ruso y ucraniano. [Ayuda a traducirlo a tu idioma.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
 
 == Installation ==
 
@@ -46,11 +53,11 @@ El plugin incluye un archivo `.pot` y ya está traducido al neerlandés, alemán
 
 = ¿Funciona con Contact Form 7 6.x y Schema-based Validation (SWV)? =
 
-Sí. Desde la versión 1.3.0, Validation Muse engancha con prioridad 20 (después del core de CF7) y usa Reflection para reemplazar el texto de error de SWV en campos ya invalidados. Tus mensajes anulan tanto los defaults legacy como los de SWV.
+Sí. Desde la versión 1.3.0, Validation Muse engancha con prioridad 20 (después del core de CF7) y usa Reflection para reemplazar el texto de error de SWV en campos ya invalidados. Desde la 1.6.1, las reglas estándar (required, email/url/tel/number/date/time, longitud mín/máx) también se inyectan directamente en el propio esquema SWV de CF7, así que la validación del lado del cliente (JS del frontend) muestra tus mensajes personalizados al instante — a través del motor de validación nativo de CF7, sin ningún script adicional de este plugin.
 
 = ¿En qué se diferencia de otros plugins de validación CF7? =
 
-Validation Muse es el único plugin de validación CF7 que (1) es compatible con CF7 6.x SWV de fábrica, (2) almacena los mensajes en el post meta del formulario para que vivan con él (compatible con la duplicación de formularios CF7 y plugins import/export), y (3) se integra con el plugin Flavor para mensajes por idioma con traducción AI de un click.
+Validation Muse es el único plugin de validación CF7 que (1) es compatible con CF7 6.x SWV de fábrica — tanto del lado del servidor como en la propia validación del lado del cliente de CF7, (2) almacena los mensajes en el post meta del formulario para que vivan con él (compatible con la duplicación de formularios CF7 y plugins import/export), y (3) se integra con el plugin Flavor para mensajes por idioma con traducción AI de un click.
 
 = ¿Puedo traducir los mensajes de validación por idioma? =
 
@@ -89,6 +96,34 @@ No. Validation Muse no hace ninguna petición externa. El botón opcional AI Tra
 
 == Changelog ==
 
+= 1.6.3 =
+* i18n: se regeneró por completo la plantilla de traducción `.pot` — el catálogo estaba congelado desde la 1.2.0 y cubría solo cerca del 20% de las cadenas traducibles del plugin (las reglas de regex/longitud, las plantillas de reglas, los errores de AI Translate y más nunca eran extraíbles antes). Los seis idiomas incluidos (alemán, español, francés, portugués, ruso y ucraniano) ahora están completamente traducidos frente a la interfaz actual.
+* Documentación: se sincronizaron todos los readme traducidos — la lista de funciones, los tipos de campo soportados y las FAQ ahora reflejan la funcionalidad de la 1.6.0–1.6.2 (reglas personalizadas de regex/longitud, required-if, validación nativa del lado del cliente vía SWV, plantillas de reglas); sus secciones de Changelog/Upgrade Notice, antes estancadas en la 1.4.2, ahora cubren todas las versiones hasta la 1.6.2.
+* Fix: se añadió un comentario `translators:` que faltaba para una cadena con marcador de posición (calidad de código i18n, sin cambios de comportamiento).
+
+= 1.6.2 =
+* Fix: los mensajes guardados por versiones anteriores al renombrado del plugin (almacenados bajo el prefijo meta legacy `_cf7cv_`) eran invisibles para el código actual. Una migración única ahora los renombra automáticamente al prefijo `_vmcf7_`, restaurando los mensajes perdidos. Segura ante colisiones y se ejecuta una sola vez.
+
+= 1.6.1 =
+* Fix: mensajes de validación duplicados/sobrescritos en el frontend, solucionado integrando con el motor SWV nativo de CF7.
+* Fix: los cajones y tarjetas de vista previa del panel admin se renderizaban expandidos porque el editor de CF7 elimina los estilos inline.
+
+= 1.6.0 =
+* Nuevo: reglas de validación personalizadas de regex y longitud mín/máx por campo, cada una con su propio mensaje.
+* Nuevo: mensajes de validación para campos `file`, `acceptance` y `quiz`; mensajes condicionales "required-if".
+* Nuevo: tokens de marcador de posición `{field_label}`, `{min}`, `{max}` en los mensajes.
+* Nuevo: validación en línea del lado del cliente que refleja los mensajes del servidor, con accesibilidad `aria-describedby`.
+* Nuevo: vista previa en vivo de mensajes, copiar mensajes entre formularios, import/export JSON de conjuntos de mensajes, y linting del editor.
+* Nuevo: registro de cadenas WPML/Polylang junto con la integración Flavor; import/export de traducciones.
+
+= 1.5.0 =
+* PHP mínimo elevado a 8.0; WordPress mínimo elevado a 6.0; probado hasta WordPress 7.0.
+* Nuevo: mensajes de validación personalizados para campos `time`.
+* Feedback de error más claro en AI Translate dentro del editor de formularios.
+* El reemplazo de mensajes SWV basado en Reflection ahora registra fallos bajo WP_DEBUG para un diagnóstico más fácil.
+* Mejor manejo de traducciones pendientes (sin fallback silencioso) con caché por petición.
+* Código modernizado a idiomas de PHP 8; escapado de salida reforzado; primera suite de tests añadida.
+
 = 1.4.2 =
 * Plugin URI: ahora apunta a la landing page dedicada en https://plugins.symonov.com/validation-muse-for-cf7/
 * Sin cambios de código ni de comportamiento
@@ -97,7 +132,6 @@ No. Validation Muse no hace ninguna petición externa. El botón opcional AI Tra
 * Readme: reescritura USP-first para visibilidad SEO
 * Tags: reemplazadas las genéricas `messages`/`forms`/`customization` por `contact-form-7`, `cf7`, `validation`, `error-message`, `multilingual`
 * FAQ: añadidas entradas sobre compatibilidad con CF7 6.x SWV, comparación con otros plugins de validación CF7, multilingüismo vía Flavor
-* Tested up to WordPress 6.9.4
 
 = 1.4.0 =
 * Añadido soporte multilingüe vía integración con el plugin de traducción Flavor
@@ -144,11 +178,26 @@ No. Validation Muse no hace ninguna petición externa. El botón opcional AI Tra
 
 == Upgrade Notice ==
 
+= 1.6.3 =
+Versión de documentación y traducción — sin cambios funcionales ni de comportamiento. Actualiza por completo los readme traducidos y el catálogo de traducción .pot/.po/.mo.
+
+= 1.6.2 =
+Recupera los mensajes de validación guardados por versiones anteriores a 1.2.0 (prefijo meta legacy `_cf7cv_`) mediante una migración única y automática. Segura, no requiere ninguna acción.
+
+= 1.6.1 =
+Corrige mensajes de validación duplicados/sobrescritos en el frontend y regresiones de diseño en el panel admin de la 1.6.0. Recomendado para todos los usuarios de 1.6.0.
+
+= 1.6.0 =
+Añade reglas personalizadas de regex/longitud, más tipos de campo, mensajes required-if, reflejo en el lado del cliente, vista previa en vivo, import/export/plantillas de reglas y soporte WPML/Polylang. No requiere migración de datos.
+
+= 1.5.0 =
+Eleva el PHP mínimo a 8.0 y el WordPress mínimo a 6.0. Revisa tu entorno de hosting antes de actualizar.
+
 = 1.4.2 =
 Plugin URI ahora apunta a la landing page dedicada en plugins.symonov.com. Sin cambios de código.
 
 = 1.4.1 =
-Release de documentación. Readme refrescado para mejor descubrimiento de funciones y compatibilidad con WordPress 6.9.4 confirmada.
+Release de documentación. Readme refrescado para mejor descubrimiento de funciones.
 
 = 1.4.0 =
 Añade soporte multilingüe vía el plugin Flavor y traducción AI de un click. No se requiere migración de datos.

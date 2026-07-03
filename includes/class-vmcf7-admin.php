@@ -822,7 +822,7 @@ class VMCF7_Admin {
 				}
 			}
 
-			wp_send_json_success( array( 'message' => sprintf( __( 'Rules applied to %d other forms successfully.', 'validation-muse-for-contact-form-7' ), count( $forms ) ) ) );
+			wp_send_json_success( array( 'message' => sprintf( /* translators: %d: number of forms the rules were applied to. */ __( 'Rules applied to %d other forms successfully.', 'validation-muse-for-contact-form-7' ), count( $forms ) ) ) );
 		}
 
 		wp_send_json_error( array( 'message' => __( 'Invalid bulk action type.', 'validation-muse-for-contact-form-7' ) ), 400 );

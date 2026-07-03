@@ -3,89 +3,412 @@
 # This file is distributed under the same license as the plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Validation Muse for Contact Form 7 1.2.1\n"
+"Project-Id-Version: Validation Muse for Contact Form 7 1.6.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/validation-muse-for-contact-form-7\n"
-"POT-Creation-Date: 2026-01-31 00:00:00+0000\n"
-"PO-Revision-Date: 2026-01-31 00:00:00+0000\n"
+"POT-Creation-Date: 2026-07-03T12:57:46+00:00\n"
+"PO-Revision-Date: 2026-07-03 00:00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit\n"
 "X-Domain: validation-muse-for-contact-form-7\n"
+"X-Generator: Poedit\n"
 
-#: validation-muse-for-contact-form-7.php:71
-#: validation-muse-for-contact-form-7.php:72
-msgid "This plugin requires Contact Form 7 to be installed and activated."
-msgstr "Цей плагін потребує встановлення та активації Contact Form 7."
+#. Plugin Name of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "Validation Muse for Contact Form 7"
+msgstr ""
 
-#: validation-muse-for-contact-form-7.php:72
-msgid "Plugin dependency check"
-msgstr "Перевірка залежностей плагіна"
+#. Plugin URI of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "https://plugins.symonov.com/validation-muse-for-cf7/"
+msgstr ""
 
-#: validation-muse-for-contact-form-7.php:116
-msgid "Validation Muse requires Contact Form 7 to be installed and activated. %1$sInstall Contact Form 7%2$s"
-msgstr "Validation Muse потребує встановлення та активації Contact Form 7. %1$sВстановити Contact Form 7%2$s"
+#. Description of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "Customize validation messages for each Contact Form 7 field."
+msgstr ""
 
-#: includes/class-vmcf7-admin.php:84
-msgid "Custom Validation"
-msgstr "Користувацька валідація"
+#. Author of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "simmotorlp"
+msgstr ""
 
-#: includes/class-vmcf7-admin.php:234
-msgid "Please enter a valid email address"
-msgstr "Будь ласка, введіть коректну адресу електронної пошти"
-
-#: includes/class-vmcf7-admin.php:235
-msgid "Please enter a valid URL"
-msgstr "Будь ласка, введіть коректну URL-адресу"
-
-#: includes/class-vmcf7-admin.php:236
-msgid "Please enter a valid phone number"
-msgstr "Будь ласка, введіть коректний номер телефону"
-
-#: includes/class-vmcf7-admin.php:237
-#: includes/class-vmcf7-admin.php:238
-msgid "Please enter a valid number"
-msgstr "Будь ласка, введіть коректне число"
-
-#: includes/class-vmcf7-admin.php:239
-msgid "Please enter a valid date"
-msgstr "Будь ласка, введіть коректну дату"
+#. Author URI of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "https://github.com/symonovserhii"
+msgstr ""
 
 #: admin/views/panel.php:27
 msgid "Enable custom validation messages for this form"
 msgstr "Увімкнути користувацькі повідомлення валідації для цієї форми"
 
-#: admin/views/panel.php:32
+#: admin/views/panel.php:36
+msgid "Export JSON"
+msgstr "Експорт JSON"
+
+#: admin/views/panel.php:39
+msgid "Import JSON"
+msgstr "Імпорт JSON"
+
+#: admin/views/panel.php:44
+msgid "Copy Rules..."
+msgstr "Копіювати правила…"
+
+#: admin/views/panel.php:49
+msgid "-- Source Form --"
+msgstr "-- Вихідна форма --"
+
+#: admin/views/panel.php:62
+msgid "Copy"
+msgstr "Копіювати"
+
+#: admin/views/panel.php:67
+msgid "Save these rules as a reusable global default template"
+msgstr ""
+"Зберегти ці правила як багаторазовий глобальний шаблон за замовчуванням"
+
+#: admin/views/panel.php:68
+msgid "Save as Default"
+msgstr "Зберегти як шаблон за замовчуванням"
+
+#: admin/views/panel.php:70
+msgid "Apply the saved global default template to this form"
+msgstr ""
+"Застосувати збережений глобальний шаблон за замовчуванням до цієї форми"
+
+#: admin/views/panel.php:71
+msgid "Apply Default"
+msgstr "Застосувати шаблон за замовчуванням"
+
+#: admin/views/panel.php:73
+msgid "Bulk copy these rules to all other contact forms"
+msgstr "Масово скопіювати ці правила на всі інші форми"
+
+#: admin/views/panel.php:74
+msgid "Apply to All Forms"
+msgstr "Застосувати до всіх форм"
+
+#: admin/views/panel.php:82
 msgid "Custom validation messages"
 msgstr "Користувацькі повідомлення валідації"
 
-#: admin/views/panel.php:35
+#: admin/views/panel.php:85 admin/views/panel.php:332
 msgid "Field"
 msgstr "Поле"
 
-#: admin/views/panel.php:36
+#: admin/views/panel.php:86 admin/views/panel.php:333
 msgid "Required Message"
 msgstr "Повідомлення обов'язкового поля"
 
-#: admin/views/panel.php:37
+#: admin/views/panel.php:87 admin/views/panel.php:334
 msgid "Invalid Format Message"
 msgstr "Повідомлення невірного формату"
 
-#: admin/views/panel.php:52
+#: admin/views/panel.php:96
+msgid "Show Regex / Length / Conditional validation rules"
+msgstr "Показати regex-/довжина-/умовні правила валідації"
+
+#: admin/views/panel.php:97 admin/views/panel.php:354
+msgid "Rules"
+msgstr "Правила"
+
+#. translators: %s: field name
+#: admin/views/panel.php:107
+#, php-format
 msgid "Required message for %s"
 msgstr "Повідомлення обов'язкового поля для %s"
 
-#: admin/views/panel.php:62
+#: admin/views/panel.php:118 admin/views/panel.php:228
+#: includes/class-vmcf7-loader.php:162
 msgid "This field is required"
 msgstr "Це поле є обов'язковим для заповнення"
 
-#: admin/views/panel.php:70
+#. translators: %s: field name
+#: admin/views/panel.php:127
+#, php-format
 msgid "Invalid format message for %s"
 msgstr "Повідомлення невірного формату для %s"
 
-#: admin/views/panel.php:89
-msgid "No required fields found in this form."
-msgstr "У цій формі не знайдено обов'язкових полів."
+#: admin/views/panel.php:141
+msgid "Format validation not supported."
+msgstr "Валідація формату не підтримується."
+
+#: admin/views/panel.php:153
+msgid "Custom Regex Validation"
+msgstr "Власна regex-валідація"
+
+#: admin/views/panel.php:155
+msgid "Pattern (without delimiters)"
+msgstr "Патерн (без роздільників)"
+
+#: admin/views/panel.php:163 admin/views/panel.php:197
+#: admin/views/panel.php:221
+msgid "Error Message"
+msgstr "Повідомлення про помилку"
+
+#: admin/views/panel.php:170
+msgid "Invalid format"
+msgstr "Невірний формат"
+
+#: admin/views/panel.php:177
+msgid "Length Restriction"
+msgstr "Обмеження довжини"
+
+#: admin/views/panel.php:180
+msgid "Min Characters"
+msgstr "Мін. символів"
+
+#: admin/views/panel.php:188
+msgid "Max Characters"
+msgstr "Макс. символів"
+
+#: admin/views/panel.php:204
+msgid "Must be between {min} and {max} characters"
+msgstr "Має бути від {min} до {max} символів"
+
+#: admin/views/panel.php:211
+msgid "Conditional Validation (Required-If)"
+msgstr "Умовна валідація (Required-If)"
+
+#: admin/views/panel.php:213
+msgid "Companion Field Name"
+msgstr "Ім'я пов'язаного поля"
+
+#: admin/views/panel.php:242
+msgid "Live Message Preview"
+msgstr "Живий попередній перегляд повідомлення"
+
+#: admin/views/panel.php:243
+msgid ""
+"Select a field to preview how its custom messages will render (evaluates "
+"placeholder tokens like {field_label}, {min}, {max})."
+msgstr ""
+"Виберіть поле, щоб побачити, як відображатимуться його повідомлення "
+"(обчислює токени-плейсхолдери на кшталт {field_label}, {min}, {max})."
+
+#: admin/views/panel.php:247
+msgid "-- Choose Field --"
+msgstr "-- Вибрати поле --"
+
+#: admin/views/panel.php:258
+msgid "Extracted Field Label:"
+msgstr "Витягнута підпис поля:"
+
+#: admin/views/panel.php:263
+msgid "Required Field:"
+msgstr "Обов'язкове поле:"
+
+#: admin/views/panel.php:267
+msgid "Invalid Format:"
+msgstr "Невірний формат:"
+
+#: admin/views/panel.php:271
+msgid "Custom Regex Match Fails:"
+msgstr "Власний regex не збігається:"
+
+#: admin/views/panel.php:275
+msgid "Min/Max Length Violated:"
+msgstr "Порушено мін/макс довжину:"
+
+#: admin/views/panel.php:279
+msgid "Conditional (Required-If) Fails:"
+msgstr "Умова (Required-If) не виконана:"
+
+#: admin/views/panel.php:287
+msgid "No supported fields found in this form layout."
+msgstr "У розмітці цієї форми не знайдено підтримуваних полів."
+
+#: admin/views/panel.php:297
+msgid "Message Translations (Flavor)"
+msgstr "Переклади повідомлень (Flavor)"
+
+#: admin/views/panel.php:317
+msgid "AI Translate"
+msgstr "AI Translate"
+
+#: admin/views/panel.php:353
+msgid "Translate Regex / Length / Conditional error messages"
+msgstr "Перекласти regex-/довжина-/умовні повідомлення про помилки"
+
+#: admin/views/panel.php:380
+msgid "Format translation not supported."
+msgstr "Переклад формату не підтримується."
+
+#: admin/views/panel.php:392
+msgid "Translate Custom Regex Error"
+msgstr "Перекласти повідомлення про помилку regex"
+
+#: admin/views/panel.php:406
+msgid "Translate Length Error"
+msgstr "Перекласти повідомлення про помилку довжини"
+
+#: admin/views/panel.php:420
+msgid "Translate Conditional Error"
+msgstr "Перекласти умовне повідомлення про помилку"
+
+#: includes/class-vmcf7-admin.php:92
+msgid "Custom Validation"
+msgstr "Користувацька валідація"
+
+#: includes/class-vmcf7-admin.php:366
+msgid "Please enter a valid email address"
+msgstr "Будь ласка, введіть коректну адресу електронної пошти"
+
+#: includes/class-vmcf7-admin.php:367
+msgid "Please enter a valid URL"
+msgstr "Будь ласка, введіть коректну URL-адресу"
+
+#: includes/class-vmcf7-admin.php:368
+msgid "Please enter a valid phone number"
+msgstr "Будь ласка, введіть коректний номер телефону"
+
+#: includes/class-vmcf7-admin.php:369 includes/class-vmcf7-admin.php:370
+msgid "Please enter a valid number"
+msgstr "Будь ласка, введіть коректне число"
+
+#: includes/class-vmcf7-admin.php:371
+msgid "Please enter a valid date"
+msgstr "Будь ласка, введіть коректну дату"
+
+#: includes/class-vmcf7-admin.php:372
+msgid "Please enter a valid time"
+msgstr "Будь ласка, введіть коректний час"
+
+#: includes/class-vmcf7-admin.php:389 includes/class-vmcf7-admin.php:463
+#: includes/class-vmcf7-admin.php:509 includes/class-vmcf7-admin.php:608
+#: includes/class-vmcf7-admin.php:677
+msgid "Permission denied."
+msgstr "Доступ заборонено."
+
+#: includes/class-vmcf7-admin.php:393
+msgid "Flavor plugin is not active."
+msgstr "Плагін Flavor не активний."
+
+#: includes/class-vmcf7-admin.php:397
+msgid ""
+"AI translation provider is not configured. Please check Flavor settings."
+msgstr ""
+"Провайдер AI-перекладу не налаштований. Перевірте налаштування Flavor."
+
+#: includes/class-vmcf7-admin.php:404
+msgid "Missing form ID or language."
+msgstr "Не вказано ID форми або мову."
+
+#: includes/class-vmcf7-admin.php:410
+msgid "Invalid form ID."
+msgstr "Невірний ID форми."
+
+#: includes/class-vmcf7-admin.php:416
+msgid "Invalid target language."
+msgstr "Невірна цільова мова."
+
+#: includes/class-vmcf7-admin.php:435
+msgid ""
+"No custom validation messages written yet. Please write and save them in the"
+" main language first."
+msgstr ""
+"Користувацькі повідомлення валідації ще не написані. Спочатку напишіть і "
+"збережіть їх основною мовою."
+
+#: includes/class-vmcf7-admin.php:441
+msgid ""
+"AI translation service failed. Please check your network connection or "
+"provider limits."
+msgstr ""
+"Збій сервісу AI-перекладу. Перевірте мережеве з'єднання або ліміти "
+"провайдера."
+
+#: includes/class-vmcf7-admin.php:468 includes/class-vmcf7-admin.php:514
+msgid "Missing form ID."
+msgstr "Не вказано ID форми."
+
+#: includes/class-vmcf7-admin.php:518
+msgid "No file uploaded."
+msgstr "Файл не завантажено."
+
+#: includes/class-vmcf7-admin.php:524
+msgid "Only JSON files are allowed."
+msgstr "Дозволені лише файли JSON."
+
+#: includes/class-vmcf7-admin.php:541
+msgid "Invalid file type. Only JSON is allowed."
+msgstr "Невірний тип файлу. Дозволено лише JSON."
+
+#: includes/class-vmcf7-admin.php:548
+msgid "Invalid JSON format."
+msgstr "Невірний формат JSON."
+
+#: includes/class-vmcf7-admin.php:595
+msgid "Rules imported successfully."
+msgstr "Правила успішно імпортовано."
+
+#: includes/class-vmcf7-admin.php:615
+msgid "Missing source or target form ID."
+msgstr "Не вказано ID вихідної або цільової форми."
+
+#: includes/class-vmcf7-admin.php:664
+msgid "Rules copied successfully."
+msgstr "Правила успішно скопійовано."
+
+#: includes/class-vmcf7-admin.php:684
+msgid "Missing form ID or action type."
+msgstr "Не вказано ID форми або тип дії."
+
+#: includes/class-vmcf7-admin.php:710
+msgid "Default template saved successfully."
+msgstr "Шаблон за замовчуванням успішно збережено."
+
+#: includes/class-vmcf7-admin.php:716
+msgid "No default template saved yet."
+msgstr "Шаблон за замовчуванням ще не збережено."
+
+#: includes/class-vmcf7-admin.php:755
+msgid "Default template applied successfully."
+msgstr "Шаблон за замовчуванням успішно застосовано."
+
+#: includes/class-vmcf7-admin.php:766
+msgid "No other forms to apply templates to."
+msgstr "Немає інших форм для застосування шаблонів."
+
+#. translators: %d: number of forms the rules were applied to.
+#: includes/class-vmcf7-admin.php:825
+#, php-format
+msgid "Rules applied to %d other forms successfully."
+msgstr "Правила успішно застосовано до %d інших форм."
+
+#: includes/class-vmcf7-admin.php:828
+msgid "Invalid bulk action type."
+msgstr "Невірний тип масової дії."
+
+#: includes/class-vmcf7-loader.php:193
+msgid "Invalid format."
+msgstr "Невірний формат."
+
+#: includes/class-vmcf7-loader.php:207 includes/class-vmcf7-loader.php:636
+#: includes/class-vmcf7-loader.php:652
+msgid "Invalid length."
+msgstr "Невірна довжина."
+
+#: validation-muse-for-contact-form-7.php:72
+msgid "This plugin requires Contact Form 7 to be installed and activated."
+msgstr "Цей плагін потребує встановлення та активації Contact Form 7."
+
+#: validation-muse-for-contact-form-7.php:73
+msgid "Plugin dependency check"
+msgstr "Перевірка залежностей плагіна"
+
+#. translators: 1: opening link tag, 2: closing link tag.
+#: validation-muse-for-contact-form-7.php:117
+#, php-format
+msgid ""
+"Validation Muse requires Contact Form 7 to be installed and activated. "
+"%1$sInstall Contact Form 7%2$s"
+msgstr ""
+"Validation Muse потребує встановлення та активації Contact Form 7. "
+"%1$sВстановити Contact Form 7%2$s"
+
+#~ msgid "No required fields found in this form."
+#~ msgstr "У цій формі не знайдено обов'язкових полів."
