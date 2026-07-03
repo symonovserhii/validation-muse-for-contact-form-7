@@ -29,7 +29,7 @@ msgstr ""
 #. Description of the plugin
 #: validation-muse-for-contact-form-7.php
 msgid "Customize validation messages for each Contact Form 7 field."
-msgstr ""
+msgstr "Налаштуйте повідомлення валідації для кожного поля Contact Form 7."
 
 #. Author of the plugin
 #: validation-muse-for-contact-form-7.php

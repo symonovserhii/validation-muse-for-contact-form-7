@@ -8,6 +8,7 @@
 /.ai-factory
 /.mcp.json
 /skills-lock.json
+/glotpress
 /docs
 /tests
 /composer.json
