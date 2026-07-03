@@ -1,3 +1,7 @@
+---
+archived: 2026-07-03
+---
+
 # M2 — Release 1.6.0: functional feature expansion
 
 **Created:** 2026-05-31

@@ -1,3 +1,7 @@
+---
+archived: 2026-07-03
+---
+
 # M1 — Release 1.5.0: PHP 8.0 floor, WP 7.0, code-style & hardening
 
 **Created:** 2026-05-31

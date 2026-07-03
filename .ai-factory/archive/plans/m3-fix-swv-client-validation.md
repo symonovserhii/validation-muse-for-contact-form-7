@@ -1,3 +1,7 @@
+---
+archived: 2026-07-03
+---
+
 # M3 — Fix: client-side validation onto CF7 SWV (post-1.6.0 hotfix)
 
 **Created:** 2026-06-01
