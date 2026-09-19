@@ -41,6 +41,7 @@ if ( $vmcf7_forms ) {
 
 // Delete plugin options.
 delete_option( 'vmcf7_version' );
+delete_option( 'vmcf7_review_state' );
 
 // Clean up Flavor translations if available.
 if ( class_exists( 'Flavor\Flv_DB' ) ) {

@@ -274,6 +274,7 @@ class VMCF7_Admin {
 				}
 
 				update_post_meta( $form_id, $meta_key, $clean_value );
+				VMCF7_Review_Notice::record_success();
 			}
 		}
 
