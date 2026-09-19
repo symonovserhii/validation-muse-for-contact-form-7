@@ -529,7 +529,6 @@ class VMCF7_Admin {
 		if ( function_exists( 'finfo_open' ) ) {
 			$finfo     = finfo_open( FILEINFO_MIME_TYPE );
 			$mime_type = finfo_file( $finfo, $tmp_name );
-			finfo_close( $finfo );
 		} elseif ( function_exists( 'mime_content_type' ) ) {
 			$mime_type = mime_content_type( $tmp_name );
 		} else {

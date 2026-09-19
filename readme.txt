@@ -2,9 +2,9 @@
 Contributors: simmotorlp
 Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.6.3
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,10 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 
 == Changelog ==
 
+= 1.6.4 =
+* Tested with WordPress 7.1 (verified on 7.1.1 with Contact Form 7 6.1).
+* Fix: removed calls deprecated in PHP 8.5 (`finfo_close()`, and `ReflectionProperty::setAccessible()` on PHP 8.1+), so the plugin no longer triggers deprecation notices on PHP 8.5.
+
 = 1.6.3 =
 * i18n: fully regenerated the `.pot` translation template — the catalog was frozen since 1.2.0 and covered only about 20% of the plugin's translatable strings (regex/length rules, rule templates, AI Translate errors, and more were never extractable before). All six shipped languages (German, Spanish, French, Portuguese, Russian, Ukrainian) are now fully translated against the current UI.
 * Docs: synced all translated readme files — feature list, supported field types, and FAQ now reflect 1.6.0–1.6.2 functionality (custom regex/length rules, required-if, native SWV client-side validation, rule templates); their Changelog/Upgrade Notice sections, previously stuck at 1.4.2, now cover every release up to 1.6.2.
@@ -181,6 +185,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 == Upgrade Notice ==
+
+= 1.6.4 =
+Compatibility release: tested with WordPress 7.1 and clean on PHP 8.5. No behavior changes.
 
 = 1.6.3 =
 Documentation and translation release — no functional or behavior changes. Fully refreshes translated readmes and the .pot/.po/.mo translation catalog.
