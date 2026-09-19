@@ -4,7 +4,7 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.6.4
+Stable tag: 1.6.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 
 == Changelog ==
 
+= 1.6.5 =
+* New: a one-time, dismissible request to leave a review on WordPress.org. It appears only a week after you first save a custom validation message, only to users who can edit Contact Form 7 forms and only on the Contact Form 7 screens. "Maybe later" snoozes it for 30 days, "Don't ask again" hides it for good. Nothing is sent anywhere.
+
 = 1.6.4 =
 * Tested with WordPress 7.1 (verified on 7.1.1 with Contact Form 7 6.1).
 * Fix: removed calls deprecated in PHP 8.5 (`finfo_close()`, and `ReflectionProperty::setAccessible()` on PHP 8.1+), so the plugin no longer triggers deprecation notices on PHP 8.5.
@@ -185,6 +188,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 == Upgrade Notice ==
+
+= 1.6.5 =
+Adds a one-time, dismissible review request (shown a week after you first save a custom message). No changes to validation behavior.
 
 = 1.6.4 =
 Compatibility release: tested with WordPress 7.1 and clean on PHP 8.5. No behavior changes.

@@ -26,5 +26,12 @@ if ( ! defined( 'VMCF7_BASENAME' ) ) {
     define( 'VMCF7_BASENAME', 'validation-muse-for-contact-form-7/validation-muse-for-contact-form-7.php' );
 }
 
+if ( ! defined( 'WEEK_IN_SECONDS' ) ) {
+    define( 'WEEK_IN_SECONDS', 604800 );
+}
+if ( ! defined( 'DAY_IN_SECONDS' ) ) {
+    define( 'DAY_IN_SECONDS', 86400 );
+}
+
 // Require Composer autoload.
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';

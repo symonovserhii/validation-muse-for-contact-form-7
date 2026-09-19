@@ -196,6 +196,8 @@ namespace {
 
             // Set up common stubs for WordPress functions.
             \Brain\Monkey\Functions\stubs( array(
+                'get_option'    => array(),
+                'update_option' => true,
                 'sanitize_key' => function( $key ) {
                     return strtolower( preg_replace( '/[^a-z0-9_]/i', '', $key ) );
                 },

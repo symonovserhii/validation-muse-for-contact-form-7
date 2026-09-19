@@ -31,6 +31,7 @@ class VMCF7_Loader {
 	public function init() {
 		require_once VMCF7_PATH . 'includes/class-vmcf7-flavor.php';
 		require_once VMCF7_PATH . 'includes/class-vmcf7-admin.php';
+		require_once VMCF7_PATH . 'includes/class-vmcf7-review-notice.php';
 		require_once VMCF7_PATH . 'includes/class-vmcf7-rules.php';
 		require_once VMCF7_PATH . 'includes/class-vmcf7-i18n-compat.php';
 		require_once VMCF7_PATH . 'includes/class-vmcf7-migrations.php';
@@ -54,6 +55,7 @@ class VMCF7_Loader {
 		// Initialize admin functionality.
 		if ( is_admin() ) {
 			$admin = new VMCF7_Admin();
+			( new VMCF7_Review_Notice() )->register();
 			add_action( 'admin_enqueue_scripts', array( $admin, 'enqueue_scripts' ) );
 			add_filter( 'wpcf7_editor_panels', array( $admin, 'add_panel' ) );
 			add_action( 'wpcf7_save_contact_form', array( $admin, 'save_messages' ) );
