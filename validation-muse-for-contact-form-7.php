@@ -3,10 +3,10 @@
  * Plugin Name:       Validation Muse for Contact Form 7
  * Plugin URI:        https://plugins.symonov.com/validation-muse-for-cf7/
  * Description:       Customize validation messages for each Contact Form 7 field.
- * Version:           1.6.3
+ * Version:           1.6.4
  * Requires at least: 6.0
  * Requires PHP:      8.0
- * Tested up to:      7.0
+ * Tested up to:      7.1
  * Author:            simmotorlp
  * Author URI:        https://github.com/symonovserhii
  * License:           GPL-2.0-or-later
@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @var string
  */
-define( 'VMCF7_VERSION', '1.6.3' );
+define( 'VMCF7_VERSION', '1.6.4' );
 
 /**
  * Plugin main file path.

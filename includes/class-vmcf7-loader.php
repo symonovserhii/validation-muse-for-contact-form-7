@@ -275,7 +275,9 @@ class VMCF7_Loader {
 	private function replace_error( $result, $field_name, $message ) {
 		try {
 			$ref = new \ReflectionProperty( $result, 'invalid_fields' );
-			$ref->setAccessible( true );
+			if ( PHP_VERSION_ID < 80100 ) {
+				$ref->setAccessible( true );
+			}
 
 			$invalid_fields = $ref->getValue( $result );
 
@@ -680,7 +682,9 @@ class VMCF7_Loader {
 	private function set_swv_property( $rule, $key, $value ) {
 		try {
 			$ref = new \ReflectionProperty( $rule, 'properties' );
-			$ref->setAccessible( true );
+			if ( PHP_VERSION_ID < 80100 ) {
+				$ref->setAccessible( true );
+			}
 
 			$properties = $ref->getValue( $rule );
 			if ( is_array( $properties ) ) {
