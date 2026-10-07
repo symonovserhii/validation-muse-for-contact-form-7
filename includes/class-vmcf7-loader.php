@@ -49,6 +49,9 @@ class VMCF7_Loader {
 			add_filter( "wpcf7_validate_{$tag_type}*", array( $this, 'validate_field' ), 20, 2 );
 		}
 
+		// Let other code read the messages written here.
+		add_filter( 'vmcf7_message', array( $this, 'filter_message' ), 10, 4 );
+
 		// Inject custom rules into SWV schema.
 		add_filter( 'wpcf7_swv_create_schema', array( $this, 'add_swv_rules' ), 20, 2 );
 
@@ -407,6 +410,30 @@ class VMCF7_Loader {
 	 */
 	private function is_enabled( $form_id ) {
 		return '1' === get_post_meta( $form_id, '_vmcf7_enabled', true );
+	}
+
+	/**
+	 * Answer the `vmcf7_message` filter: the message written for a field, or the default passed in.
+	 *
+	 * Lets other code (a theme, a form pipeline) show the same text as the validation does,
+	 * without reading the post meta itself. A form that is not enabled has no custom messages.
+	 *
+	 * @since 1.7.0
+	 *
+	 * @param string $message    The default, returned when no message was written.
+	 * @param int    $form_id    The form ID.
+	 * @param string $field_name The field name.
+	 * @param string $type       The message type, e.g. 'required' or 'invalid'.
+	 * @return string The custom message, or the default.
+	 */
+	public function filter_message( $message, $form_id, $field_name, $type ) {
+		if ( ! $this->is_enabled( $form_id ) ) {
+			return $message;
+		}
+
+		$custom = $this->get_custom_message( $form_id, (string) $field_name, (string) $type );
+
+		return '' === $custom ? $message : $custom;
 	}
 
 	/**

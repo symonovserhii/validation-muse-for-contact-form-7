@@ -502,6 +502,32 @@ namespace {
         }
 
         /**
+         * The vmcf7_message filter hands a written message to other code, and the default otherwise.
+         */
+        public function test_message_filter_returns_the_written_message_or_the_default() {
+            $loader = new VMCF7_Loader();
+            $enabled = true;
+
+            \Brain\Monkey\Functions\expect( 'get_post_meta' )
+                ->andReturnUsing( function( $post_id, $key, $single ) use ( &$enabled ) {
+                    if ( '_vmcf7_enabled' === $key ) {
+                        return $enabled ? '1' : '0';
+                    }
+                    if ( '_vmcf7_youremail_required' === $key ) {
+                        return 'Tell us where to write';
+                    }
+                    return '';
+                } );
+
+            $this->assertSame( 'Tell us where to write', $loader->filter_message( 'default', 123, 'your-email', 'required' ) );
+            $this->assertSame( 'default', $loader->filter_message( 'default', 123, 'your-email', 'invalid' ) );
+            $this->assertSame( 'default', $loader->filter_message( 'default', 123, 'your-name', 'required' ) );
+
+            $enabled = false;
+            $this->assertSame( 'default', $loader->filter_message( 'default', 123, 'your-email', 'required' ) );
+        }
+
+        /**
          * Test default invalid message helper returns expected message for time field.
          */
         public function test_get_default_invalid_message() {
