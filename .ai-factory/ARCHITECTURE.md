@@ -80,7 +80,7 @@ OOP, six single-responsibility classes wired together by the loader. No framewor
 ## Hooks & Extension Points
 
 - **Consumes:** `wpcf7_validate_{tag}` / `{tag}*` (prio 20), `wpcf7_swv_create_schema` (prio 20), `wpcf7_editor_panels`, `wpcf7_save_contact_form`, `admin_enqueue_scripts`, `wpcf7_enqueue_scripts`, `wp_ajax_vmcf7_ai_translate` / `_export_rules` / `_import_rules` / `_copy_rules` / `_bulk_apply`, activation hook, `plugins_loaded`.
-- **Provides:** `vmcf7_loaded` (action), `vmcf7_validation_tag_types` (filter), `vmcf7_translate_message` (filter), `vmcf7_debug` (action).
+- **Provides:** `vmcf7_loaded` (action), `vmcf7_validation_tag_types` (filter), `vmcf7_translate_message` (filter), `vmcf7_message` (filter: the message written for a field, or the default passed in), `vmcf7_debug` (action).
 
 ## Notes
 

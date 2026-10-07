@@ -14,7 +14,7 @@
 
 - All classes live flat under `includes/` (no subdirectories) and are Composer classmap-autoloaded; the plugin bootstrap (`validation-muse-for-contact-form-7.php`) only requires `class-vmcf7-loader.php` — `VMCF7_Loader::init()` is the composition root that requires the other five classes and wires them together.
 - Load order inside `VMCF7_Loader::init()` matters: Flavor → Admin → Rules → I18n_Compat → Migrations are required first, migrations run once, then filters/hooks are registered.
-- Extension points are plain WordPress filters/actions, not a registry object: `vmcf7_validation_tag_types` (add field types), `vmcf7_translate_message` (add a translation source), `vmcf7_debug` (observe internal diagnostics).
+- Extension points are plain WordPress filters/actions, not a registry object: `vmcf7_validation_tag_types` (add field types), `vmcf7_translate_message` (add a translation source), `vmcf7_message` (read a message written here), `vmcf7_debug` (observe internal diagnostics).
 - Static, stateless bridges (`VMCF7_Flavor`) use `public static function` throughout — no instantiation; stateful collaborators (`VMCF7_Loader`, `VMCF7_Admin`, `VMCF7_I18n_Compat`) are instantiated once in `init()`.
 - Pure evaluation logic with no WordPress state (`VMCF7_Rules`) is kept separate from the filter-registration/orchestration class (`VMCF7_Loader`) so it can be unit-tested without WordPress.
 
