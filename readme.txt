@@ -4,7 +4,7 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 
 == Changelog ==
 
+= 1.7.1 =
+* Fix: the archive GitHub and Composer build from a tag no longer carries tests, development tooling and documentation, so a project that installs the plugin from Git gets only the plugin. No change to the plugin's behavior.
+
 = 1.7.0 =
 * New: the `vmcf7_message` filter hands a message written here to other code: `apply_filters( 'vmcf7_message', $default, $form_id, $field_name, $type )` returns the custom message, or `$default` when none was written or custom validation is off for the form. Nothing changes for visitors unless other code asks.
 
@@ -191,6 +194,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 == Upgrade Notice ==
+
+= 1.7.1 =
+Packaging only: the Git archive drops tests and tooling. No changes to validation behavior.
 
 = 1.7.0 =
 Adds the `vmcf7_message` filter for other code to read the messages written here. No changes to validation behavior.

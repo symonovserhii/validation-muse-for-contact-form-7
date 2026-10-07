@@ -1,0 +1,18 @@
+# Left out of `git archive` and so out of the zip Composer installs from a tag. The wp.org release
+# is built from .distignore; keep the two lists in step.
+/.ai-factory export-ignore
+/.claude export-ignore
+/.github export-ignore
+/.idea export-ignore
+/.vscode export-ignore
+/.mcp.json export-ignore
+/skills-lock.json export-ignore
+/glotpress export-ignore
+/docs export-ignore
+/tests export-ignore
+/phpunit.xml export-ignore
+/phpunit.xml.dist export-ignore
+/.distignore export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore
+*.md export-ignore

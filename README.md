@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/wordpress/plugin/v/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Rating](https://img.shields.io/wordpress/plugin/stars/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Active installs](https://img.shields.io/wordpress/plugin/installs/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-Requires at least: **6.0** · Tested up to: **7.1** · Requires PHP: **8.0** · Stable tag: **1.7.0**
+Requires at least: **6.0** · Tested up to: **7.1** · Requires PHP: **8.0** · Stable tag: **1.7.1**
 
 Custom validation rules & messages for Contact Form 7 — regex, length, required-if, per field, CF7 6.x SWV-compatible, multilingual.
 
@@ -79,6 +79,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 4. Invalid-format message for an email field rendered on the frontend.
 
 ## Changelog
+### 1.7.1
+* Fix: the archive GitHub and Composer build from a tag no longer carries tests, development tooling and documentation, so a project that installs the plugin from Git gets only the plugin. No change to the plugin's behavior.
+
 ### 1.7.0
 * New: the `vmcf7_message` filter hands a message written here to other code: `apply_filters( 'vmcf7_message', $default, $form_id, $field_name, $type )` returns the custom message, or `$default` when none was written or custom validation is off for the form. Nothing changes for visitors unless other code asks.
 
@@ -170,6 +173,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 ## Upgrade Notice
+### 1.7.1
+Packaging only: the Git archive drops tests and tooling. No changes to validation behavior.
+
 ### 1.7.0
 Adds the `vmcf7_message` filter for other code to read the messages written here. No changes to validation behavior.
 
