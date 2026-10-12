@@ -131,7 +131,8 @@ class VMCF7_Flavor {
 	 * @return string|null Translated message or null if not found.
 	 */
 	public static function get_translation( $form_id, $field, $type, $lang = null ) {
-		if ( ! self::is_active() ) {
+		$form_id = absint( $form_id );
+		if ( ! self::is_active() || ! $form_id ) {
 			return null;
 		}
 
@@ -181,7 +182,9 @@ class VMCF7_Flavor {
 	 * @return array Associative array keyed by field_name.
 	 */
 	public static function get_all_translations( $form_id, $lang ) {
-		if ( ! self::is_active() ) {
+		// A form that has not been saved yet has no ID and nothing translated.
+		$form_id = absint( $form_id );
+		if ( ! self::is_active() || ! $form_id ) {
 			return array();
 		}
 
@@ -244,7 +247,8 @@ class VMCF7_Flavor {
 	 * @return void
 	 */
 	public static function save_translation( $form_id, $field, $type, $lang, $value, $is_auto = false ) {
-		if ( ! self::is_active() ) {
+		$form_id = absint( $form_id );
+		if ( ! self::is_active() || ! $form_id ) {
 			return;
 		}
 
@@ -277,7 +281,8 @@ class VMCF7_Flavor {
 	 * @return void
 	 */
 	public static function delete_translation( $form_id, $field, $type, $lang ) {
-		if ( ! self::is_active() ) {
+		$form_id = absint( $form_id );
+		if ( ! self::is_active() || ! $form_id ) {
 			return;
 		}
 
@@ -298,7 +303,8 @@ class VMCF7_Flavor {
 	 * @return array Associative array of translated messages keyed by Flavor field key.
 	 */
 	public static function ai_translate_form( $form_id, $lang ) {
-		if ( ! self::is_active() || ! self::is_ai_available() ) {
+		$form_id = absint( $form_id );
+		if ( ! $form_id || ! self::is_active() || ! self::is_ai_available() ) {
 			return array();
 		}
 
