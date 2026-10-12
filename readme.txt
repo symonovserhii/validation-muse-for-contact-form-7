@@ -4,7 +4,7 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -100,6 +100,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 
 == Changelog ==
 
+= 1.7.2 =
+* Fix: opening Contact → Add New with Flavor active no longer stops with a fatal error. A form that has not been saved yet has no ID, and Validation Muse now skips its translations until the form is saved.
+
 = 1.7.1 =
 * Fix: the archive GitHub and Composer build from a tag no longer carries tests, development tooling and documentation, so a project that installs the plugin from Git gets only the plugin. No change to the plugin's behavior.
 
@@ -194,6 +197,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 == Upgrade Notice ==
+
+= 1.7.2 =
+Fixes a fatal error on Contact → Add New when Flavor is active. No changes to validation behavior.
 
 = 1.7.1 =
 Packaging only: the Git archive drops tests and tooling. No changes to validation behavior.

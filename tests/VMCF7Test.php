@@ -139,12 +139,13 @@ namespace Flavor {
     class Flv_DB {
         public static $records = array();
 
-        public static function get( $type, $id, $key, $lang ) {
+        // Same parameter types as the real Flavor\Flv_DB, so a missing ID fails here too.
+        public static function get( string $type, int $id, string $key, string $lang ) {
             $db_key = "{$type}_{$id}_{$key}_{$lang}";
             return isset( self::$records[ $db_key ] ) ? self::$records[ $db_key ] : null;
         }
 
-        public static function get_all( $type, $id, $lang ) {
+        public static function get_all( string $type, int $id, string $lang ): array {
             $result = array();
             foreach ( self::$records as $db_key => $record ) {
                 $prefix = "{$type}_{$id}_";
@@ -173,7 +174,7 @@ namespace Flavor {
             );
         }
 
-        public static function delete_by_field( $type, $id, $key, $lang ) {
+        public static function delete_by_field( string $type, int $id, string $key, string $lang ) {
             $db_key = "{$type}_{$id}_{$key}_{$lang}";
             unset( self::$records[ $db_key ] );
         }
@@ -206,6 +207,9 @@ namespace {
                 },
                 'wp_kses_post' => function( $val ) {
                     return preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $val );
+                },
+                'absint' => function( $val ) {
+                    return abs( (int) $val );
                 },
                 'sanitize_text_field' => function( $val ) {
                     return trim( (string) $val );
@@ -466,6 +470,19 @@ namespace {
             // Test delete_translation.
             VMCF7_Flavor::delete_translation( 123, 'your-name', 'required', 'de' );
             $this->assertNull( VMCF7_Flavor::get_translation( 123, 'your-name', 'required', 'de' ) );
+        }
+
+        /**
+         * A form that has not been saved yet (CF7 "Add New") has no ID: nothing
+         * is read from or written to Flavor, and nothing throws.
+         */
+        public function test_flavor_unsaved_form_has_no_translations() {
+            $this->assertSame( array(), VMCF7_Flavor::get_all_translations( null, 'de' ) );
+            $this->assertNull( VMCF7_Flavor::get_translation( null, 'your-name', 'required', 'de' ) );
+
+            VMCF7_Flavor::save_translation( null, 'your-name', 'required', 'de', 'Name erforderlich' );
+            VMCF7_Flavor::delete_translation( null, 'your-name', 'required', 'de' );
+            $this->assertSame( array(), \Flavor\Flv_DB::$records );
         }
 
         /**
