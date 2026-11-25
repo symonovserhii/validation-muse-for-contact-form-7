@@ -36,17 +36,17 @@ Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-ba
 * Invalid-format messages: `email`, `url`, `tel`, `number` (including `range`), `date`, and `time` fields.
 * Custom error messages on validation failure: `file` (size/type checks), `acceptance` (unchecked/unaccepted state), and `quiz` (incorrect answer).
 * HTML inside messages is allowed and sanitized through `wp_kses_post()`.
-* Custom Regex and Min/Max Length rules support all input fields (excluding acceptance and quiz).
+* Custom Regex and Min/Max Length rules are available for every field type except `file`.
 
 = Translations =
 
-The plugin ships with a `.pot` file and is already translated into German, Spanish, French, Portuguese (Brazil), Russian, and Ukrainian. [Help translate it into your language.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
+The plugin ships with a `.pot` file and is already translated into German, Spanish, French, Italian, Japanese, Polish, Portuguese (Brazil), Russian, and Ukrainian. [Help translate it into your language.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
 
 == Installation ==
 
 1. Install from **Plugins → Add New** and search for *Validation Muse for Contact Form 7*, or upload the `validation-muse-for-contact-form-7` folder to `/wp-content/plugins/`.
 2. Activate the plugin. Contact Form 7 must already be active — Validation Muse will deactivate itself with an admin notice if it is not.
-3. Edit any Contact Form 7 form, open the **Custom Validation** panel, enable it, and write your messages.
+3. Edit any Contact Form 7 form, open the **Custom Validation** tab, enable it, and write your messages.
 4. (Optional) Install the Flavor translation plugin to translate messages per language with AI assistance.
 
 == Frequently Asked Questions ==
@@ -57,11 +57,11 @@ Yes. Since version 1.3.0, Validation Muse hooks at priority 20 (after CF7 core) 
 
 = How is this different from other CF7 validation plugins? =
 
-Validation Muse is the only CF7 validation plugin that (1) is compatible with CF7 6.x SWV out of the box — both server-side and in CF7's own client-side validation, (2) stores messages in form post meta so they live with the form (compatible with CF7 form duplication and import/export plugins), and (3) integrates with the Flavor translation plugin for per-language messages with one-click AI translation.
+Validation Muse is the only CF7 validation plugin that (1) is compatible with CF7 6.x SWV out of the box — both server-side and in CF7's own client-side validation, (2) stores messages in form post meta so they live with the form (compatible with CF7 form duplication and import/export plugins), and (3) supports per-language messages through WPML, Polylang, or the Flavor translation plugin (with one-click AI translation).
 
 = Can I translate validation messages per language? =
 
-Yes — install the Flavor translation plugin and Validation Muse will show language tabs in the form editor plus an *AI Translate* button. Translations are stored in Flavor's database; uninstalling Validation Muse cleans them up.
+Yes. WPML (String Translation) and Polylang are supported natively: your messages are registered for translation each time you save the form, and the **Custom Validation** tab links to the screen where you translate them. With the Flavor translation plugin, Validation Muse also shows language tabs in the form editor plus an *AI Translate* button; those translations are stored in Flavor's database, and uninstalling Validation Muse cleans them up.
 
 = Which field types support custom invalid or validation failure messages? =
 
@@ -85,7 +85,7 @@ Yes. CF7 must be installed and active. The plugin shows an admin notice and self
 
 = Is there a settings page? =
 
-No. Configuration lives inside each form, in the **Custom Validation** panel. There is no global settings page by design — every form keeps its own messages.
+No. Configuration lives inside each form, in the **Custom Validation** tab. There is no global settings page by design — every form keeps its own messages.
 
 = Does the plugin track or send any data? =
 
