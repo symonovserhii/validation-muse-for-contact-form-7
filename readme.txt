@@ -4,7 +4,7 @@ Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
 Tested up to: 7.1
 Requires PHP: 8.0
-Stable tag: 1.7.2
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -27,7 +27,7 @@ Most CF7 validation plugins broke when Contact Form 7 6.x introduced **Schema-ba
 * **Per-form, per-field** — each form keeps its own messages; no global override.
 * **Stored in post meta** — messages live with the form, compatible with CF7 form duplication and third-party CF7 import/export plugins.
 * **Multilingual via WPML, Polylang & Flavor** — translates rules using standard WPML/Polylang hooks, and features language tabs + one-click AI Translate when Flavor is active.
-* **Developer-friendly** — extensibility hooks `vmcf7_loaded` and `vmcf7_validation_tag_types` let you add custom field types.
+* **Developer-friendly** — extensibility hooks `vmcf7_loaded` and `vmcf7_validation_tag_types` let you add custom field types; `vmcf7_message`, `vmcf7_default_message`, `vmcf7_placeholders` and `vmcf7_field_label` filters let you read messages, set site-wide defaults and add your own `{tokens}`.
 * **Lightweight** — no admin bloat, no tracking, no upsells.
 
 = Supported field types =
@@ -93,12 +93,31 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 
 == Screenshots ==
 
-1. The **Custom Validation** panel inside the Contact Form 7 editor — enable per form, write messages per field.
-2. Per-language tabs and the **AI Translate** button (visible when the Flavor translation plugin is active).
+1. The **Custom Validation** tab inside the Contact Form 7 editor — one card per field with messages, extra rules (length, pattern with a live tester, required only sometimes) and a preview of what visitors will see.
+2. **Copy, back up and reuse** — copy rules from another form, download/load them as a file, keep a template, or use them on all forms.
 3. Required-field message rendered on the frontend.
 4. Invalid-format message for an email field rendered on the frontend.
 
 == Changelog ==
+
+= 1.8.0 =
+* New: the Custom Validation tab is redesigned. Each field is a card with its label, type and whether it is customized; extra rules (length, pattern, required only sometimes) sit behind one "Extra rules" switch; every card shows what visitors will see. Search, "only show customized fields" and open/close all help on long forms.
+* New: ready-made pattern examples and a "try an example answer" box that checks a pattern the same way the site does.
+* New: copy, back-up, template and "use on all forms" tools are grouped and explained, ask for confirmation inline and show the result in the panel instead of browser pop-ups.
+* New: when WPML String Translation or Polylang is active, the tab links straight to the screen where the messages are translated.
+* New: custom "wrong answer" message for quiz fields and "wrong file" message for file fields.
+* New: `{min}` and `{max}` work in every message; developer filters `vmcf7_default_message`, `vmcf7_placeholders`, `vmcf7_field_label`, `vmcf7_supports_text_rules` and `vmcf7_swv_invalid_rules`.
+* New: front-end error style can be changed with CSS custom properties (`--vmcf7-error-color`, `--vmcf7-error-font-size` and others).
+* New: Japanese, Italian and Polish translations.
+* Fix: the Contact Form 7 editor no longer asks "Leave site? Changes you made may not be saved" when nothing was changed.
+* Fix: custom messages and length limits now reach Contact Form 7 6.2+ client-side validation again (the schema hook silently did nothing on 6.2).
+* Fix: backslashes were stripped from saved patterns and messages (`^\d+$` was stored as `^d+$`), also on import, copy and "use on all forms".
+* Fix: an invalid pattern no longer rejects every answer; a pattern or length rule on checkboxes or multi-selects no longer causes an error on submit.
+* Fix: copying a form's rules onto the same form no longer erases them; rule-set tools accept only Contact Form 7 forms the user may edit, and import files are checked and size-limited.
+* Fix: WPML/Polylang received each message one save late, Polylang did not list the messages on its Translations screen, and then listed them twice.
+* Fix: the custom required message now also applies to acceptance checkboxes; required-if works when the other field's name has capital letters.
+* Fix: AI Translate no longer sends patterns and numbers to the translator.
+* Fix: uninstall removes all plugin options; front-end styles also load for forms placed in widgets and templates.
 
 = 1.7.2 =
 * Fix: opening Contact → Add New with Flavor active no longer stops with a fatal error. A form that has not been saved yet has no ID, and Validation Muse now skips its translations until the form is saved.
@@ -197,6 +216,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 == Upgrade Notice ==
+
+= 1.8.0 =
+Redesigned Custom Validation tab, client-side messages working again on Contact Form 7 6.2+, and several validation fixes. Existing rules and messages are kept as they are.
 
 = 1.7.2 =
 Fixes a fatal error on Contact → Add New when Flavor is active. No changes to validation behavior.

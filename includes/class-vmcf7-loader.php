@@ -73,6 +73,8 @@ class VMCF7_Loader {
 			add_action( 'wp_ajax_vmcf7_bulk_apply', array( $admin, 'ajax_bulk_apply' ) );
 		} else {
 			add_action( 'wpcf7_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
+			// Forms rendered outside the post content (widgets, templates, builders).
+			add_action( 'wpcf7_shortcode_callback', array( $this, 'enqueue_assets_on_render' ) );
 		}
 
 		/**
@@ -122,6 +124,21 @@ class VMCF7_Loader {
 	}
 
 	/**
+	 * Enqueue the frontend stylesheet when a form is actually rendered.
+	 *
+	 * Covers forms placed where the post content is not the source of the
+	 * shortcode: widgets, theme templates, page builders, popups.
+	 *
+	 * @since 1.8.0
+	 * @return void
+	 */
+	public function enqueue_assets_on_render() {
+		if ( ! wp_style_is( 'vmcf7-frontend', 'enqueued' ) ) {
+			$this->enqueue_assets();
+		}
+	}
+
+	/**
 	 * Validate a form field.
 	 *
 	 * Applies custom validation messages if configured for the field.
@@ -143,125 +160,155 @@ class VMCF7_Loader {
 			return $result;
 		}
 
-		$value          = $this->get_posted_value( $tag );
-		$invalid_fields = $result->get_invalid_fields();
+		$form_id         = $form->id();
+		$value           = $this->get_posted_value( $tag );
+		$invalid_fields  = $result->get_invalid_fields();
 		$already_invalid = isset( $invalid_fields[ $tag->name ] );
+		$min_length      = $this->get_length_setting( $form_id, $field_name, 'min_length' );
+		$max_length      = $this->get_length_setting( $form_id, $field_name, 'max_length' );
 
-		$form_id             = $form->id();
-		$required_message    = $this->get_custom_message( $form_id, $field_name, 'required' );
-		$invalid_message     = $this->get_custom_message( $form_id, $field_name, 'invalid' );
-		$regex               = get_post_meta( $form_id, "_vmcf7_{$field_name}_regex", true );
-		$regex_message       = $this->get_custom_message( $form_id, $field_name, 'regex_message' );
-		$min_length          = get_post_meta( $form_id, "_vmcf7_{$field_name}_min_length", true );
-		$max_length          = get_post_meta( $form_id, "_vmcf7_{$field_name}_max_length", true );
-		$length_message      = $this->get_custom_message( $form_id, $field_name, 'length_message' );
-		$required_if_field   = get_post_meta( $form_id, "_vmcf7_{$field_name}_required_if_field", true );
-		$required_if_message = $this->get_custom_message( $form_id, $field_name, 'required_if_message' );
-
-		// Empty checks
+		// Empty checks.
 		if ( $this->value_is_empty( $value ) ) {
-			// Required-if check
-			if ( ! empty( $required_if_field ) ) {
-				$companion_value = $this->get_field_value_by_name( $required_if_field );
+			$required_message  = $this->get_custom_message( $form_id, $field_name, 'required' );
+			$required_if_field = get_post_meta( $form_id, "_vmcf7_{$field_name}_required_if_field", true );
+
+			// Required-if check.
+			if ( is_string( $required_if_field ) && '' !== $required_if_field ) {
+				$companion_value = $this->get_field_value_by_name( $this->resolve_field_name( $form, $required_if_field ) );
 				if ( ! $this->value_is_empty( $companion_value ) ) {
-					$msg = $required_if_message ? $required_if_message : ( $required_message ? $required_message : __( 'This field is required', 'validation-muse-for-contact-form-7' ) );
-					$msg = $this->expand_placeholders( $msg, $form, $tag );
-					if ( $already_invalid ) {
-						$this->replace_error( $result, $tag->name, $msg );
-					} else {
-						$result->invalidate( $tag, $msg );
-					}
-					return $result;
+					$required_if_message = $this->get_custom_message( $form_id, $field_name, 'required_if_message' );
+					$msg                 = $required_if_message ? $required_if_message : ( $required_message ? $required_message : __( 'This field is required', 'validation-muse-for-contact-form-7' ) );
+
+					return $this->set_error( $result, $tag, $this->expand_placeholders( $msg, $form, $tag, $min_length, $max_length ), $already_invalid );
 				}
 			}
 
-			// Normal required check
-			if ( $tag->is_required() ) {
-				if ( ! empty( $required_message ) ) {
-					$msg = $this->expand_placeholders( $required_message, $form, $tag );
-					if ( $already_invalid ) {
-						$this->replace_error( $result, $tag->name, $msg );
-					} else {
-						$result->invalidate( $tag, $msg );
-					}
-					return $result;
-				}
+			// Normal required check. An empty field that CF7 already rejected (a
+			// required field, an unticked acceptance box, an unanswered quiz)
+			// gets the custom required message too.
+			if ( '' !== $required_message && ( $already_invalid || $tag->is_required() ) ) {
+				return $this->set_error( $result, $tag, $this->expand_placeholders( $required_message, $form, $tag, $min_length, $max_length ), $already_invalid );
 			}
 
 			return $result;
 		}
 
-		// Field value is NOT empty
+		// Field value is NOT empty.
+		$invalid_message = $this->get_custom_message( $form_id, $field_name, 'invalid' );
 
-		// 1. Regex rule check
-		if ( ! empty( $regex ) && ! VMCF7_Rules::evaluate_regex( $value, $regex ) ) {
-			$msg = $regex_message ? $regex_message : ( $invalid_message ? $invalid_message : __( 'Invalid format.', 'validation-muse-for-contact-form-7' ) );
-			$msg = $this->expand_placeholders( $msg, $form, $tag );
-			if ( $already_invalid ) {
-				$this->replace_error( $result, $tag->name, $msg );
-			} else {
-				$result->invalidate( $tag, $msg );
+		if ( $this->supports_text_rules( $tag ) ) {
+			// 1. Regex rule check.
+			$regex = get_post_meta( $form_id, "_vmcf7_{$field_name}_regex", true );
+			if ( is_string( $regex ) && '' !== $regex && ! VMCF7_Rules::evaluate_regex( $value, $regex ) ) {
+				$regex_message = $this->get_custom_message( $form_id, $field_name, 'regex_message' );
+				$msg           = $regex_message ? $regex_message : ( $invalid_message ? $invalid_message : __( 'Invalid format.', 'validation-muse-for-contact-form-7' ) );
+
+				return $this->set_error( $result, $tag, $this->expand_placeholders( $msg, $form, $tag, $min_length, $max_length ), $already_invalid );
 			}
+
+			// 2. Length check.
+			if ( '' !== $min_length || '' !== $max_length ) {
+				$length_res = VMCF7_Rules::evaluate_length( $value, $min_length, $max_length );
+				if ( ! $length_res['valid'] ) {
+					$length_message = $this->get_custom_message( $form_id, $field_name, 'length_message' );
+					$msg            = $length_message ? $length_message : __( 'Invalid length.', 'validation-muse-for-contact-form-7' );
+
+					return $this->set_error( $result, $tag, $this->expand_placeholders( $msg, $form, $tag, $min_length, $max_length ), $already_invalid );
+				}
+			}
+		}
+
+		if ( '' === $invalid_message ) {
 			return $result;
 		}
 
-		// 2. Length check
-		if ( '' !== $min_length || '' !== $max_length ) {
-			$length_res = VMCF7_Rules::evaluate_length( $value, $min_length, $max_length );
-			if ( ! $length_res['valid'] ) {
-				$msg = $length_message ? $length_message : __( 'Invalid length.', 'validation-muse-for-contact-form-7' );
-				$msg = $this->expand_placeholders( $msg, $form, $tag, $min_length, $max_length );
-				if ( $already_invalid ) {
-					$this->replace_error( $result, $tag->name, $msg );
-				} else {
-					$result->invalidate( $tag, $msg );
-				}
-				return $result;
-			}
-		}
-
-		// 3. Custom invalid message replacement if already invalid (format validation check from CF7/SWV)
+		// 3. Custom invalid message replacement if already invalid (format validation check from CF7/SWV).
 		if ( $already_invalid ) {
-			if ( ! empty( $invalid_message ) ) {
-				$msg = $this->expand_placeholders( $invalid_message, $form, $tag );
-				$this->replace_error( $result, $tag->name, $msg );
-				return $result;
-			}
-		} else {
-			// If not already invalid, evaluate built-in formats for fields not checked by SWV
-			if ( ! empty( $invalid_message ) ) {
-				$is_invalid = false;
+			return $this->set_error( $result, $tag, $this->expand_placeholders( $invalid_message, $form, $tag, $min_length, $max_length ), true );
+		}
 
-				switch ( $tag->basetype ) {
-					case 'email':
-						$is_invalid = ! wpcf7_is_email( $value );
-						break;
-					case 'url':
-						$is_invalid = ! wpcf7_is_url( $value );
-						break;
-					case 'tel':
-						$is_invalid = ! wpcf7_is_tel( $value );
-						break;
-					case 'number':
-					case 'range':
-						$is_invalid = ! wpcf7_is_number( $value );
-						break;
-					case 'date':
-						$is_invalid = ! wpcf7_is_date( $value );
-						break;
-					case 'time':
-						$is_invalid = ! wpcf7_is_time( $value );
-						break;
-				}
+		// If not already invalid, evaluate built-in formats for fields not checked by SWV.
+		$checks = array(
+			'email'  => 'wpcf7_is_email',
+			'url'    => 'wpcf7_is_url',
+			'tel'    => 'wpcf7_is_tel',
+			'number' => 'wpcf7_is_number',
+			'range'  => 'wpcf7_is_number',
+			'date'   => 'wpcf7_is_date',
+			'time'   => 'wpcf7_is_time',
+		);
 
-				if ( $is_invalid ) {
-					$msg = $this->expand_placeholders( $invalid_message, $form, $tag );
-					$result->invalidate( $tag, $msg );
-				}
-			}
+		$check = isset( $checks[ $tag->basetype ] ) ? $checks[ $tag->basetype ] : '';
+
+		if ( $check && is_string( $value ) && function_exists( $check ) && ! $check( $value ) ) {
+			$result->invalidate( $tag, $this->expand_placeholders( $invalid_message, $form, $tag, $min_length, $max_length ) );
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Put an error message on a field: replace the one CF7 set, or add a new one.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param WPCF7_Validation $result          The validation result.
+	 * @param WPCF7_FormTag    $tag             The form tag.
+	 * @param string           $message         The error message.
+	 * @param bool             $already_invalid Whether the field already has an error.
+	 * @return WPCF7_Validation The validation result.
+	 */
+	private function set_error( $result, $tag, $message, $already_invalid ) {
+		if ( $already_invalid ) {
+			$this->replace_error( $result, $tag->name, $message );
+		} else {
+			$result->invalidate( $tag, $message );
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Whether the regex and length rules apply to a tag.
+	 *
+	 * File fields hold an upload, not text, so matching a pattern against the
+	 * temporary file path or counting its characters makes no sense.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param WPCF7_FormTag $tag The form tag.
+	 * @return bool True if regex/length rules apply.
+	 */
+	private function supports_text_rules( $tag ) {
+		/**
+		 * Filters whether the regex and min/max length rules apply to a form tag.
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param bool          $supports True for every type but `file`.
+		 * @param WPCF7_FormTag $tag      The form tag.
+		 */
+		return (bool) apply_filters( 'vmcf7_supports_text_rules', 'file' !== $tag->basetype, $tag );
+	}
+
+	/**
+	 * Read a min/max length setting as a positive integer string, or '' when unset.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param int    $form_id    The form ID.
+	 * @param string $field_name The normalized field name.
+	 * @param string $type       'min_length' or 'max_length'.
+	 * @return string The length as a numeric string, or an empty string.
+	 */
+	private function get_length_setting( $form_id, $field_name, $type ) {
+		$raw = get_post_meta( $form_id, "_vmcf7_{$field_name}_{$type}", true );
+
+		if ( ! is_scalar( $raw ) || ! is_numeric( $raw ) || (int) $raw <= 0 ) {
+			return '';
+		}
+
+		return (string) (int) $raw;
 	}
 
 	/**
@@ -291,10 +338,23 @@ class VMCF7_Loader {
 				$ref->setValue( $result, $invalid_fields );
 			}
 		} catch ( \ReflectionException $e ) {
-			do_action( 'vmcf7_debug', 'Reflection failure: ' . $e->getMessage() );
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( 'Validation Muse ReflectionException: ' . $e->getMessage() );
-			}
+			$this->report_reflection_failure( $e );
+		}
+	}
+
+	/**
+	 * Report a Reflection failure without breaking the request.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param \Throwable $e The failure.
+	 * @return void
+	 */
+	private function report_reflection_failure( $e ) {
+		do_action( 'vmcf7_debug', 'Reflection failure: ' . $e->getMessage() );
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Only under WP_DEBUG.
+			error_log( 'Validation Muse ReflectionException: ' . $e->getMessage() );
 		}
 	}
 
@@ -366,17 +426,18 @@ class VMCF7_Loader {
 			return (string) $file;
 		}
 
+		// CF7 has already unslashed the posted data; unslashing again would eat
+		// the backslashes a visitor actually typed.
 		$value = $submission->get_posted_data( $name );
 		if ( null === $value ) {
 			return null;
 		}
 
 		if ( is_array( $value ) ) {
-			$value = array_map( 'wp_unslash', $value );
-			return array_map( 'trim', $value );
+			return array_map( 'trim', VMCF7_Rules::flatten( $value ) );
 		}
 
-		return trim( strtr( (string) wp_unslash( $value ), "\n", ' ' ) );
+		return trim( strtr( (string) $value, "\n", ' ' ) );
 	}
 
 	/**
@@ -389,8 +450,8 @@ class VMCF7_Loader {
 	 */
 	private function value_is_empty( $value ) {
 		if ( is_array( $value ) ) {
-			foreach ( $value as $item ) {
-				if ( '' !== $item ) {
+			foreach ( VMCF7_Rules::flatten( $value ) as $item ) {
+				if ( '' !== trim( $item ) ) {
 					return false;
 				}
 			}
@@ -458,14 +519,35 @@ class VMCF7_Loader {
 		$message  = get_post_meta( $form_id, $meta_key, true );
 		$message  = is_string( $message ) ? $message : '';
 
+		if ( '' === $message ) {
+			/**
+			 * Filters the fallback used when no message was written for a field.
+			 *
+			 * Return a non-empty string to give every enabled form a site-wide
+			 * default for a message type, e.g. one "required" text for all fields.
+			 * Placeholder tokens are expanded in it like in any other message.
+			 *
+			 * @since 1.8.0
+			 *
+			 * @param string $message    The fallback message. Default empty: use CF7's own text.
+			 * @param int    $form_id    The form ID.
+			 * @param string $field_name The normalized field name.
+			 * @param string $type       The message type: required, invalid, regex_message,
+			 *                           length_message or required_if_message.
+			 */
+			$default = apply_filters( 'vmcf7_default_message', '', $form_id, $field_name, $type );
+
+			return is_string( $default ) ? $default : '';
+		}
+
 		// Allow multilingual plugins like WPML/Polylang to filter this message.
 		$translated = apply_filters( 'vmcf7_translate_message', $message, $form_id, $field_name, $type );
 		if ( $translated !== $message ) {
-			return $translated;
+			return is_string( $translated ) ? $translated : $message;
 		}
 
 		// Return translated message if available and needed (Flavor).
-		if ( '' !== $message && VMCF7_Flavor::needs_translation() ) {
+		if ( VMCF7_Flavor::needs_translation() ) {
 			$flavor_translated = VMCF7_Flavor::get_translation( $form_id, $field_name, $type );
 			if ( null !== $flavor_translated ) {
 				return $flavor_translated;
@@ -488,6 +570,30 @@ class VMCF7_Loader {
 	}
 
 	/**
+	 * Find the real name of a form field from its normalized (meta key) form.
+	 *
+	 * Rules store the companion field lowercased; the posted data is keyed by
+	 * the name as written in the form template, which may contain capitals.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param object $form       The contact form object.
+	 * @param string $normalized The normalized field name.
+	 * @return string The field name as used in the form, or the input when not found.
+	 */
+	private function resolve_field_name( $form, $normalized ) {
+		if ( $form && method_exists( $form, 'scan_form_tags' ) ) {
+			foreach ( (array) $form->scan_form_tags() as $tag ) {
+				if ( ! empty( $tag->name ) && $this->normalize_field_name( $tag->name ) === $normalized ) {
+					return $tag->name;
+				}
+			}
+		}
+
+		return $normalized;
+	}
+
+	/**
 	 * Get a field's posted value by field name.
 	 *
 	 * @since 1.6.0
@@ -505,6 +611,11 @@ class VMCF7_Loader {
 			$uploaded = $submission->uploaded_files();
 			if ( isset( $uploaded[ $name ] ) ) {
 				$val = $uploaded[ $name ];
+			} elseif ( isset( $_FILES[ $name ]['name'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Read-only presence check inside CF7's own submission flow.
+				// Uploads are moved after the text fields are validated, so a file
+				// companion is only visible in the raw request at this point.
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Only tested for emptiness.
+				$val = $_FILES[ $name ]['name'];
 			}
 		}
 		return $val;
@@ -523,13 +634,42 @@ class VMCF7_Loader {
 	 * @return string The expanded message.
 	 */
 	private function expand_placeholders( $message, $form, $tag, $min = '', $max = '' ) {
-		$label = $this->get_field_label( $form, $tag );
+		$message = (string) $message;
+
+		if ( ! str_contains( $message, '{' ) ) {
+			return $message;
+		}
+
 		$replacements = array(
-			'{field_label}' => $label,
-			'{min}'         => $min,
-			'{max}'         => $max,
+			'{min}' => (string) $min,
+			'{max}' => (string) $max,
 		);
-		return strtr( $message, $replacements );
+
+		// The label is parsed out of the form template, so only do it on demand.
+		if ( str_contains( $message, '{field_label}' ) ) {
+			$replacements['{field_label}'] = $this->get_field_label( $form, $tag );
+		}
+
+		/**
+		 * Filters the placeholder tokens expanded in a validation message.
+		 *
+		 * Add your own `'{token}' => 'value'` pairs here. `{field_label}` is
+		 * only present when the message uses it.
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param array         $replacements Token => replacement text.
+		 * @param string        $message      The message before expansion.
+		 * @param object        $form         The contact form object.
+		 * @param WPCF7_FormTag $tag          The form tag object.
+		 */
+		$replacements = apply_filters( 'vmcf7_placeholders', $replacements, $message, $form, $tag );
+
+		if ( ! is_array( $replacements ) ) {
+			return $message;
+		}
+
+		return strtr( $message, array_map( 'strval', array_filter( $replacements, 'is_scalar' ) ) );
 	}
 
 	/**
@@ -541,46 +681,117 @@ class VMCF7_Loader {
 	 * @param WPCF7_FormTag $tag  The form tag object.
 	 * @return string The label text, or prettified field name if not found.
 	 */
-	private function get_field_label( $form, $tag ) {
-		if ( ! $form ) {
-			return $tag->name;
-		}
+	public function get_field_label( $form, $tag ) {
+		$label        = '';
+		$form_content = $form ? $form->prop( 'form' ) : '';
 
-		$form_content = $form->prop( 'form' );
-		if ( ! $form_content ) {
-			return $tag->name;
-		}
+		if ( is_string( $form_content ) && '' !== $form_content ) {
+			$tag_name = preg_quote( $tag->name, '/' );
 
-		$tag_name = preg_quote( $tag->name, '/' );
+			// The tag itself, as written in the template: [type name ...]. Matching
+			// the bracketed tag (not the bare word) keeps a field called "name"
+			// from picking up another label that merely mentions "name".
+			$tag_pattern = '\[[^\]\s]+\s+' . $tag_name . '(?=[\s\]])';
 
-		// 1. Check if the tag is wrapped in a <label> tag.
-		if ( preg_match( '/<label\b[^>]*>(?:(?!<\/label>).)*\b' . $tag_name . '\b(?:(?!<\/label>).)*<\/label>/is', $form_content, $matches ) ) {
-			$label_content = $matches[0];
-			$label_text = preg_replace( '/\[[^\]]+\]/', '', $label_content );
-			$label_text = wp_strip_all_tags( $label_text );
-			$label_text = trim( $label_text );
-			if ( ! empty( $label_text ) ) {
-				return $label_text;
+			// 1. Check if the tag is wrapped in a <label> tag.
+			if ( preg_match( '/<label\b[^>]*>((?:(?!<\/label>).)*?' . $tag_pattern . '(?:(?!<\/label>).)*)<\/label>/is', $form_content, $matches ) ) {
+				$label = $this->clean_label( preg_replace( '/\[[^\]]+\]/', '', $matches[1] ) );
 			}
-		}
 
-		// 2. Check for <label for="id_or_name"> in the template.
-		$id = $tag->get_id_option();
-		$for_attr = $id ? '(?:' . preg_quote( $id, '/' ) . '|' . $tag_name . ')' : $tag_name;
-		if ( preg_match( '/<label\b[^>]*\bfor=["\']' . $for_attr . '["\'][^>]*>(.*?)<\/label>/is', $form_content, $matches ) ) {
-			$label_text = wp_strip_all_tags( trim( $matches[1] ) );
-			if ( ! empty( $label_text ) ) {
-				return $label_text;
+			// 2. A <label> that directly precedes the tag: <label>Email</label>[email* your-email].
+			// The label must not hold a form tag itself, or the previous field's
+			// <label>Message [textarea your-message]</label> would be taken.
+			if ( '' === $label && preg_match( '/<label\b[^>]*>((?:(?!<\/label>)[^\[])*)<\/label>\s*(?:<br\s*\/?>\s*)?' . $tag_pattern . '/is', $form_content, $matches ) ) {
+				$label = $this->clean_label( preg_replace( '/\[[^\]]+\]/', '', $matches[1] ) );
+			}
+
+			// 3. Check for <label for="id_or_name"> in the template.
+			if ( '' === $label ) {
+				$id       = method_exists( $tag, 'get_id_option' ) ? $tag->get_id_option() : '';
+				$for_attr = $id ? '(?:' . preg_quote( $id, '/' ) . '|' . $tag_name . ')' : $tag_name;
+				if ( preg_match( '/<label\b[^>]*\bfor=["\']' . $for_attr . '["\'][^>]*>(.*?)<\/label>/is', $form_content, $matches ) ) {
+					$label = $this->clean_label( $matches[1] );
+				}
 			}
 		}
 
 		// Fallback to name capitalized.
-		$label_text = str_replace( array( '-', '_' ), ' ', $tag->name );
-		return ucwords( $label_text );
+		if ( '' === $label ) {
+			$label = ucwords( str_replace( array( '-', '_' ), ' ', $tag->name ) );
+		}
+
+		/**
+		 * Filters the label that replaces `{field_label}` in a message.
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param string        $label The label found in the form template, or the prettified field name.
+		 * @param WPCF7_FormTag $tag   The form tag object.
+		 * @param object        $form  The contact form object.
+		 */
+		return (string) apply_filters( 'vmcf7_field_label', $label, $tag, $form );
+	}
+
+	/**
+	 * Turn label markup into plain label text.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $html The label's inner HTML.
+	 * @return string The label text, without tags, extra whitespace or a trailing required mark / colon.
+	 */
+	private function clean_label( $html ) {
+		$text = wp_strip_all_tags( (string) $html );
+		$text = trim( (string) preg_replace( '/\s+/u', ' ', $text ) );
+
+		return rtrim( $text, " *:\t" );
+	}
+
+	/**
+	 * SWV rules whose error is the field's "invalid" message.
+	 *
+	 * Mirrors the server-side behaviour, where any error CF7 raised on a filled
+	 * field is replaced by the custom invalid message.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @return string[] SWV rule names.
+	 */
+	private function get_swv_invalid_rules() {
+		$rules = array(
+			'email',
+			'url',
+			'tel',
+			'number',
+			'minnumber',
+			'maxnumber',
+			'stepnumber',
+			'date',
+			'mindate',
+			'maxdate',
+			'dayofweek',
+			'time',
+			'file',
+			'minfilesize',
+			'maxfilesize',
+		);
+
+		/**
+		 * Filters the SWV rule names that take the field's custom "invalid" message.
+		 *
+		 * @since 1.8.0
+		 *
+		 * @param string[] $rules SWV rule names.
+		 */
+		return (array) apply_filters( 'vmcf7_swv_invalid_rules', $rules );
 	}
 
 	/**
 	 * Inject custom rules and error messages into the SWV schema.
+	 *
+	 * Supports both SWV generations: the `Contactable\SWV` rules of CF7 up to
+	 * 6.1 (mutable `properties` array) and the `RockLobsterInc\Swv` rules of
+	 * CF7 6.2+ (readonly properties — a rule is rebuilt and swapped in place).
 	 *
 	 * @since 1.6.1
 	 *
@@ -589,7 +800,7 @@ class VMCF7_Loader {
 	 * @return object The modified schema.
 	 */
 	public function add_swv_rules( $schema, $contact_form ) {
-		if ( ! class_exists( '\\Contactable\\SWV\\Rule' ) ) {
+		if ( ! is_object( $schema ) || ! method_exists( $schema, 'rules' ) ) {
 			return $schema;
 		}
 
@@ -597,98 +808,90 @@ class VMCF7_Loader {
 			return $schema;
 		}
 
-		$form_id   = $contact_form->id();
-		$form_tags = $contact_form->scan_form_tags();
-		$tags_map  = array();
-		foreach ( $form_tags as $tag ) {
-			if ( ! empty( $tag->name ) ) {
+		$form_id  = $contact_form->id();
+		$tags_map = array();
+		foreach ( (array) $contact_form->scan_form_tags() as $tag ) {
+			if ( ! empty( $tag->name ) && ! isset( $tags_map[ $tag->name ] ) ) {
 				$tags_map[ $tag->name ] = $tag;
 			}
 		}
 
+		// CF7 up to 6.1 returns a generator here, 6.2+ an array.
+		$rules = $schema->rules();
+		$rules = is_array( $rules ) ? array_values( $rules ) : iterator_to_array( $rules, false );
+
 		$existing_rules = array();
+		$swapped        = false;
 
 		// Iterate over existing rules to override their messages/properties.
-		foreach ( $schema->rules() as $rule ) {
-			$rule_data = $rule->to_array();
-			$rule_name = isset( $rule_data['rule'] ) ? $rule_data['rule'] : '';
+		foreach ( $rules as $index => $rule ) {
+			$rule_data  = $this->get_swv_rule_data( $rule );
+			$rule_name  = isset( $rule_data['rule'] ) && is_string( $rule_data['rule'] ) ? $rule_data['rule'] : '';
+			$field_name = isset( $rule_data['field'] ) && is_string( $rule_data['field'] ) ? $rule_data['field'] : '';
 
-			$field_name = '';
-			if ( method_exists( $rule, 'get_property' ) ) {
-				$field_name = $rule->get_property( 'field' );
-			}
-			if ( empty( $field_name ) && isset( $rule_data['field'] ) ) {
-				$field_name = $rule_data['field'];
-			}
-
-			if ( empty( $field_name ) || empty( $rule_name ) ) {
+			if ( '' === $field_name || '' === $rule_name ) {
 				continue;
 			}
 
 			$existing_rules[ $field_name ][ $rule_name ] = true;
-			$normalized_field = $this->normalize_field_name( $field_name );
-			$tag = isset( $tags_map[ $field_name ] ) ? $tags_map[ $field_name ] : null;
 
-			if ( 'required' === $rule_name || 'requiredfile' === $rule_name ) {
-				$required_message = $this->get_custom_message( $form_id, $normalized_field, 'required' );
-				if ( ! empty( $required_message ) && $tag ) {
-					$msg = $this->expand_placeholders( $required_message, $contact_form, $tag );
-					$this->set_swv_property( $rule, 'error', $msg );
-				}
-			} elseif ( in_array( $rule_name, array( 'email', 'url', 'tel', 'number', 'date', 'time' ), true ) ) {
-				$invalid_message = $this->get_custom_message( $form_id, $normalized_field, 'invalid' );
-				if ( ! empty( $invalid_message ) && $tag ) {
-					$msg = $this->expand_placeholders( $invalid_message, $contact_form, $tag );
-					$this->set_swv_property( $rule, 'error', $msg );
-				}
-			} elseif ( 'maxlength' === $rule_name ) {
-				$max_length     = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_max_length", true );
-				$min_length     = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_min_length", true );
-				$length_message = $this->get_custom_message( $form_id, $normalized_field, 'length_message' );
-				if ( '' !== $max_length ) {
-					$this->set_swv_property( $rule, 'threshold', (string) $max_length );
-				}
-				if ( ! empty( $length_message ) && $tag ) {
-					$msg = $this->expand_placeholders( $length_message, $contact_form, $tag, $min_length, $max_length );
-					$this->set_swv_property( $rule, 'error', $msg );
-				}
+			if ( ! isset( $tags_map[ $field_name ] ) ) {
+				continue;
+			}
+
+			$overrides = $this->get_swv_overrides( $form_id, $contact_form, $tags_map[ $field_name ], $rule_name );
+			if ( ! $overrides ) {
+				continue;
+			}
+
+			$new_rule = $this->override_swv_rule( $rule, $rule_data, $overrides );
+			if ( $new_rule && $new_rule !== $rule ) {
+				$rules[ $index ] = $new_rule;
+				$swapped         = true;
 			}
 		}
 
+		if ( $swapped ) {
+			$this->set_swv_rules( $schema, $rules );
+		}
+
 		// Add custom rules (minlength, maxlength) if they don't exist.
+		if ( ! function_exists( 'wpcf7_swv_create_rule' ) ) {
+			return $schema;
+		}
+
 		foreach ( $tags_map as $field_name => $tag ) {
-			$normalized_field = $this->normalize_field_name( $field_name );
-			$min_length       = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_min_length", true );
-			$max_length       = get_post_meta( $form_id, "_vmcf7_{$normalized_field}_max_length", true );
-			$length_message   = $this->get_custom_message( $form_id, $normalized_field, 'length_message' );
-
-			if ( '' !== $min_length && ! isset( $existing_rules[ $field_name ]['minlength'] ) ) {
-				if ( function_exists( 'wpcf7_swv_create_rule' ) ) {
-					$msg = ! empty( $length_message ) ? $length_message : __( 'Invalid length.', 'validation-muse-for-contact-form-7' );
-					$msg = $this->expand_placeholders( $msg, $contact_form, $tag, $min_length, $max_length );
-
-					$new_rule = wpcf7_swv_create_rule( 'minlength', array(
-						'field'     => $field_name,
-						'threshold' => (string) $min_length,
-						'error'     => $msg,
-					) );
-					if ( $new_rule ) {
-						$schema->add_rule( $new_rule );
-					}
-				}
+			if ( ! $this->supports_text_rules( $tag ) ) {
+				continue;
 			}
 
-			if ( '' !== $max_length && ! isset( $existing_rules[ $field_name ]['maxlength'] ) ) {
-				if ( function_exists( 'wpcf7_swv_create_rule' ) ) {
-					$msg = ! empty( $length_message ) ? $length_message : __( 'Invalid length.', 'validation-muse-for-contact-form-7' );
-					$msg = $this->expand_placeholders( $msg, $contact_form, $tag, $min_length, $max_length );
+			$normalized_field = $this->normalize_field_name( $field_name );
+			$thresholds       = array(
+				'minlength' => $this->get_length_setting( $form_id, $normalized_field, 'min_length' ),
+				'maxlength' => $this->get_length_setting( $form_id, $normalized_field, 'max_length' ),
+			);
 
-					$new_rule = wpcf7_swv_create_rule( 'maxlength', array(
+			foreach ( $thresholds as $rule_name => $threshold ) {
+				if ( '' === $threshold || isset( $existing_rules[ $field_name ][ $rule_name ] ) ) {
+					continue;
+				}
+
+				$length_message = $this->get_custom_message( $form_id, $normalized_field, 'length_message' );
+				$msg            = '' !== $length_message ? $length_message : __( 'Invalid length.', 'validation-muse-for-contact-form-7' );
+
+				$new_rule = $this->create_swv_rule(
+					$rule_name,
+					array(
 						'field'     => $field_name,
-						'threshold' => (string) $max_length,
-						'error'     => $msg,
-					) );
-					if ( $new_rule ) {
+						'threshold' => $threshold,
+						'error'     => $this->expand_placeholders( $msg, $contact_form, $tag, $thresholds['minlength'], $thresholds['maxlength'] ),
+					)
+				);
+
+				if ( $new_rule ) {
+					if ( method_exists( $schema, 'addRule' ) ) {
+						$schema->addRule( $new_rule );
+					} elseif ( method_exists( $schema, 'add_rule' ) ) {
 						$schema->add_rule( $new_rule );
 					}
 				}
@@ -699,7 +902,168 @@ class VMCF7_Loader {
 	}
 
 	/**
-	 * Set a protected property on an SWV rule via Reflection.
+	 * Work out which properties of an existing SWV rule the form's settings override.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param int           $form_id   The form ID.
+	 * @param object        $form      The contact form.
+	 * @param WPCF7_FormTag $tag       The form tag the rule belongs to.
+	 * @param string        $rule_name The SWV rule name.
+	 * @return array Property => value pairs; empty when nothing changes.
+	 */
+	private function get_swv_overrides( $form_id, $form, $tag, $rule_name ) {
+		$field     = $this->normalize_field_name( $tag->name );
+		$overrides = array();
+		$type      = '';
+
+		if ( 'required' === $rule_name || 'requiredfile' === $rule_name ) {
+			$type = 'required';
+		} elseif ( 'minlength' === $rule_name || 'maxlength' === $rule_name ) {
+			$type = 'length_message';
+		} elseif ( in_array( $rule_name, $this->get_swv_invalid_rules(), true ) ) {
+			$type = 'invalid';
+		}
+
+		if ( '' === $type ) {
+			return $overrides;
+		}
+
+		$min = $this->get_length_setting( $form_id, $field, 'min_length' );
+		$max = $this->get_length_setting( $form_id, $field, 'max_length' );
+
+		if ( 'length_message' === $type ) {
+			if ( ! $this->supports_text_rules( $tag ) ) {
+				return $overrides;
+			}
+
+			$threshold = 'minlength' === $rule_name ? $min : $max;
+			if ( '' !== $threshold ) {
+				$overrides['threshold'] = $threshold;
+			}
+		}
+
+		$message = $this->get_custom_message( $form_id, $field, $type );
+		if ( '' !== $message ) {
+			$overrides['error'] = $this->expand_placeholders( $message, $form, $tag, $min, $max );
+		}
+
+		return $overrides;
+	}
+
+	/**
+	 * Read an SWV rule's properties as an array, whichever SWV generation it is.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param object $rule The SWV rule.
+	 * @return array The rule properties ('rule', 'field', 'error', ...).
+	 */
+	private function get_swv_rule_data( $rule ) {
+		$data = array();
+
+		if ( is_object( $rule ) ) {
+			if ( method_exists( $rule, 'toArray' ) ) {
+				$data = $rule->toArray();
+			} elseif ( method_exists( $rule, 'to_array' ) ) {
+				$data = $rule->to_array();
+			}
+		}
+
+		$data = is_array( $data ) ? $data : array();
+
+		if ( empty( $data['field'] ) && is_object( $rule ) && method_exists( $rule, 'get_property' ) ) {
+			$data['field'] = $rule->get_property( 'field' );
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Apply property overrides to an SWV rule.
+	 *
+	 * Legacy rules are changed in place. CF7 6.2+ rules are immutable, so a new
+	 * rule of the same kind is built from the old one's properties.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param object $rule      The SWV rule.
+	 * @param array  $rule_data The rule's current properties.
+	 * @param array  $overrides Property => value pairs to change.
+	 * @return object|null The rule to keep in the schema (the same object when
+	 *                     changed in place), or null when it could not be changed.
+	 */
+	private function override_swv_rule( $rule, $rule_data, $overrides ) {
+		if ( property_exists( $rule, 'properties' ) ) {
+			foreach ( $overrides as $key => $value ) {
+				$this->set_swv_property( $rule, $key, $value );
+			}
+			return $rule;
+		}
+
+		$properties = array_merge( $rule_data, $overrides );
+		unset( $properties['rule'] );
+
+		return $this->create_swv_rule( $rule_data['rule'], $properties );
+	}
+
+	/**
+	 * Create an SWV rule through CF7, never letting a failure reach the visitor.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param string $rule_name  The SWV rule name.
+	 * @param array  $properties The rule properties.
+	 * @return object|null The rule, or null on failure.
+	 */
+	private function create_swv_rule( $rule_name, $properties ) {
+		if ( ! function_exists( 'wpcf7_swv_create_rule' ) ) {
+			return null;
+		}
+
+		// CF7 6.2+ declares `threshold` and `error` as strings.
+		foreach ( array( 'threshold', 'error', 'field' ) as $key ) {
+			if ( isset( $properties[ $key ] ) && is_scalar( $properties[ $key ] ) ) {
+				$properties[ $key ] = (string) $properties[ $key ];
+			}
+		}
+
+		try {
+			$rule = wpcf7_swv_create_rule( $rule_name, $properties );
+		} catch ( \Throwable $e ) {
+			$this->report_reflection_failure( $e );
+			return null;
+		}
+
+		return is_object( $rule ) ? $rule : null;
+	}
+
+	/**
+	 * Replace the rule list of an SWV schema.
+	 *
+	 * The schema only offers "add", so swapping a rebuilt rule into its original
+	 * position goes through Reflection on the protected `rules` property.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param object $schema The SWV schema.
+	 * @param array  $rules  The full rule list.
+	 * @return void
+	 */
+	private function set_swv_rules( $schema, $rules ) {
+		try {
+			$ref = new \ReflectionProperty( $schema, 'rules' );
+			if ( PHP_VERSION_ID < 80100 ) {
+				$ref->setAccessible( true );
+			}
+			$ref->setValue( $schema, array_values( $rules ) );
+		} catch ( \Throwable $e ) {
+			$this->report_reflection_failure( $e );
+		}
+	}
+
+	/**
+	 * Set a protected property on a legacy (CF7 ≤ 6.1) SWV rule via Reflection.
 	 *
 	 * @since 1.6.1
 	 *
@@ -720,11 +1084,8 @@ class VMCF7_Loader {
 				$properties[ $key ] = $value;
 				$ref->setValue( $rule, $properties );
 			}
-		} catch ( \ReflectionException $e ) {
-			do_action( 'vmcf7_debug', 'Reflection failure: ' . $e->getMessage() );
-			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
-				error_log( 'Validation Muse ReflectionException: ' . $e->getMessage() );
-			}
+		} catch ( \Throwable $e ) {
+			$this->report_reflection_failure( $e );
 		}
 	}
 }

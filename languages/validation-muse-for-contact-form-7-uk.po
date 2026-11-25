@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Validation Muse for Contact Form 7 1.6.3\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/validation-muse-for-contact-form-7\n"
-"POT-Creation-Date: 2026-07-03T12:57:46+00:00\n"
-"PO-Revision-Date: 2026-07-03 00:00:00+0000\n"
+"Project-Id-Version: Validation Muse for Contact Form 7 1.8.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/app\n"
+"POT-Creation-Date: 2026-11-25T07:36:21+00:00\n"
+"PO-Revision-Date: 2026-11-25 00:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: Ukrainian\n"
 "Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,12 +20,12 @@ msgstr ""
 #. Plugin Name of the plugin
 #: validation-muse-for-contact-form-7.php
 msgid "Validation Muse for Contact Form 7"
-msgstr ""
+msgstr "Validation Muse for Contact Form 7"
 
 #. Plugin URI of the plugin
 #: validation-muse-for-contact-form-7.php
 msgid "https://plugins.symonov.com/validation-muse-for-cf7/"
-msgstr ""
+msgstr "https://plugins.symonov.com/validation-muse-for-cf7/"
 
 #. Description of the plugin
 #: validation-muse-for-contact-form-7.php
@@ -34,363 +35,834 @@ msgstr "Налаштуйте повідомлення валідації для 
 #. Author of the plugin
 #: validation-muse-for-contact-form-7.php
 msgid "simmotorlp"
-msgstr ""
+msgstr "simmotorlp"
 
 #. Author URI of the plugin
 #: validation-muse-for-contact-form-7.php
 msgid "https://github.com/symonovserhii"
-msgstr ""
+msgstr "https://github.com/symonovserhii"
 
-#: admin/views/panel.php:27
-msgid "Enable custom validation messages for this form"
-msgstr "Увімкнути користувацькі повідомлення валідації для цієї форми"
+#: admin/views/panel.php:33
+msgid "Message when the format is wrong"
+msgstr "Повідомлення, якщо формат неправильний"
 
-#: admin/views/panel.php:36
-msgid "Export JSON"
-msgstr "Експорт JSON"
+#: admin/views/panel.php:34
+msgid "Shown when the visitor types something that does not fit this kind of field, for example an email address without @. Leave empty to keep the standard message."
+msgstr "Показується, коли відвідувач вводить те, що не підходить для цього типу поля, наприклад адресу e-mail без @. Залиште порожнім, щоб використовувати стандартне повідомлення."
+
+#: admin/views/panel.php:35 admin/views/panel.php:75
+msgid "If the format is wrong"
+msgstr "Якщо формат неправильний"
+
+#: admin/views/panel.php:38
+msgid "Message when the answer is wrong"
+msgstr "Повідомлення, якщо відповідь неправильна"
 
 #: admin/views/panel.php:39
-msgid "Import JSON"
-msgstr "Імпорт JSON"
+msgid "Shown when the visitor gives the wrong answer to the quiz question. Leave empty to keep the standard message."
+msgstr "Показується, коли відвідувач неправильно відповідає на контрольне запитання. Залиште порожнім, щоб використовувати стандартне повідомлення."
+
+#: admin/views/panel.php:40
+msgid "If the answer is wrong"
+msgstr "Якщо відповідь неправильна"
+
+#: admin/views/panel.php:43
+msgid "Message when the file is too big or the wrong type"
+msgstr "Повідомлення, якщо файл завеликий або невідповідного типу"
 
 #: admin/views/panel.php:44
-msgid "Copy Rules..."
-msgstr "Копіювати правила…"
+msgid "Shown when the visitor picks a file that is larger than allowed or of a type you do not accept. Leave empty to keep the standard message."
+msgstr "Показується, коли відвідувач вибирає файл, більший за дозволений розмір, або типу, який ви не приймаєте. Залиште порожнім, щоб використовувати стандартне повідомлення."
 
-#: admin/views/panel.php:49
-msgid "-- Source Form --"
-msgstr "-- Вихідна форма --"
+#: admin/views/panel.php:45
+msgid "If the file is too big or the wrong type"
+msgstr "Якщо файл завеликий або невідповідного типу"
+
+#: admin/views/panel.php:55
+msgid "Text"
+msgstr "Текст"
+
+#: admin/views/panel.php:56
+msgid "Email"
+msgstr "E-mail"
+
+#: admin/views/panel.php:57
+msgid "Web address"
+msgstr "Вебадреса"
+
+#: admin/views/panel.php:58
+msgid "Phone"
+msgstr "Телефон"
+
+#: admin/views/panel.php:59
+msgid "Number"
+msgstr "Число"
+
+#: admin/views/panel.php:60
+msgid "Slider"
+msgstr "Повзунок"
+
+#: admin/views/panel.php:61
+msgid "Date"
+msgstr "Дата"
 
 #: admin/views/panel.php:62
-msgid "Copy"
-msgstr "Копіювати"
+msgid "Time"
+msgstr "Час"
+
+#: admin/views/panel.php:63
+msgid "Long text"
+msgstr "Довгий текст"
+
+#: admin/views/panel.php:64
+msgid "Drop-down"
+msgstr "Випадний список"
+
+#: admin/views/panel.php:65
+msgid "Checkboxes"
+msgstr "Прапорці"
+
+#: admin/views/panel.php:66
+msgid "Radio buttons"
+msgstr "Перемикачі"
 
 #: admin/views/panel.php:67
-msgid "Save these rules as a reusable global default template"
-msgstr ""
-"Зберегти ці правила як багаторазовий глобальний шаблон за замовчуванням"
+msgid "File upload"
+msgstr "Завантаження файлу"
 
 #: admin/views/panel.php:68
-msgid "Save as Default"
-msgstr "Зберегти як шаблон за замовчуванням"
+msgid "Acceptance"
+msgstr "Згода"
 
-#: admin/views/panel.php:70
-msgid "Apply the saved global default template to this form"
-msgstr ""
-"Застосувати збережений глобальний шаблон за замовчуванням до цієї форми"
-
-#: admin/views/panel.php:71
-msgid "Apply Default"
-msgstr "Застосувати шаблон за замовчуванням"
-
-#: admin/views/panel.php:73
-msgid "Bulk copy these rules to all other contact forms"
-msgstr "Масово скопіювати ці правила на всі інші форми"
+#: admin/views/panel.php:69
+msgid "Quiz"
+msgstr "Контрольне запитання"
 
 #: admin/views/panel.php:74
-msgid "Apply to All Forms"
-msgstr "Застосувати до всіх форм"
+msgid "If left empty"
+msgstr "Якщо не заповнено"
 
-#: admin/views/panel.php:82
-msgid "Custom validation messages"
-msgstr "Користувацькі повідомлення валідації"
+#: admin/views/panel.php:76
+msgid "If too short or too long"
+msgstr "Якщо закоротко або задовго"
 
-#: admin/views/panel.php:85 admin/views/panel.php:332
-msgid "Field"
-msgstr "Поле"
+#: admin/views/panel.php:77
+msgid "If the pattern does not match"
+msgstr "Якщо не відповідає шаблону"
 
-#: admin/views/panel.php:86 admin/views/panel.php:333
-msgid "Required Message"
-msgstr "Повідомлення обов'язкового поля"
+#: admin/views/panel.php:78
+msgid "If empty while the other field is filled in"
+msgstr "Якщо порожньо, а інше поле заповнено"
 
-#: admin/views/panel.php:87 admin/views/panel.php:334
-msgid "Invalid Format Message"
-msgstr "Повідомлення невірного формату"
+#: admin/views/panel.php:95
+msgid "Digits only"
+msgstr "Лише цифри"
 
 #: admin/views/panel.php:96
-msgid "Show Regex / Length / Conditional validation rules"
-msgstr "Показати regex-/довжина-/умовні правила валідації"
+msgid "Exactly 5 digits (e.g. a ZIP code)"
+msgstr "Рівно 5 цифр (наприклад, поштовий індекс)"
 
-#: admin/views/panel.php:97 admin/views/panel.php:354
-msgid "Rules"
-msgstr "Правила"
+#: admin/views/panel.php:97
+msgid "Letters only (names)"
+msgstr "Лише літери (імена)"
 
-#. translators: %s: field name
-#: admin/views/panel.php:107
+#: admin/views/panel.php:98
+msgid "Letters, digits, dash and underscore"
+msgstr "Літери, цифри, дефіс і підкреслення"
+
+#: admin/views/panel.php:99
+msgid "Phone number"
+msgstr "Номер телефону"
+
+#: admin/views/panel.php:100
+msgid "No links allowed"
+msgstr "Посилання заборонені"
+
+#: admin/views/panel.php:129 admin/views/panel.php:314
+msgid "Customized"
+msgstr "Налаштовано"
+
+#: admin/views/panel.php:130 admin/views/panel.php:314
+msgid "Default messages"
+msgstr "Стандартні повідомлення"
+
+#. translators: 1: number of customized fields, 2: total number of fields.
+#: admin/views/panel.php:132 admin/views/panel.php:244
 #, php-format
-msgid "Required message for %s"
-msgstr "Повідомлення обов'язкового поля для %s"
+msgid "%1$s of %2$s fields customized"
+msgstr "Налаштовано полів: %1$s із %2$s"
 
-#: admin/views/panel.php:118 admin/views/panel.php:228
-#: includes/class-vmcf7-loader.php:162
+#: admin/views/panel.php:133
+msgid "Contact Form 7’s standard message"
+msgstr "Стандартне повідомлення Contact Form 7"
+
+#: admin/views/panel.php:134 includes/class-vmcf7-loader.php:180
 msgid "This field is required"
 msgstr "Це поле є обов'язковим для заповнення"
 
-#. translators: %s: field name
-#: admin/views/panel.php:127
+#: admin/views/panel.php:135 includes/class-vmcf7-loader.php:204
+msgid "Invalid format."
+msgstr "Невірний формат."
+
+#: admin/views/panel.php:136 includes/class-vmcf7-loader.php:214
+#: includes/class-vmcf7-loader.php:878
+msgid "Invalid length."
+msgstr "Невірна довжина."
+
+#. translators: %d: number of characters.
+#: admin/views/panel.php:138
 #, php-format
-msgid "Invalid format message for %s"
-msgstr "Повідомлення невірного формату для %s"
+msgid "This message is very long (%d characters). Short messages are easier to read."
+msgstr "Це повідомлення дуже довге (символів: %d). Короткі повідомлення читати легше."
+
+#. translators: %s: list of HTML tags.
+#: admin/views/panel.php:140
+#, php-format
+msgid "These HTML tags are not allowed and will be removed when you save: %s"
+msgstr "Ці HTML-теги не дозволені й будуть вилучені під час збереження: %s"
 
 #: admin/views/panel.php:141
-msgid "Format validation not supported."
-msgstr "Валідація формату не підтримується."
+msgid "This field has no length limit yet (Extra rules → Length limit), so {min} and {max} will be left blank."
+msgstr "Це поле ще не має обмеження довжини (Додаткові правила → Обмеження довжини), тому на місці {min} і {max} буде порожньо."
 
-#: admin/views/panel.php:153
-msgid "Custom Regex Validation"
-msgstr "Власна regex-валідація"
+#: admin/views/panel.php:142
+msgid "The minimum is larger than the maximum, so no value can ever pass."
+msgstr "Мінімум більший за максимум, тому жодне значення не пройде перевірку."
+
+#: admin/views/panel.php:143
+msgid "This pattern may be invalid. Please test it on the live form before relying on it."
+msgstr "Можливо, цей шаблон некоректний. Перевірте його на робочій формі, перш ніж на нього покладатися."
+
+#: admin/views/panel.php:144
+msgid "Accepted — no error would be shown."
+msgstr "Прийнято — помилку не буде показано."
+
+#: admin/views/panel.php:145
+msgid "Rejected — the visitor would see the error message."
+msgstr "Відхилено — відвідувач побачить повідомлення про помилку."
+
+#: admin/views/panel.php:146
+msgid "This pattern cannot be tested here."
+msgstr "Цей шаблон не можна перевірити тут."
+
+#: admin/views/panel.php:147
+msgid "Working…"
+msgstr "Виконується…"
+
+#: admin/views/panel.php:148
+msgid "Cancel"
+msgstr "Скасувати"
+
+#: admin/views/panel.php:149
+msgid "Reloading the page…"
+msgstr "Сторінка перезавантажується…"
+
+#: admin/views/panel.php:150
+msgid "Something went wrong. Please try again."
+msgstr "Щось пішло не так. Спробуйте ще раз."
+
+#: admin/views/panel.php:151
+msgid "Network error. Please check your internet connection and try again."
+msgstr "Помилка мережі. Перевірте підключення до інтернету та спробуйте ще раз."
+
+#: admin/views/panel.php:152
+msgid "Please choose a form to copy from first."
+msgstr "Спочатку виберіть форму, з якої потрібно скопіювати."
+
+#. translators: %s: form title.
+#: admin/views/panel.php:154
+#, php-format
+msgid "Replace all validation settings of this form with the ones from “%s”? Everything set up here, including unsaved changes, will be overwritten."
+msgstr "Замінити всі налаштування валідації цієї форми налаштуваннями з «%s»? Усе, що налаштовано тут, зокрема незбережені зміни, буде перезаписано."
 
 #: admin/views/panel.php:155
-msgid "Pattern (without delimiters)"
-msgstr "Патерн (без роздільників)"
+msgid "Yes, copy and replace"
+msgstr "Так, скопіювати й замінити"
 
-#: admin/views/panel.php:163 admin/views/panel.php:197
-#: admin/views/panel.php:221
-msgid "Error Message"
-msgstr "Повідомлення про помилку"
+#. translators: %s: file name.
+#: admin/views/panel.php:157
+#, php-format
+msgid "Replace all validation settings of this form with the contents of “%s”? Everything set up here, including unsaved changes, will be overwritten."
+msgstr "Замінити всі налаштування валідації цієї форми вмістом файлу «%s»? Усе, що налаштовано тут, зокрема незбережені зміни, буде перезаписано."
 
-#: admin/views/panel.php:170
-msgid "Invalid format"
-msgstr "Невірний формат"
+#: admin/views/panel.php:158
+msgid "Yes, load the file"
+msgstr "Так, завантажити файл"
 
-#: admin/views/panel.php:177
-msgid "Length Restriction"
-msgstr "Обмеження довжини"
+#: admin/views/panel.php:159
+msgid "Please choose a .json file that was downloaded from this plugin."
+msgstr "Виберіть файл .json, завантажений із цього плагіна."
 
-#: admin/views/panel.php:180
-msgid "Min Characters"
-msgstr "Мін. символів"
+#: admin/views/panel.php:160
+msgid "Replace all validation settings of this form with your saved template? Everything set up here, including unsaved changes, will be overwritten."
+msgstr "Замінити всі налаштування валідації цієї форми вашим збереженим шаблоном? Усе, що налаштовано тут, зокрема незбережені зміни, буде перезаписано."
 
-#: admin/views/panel.php:188
-msgid "Max Characters"
-msgstr "Макс. символів"
+#: admin/views/panel.php:161
+msgid "Yes, use the template"
+msgstr "Так, використати шаблон"
 
-#: admin/views/panel.php:204
-msgid "Must be between {min} and {max} characters"
-msgstr "Має бути від {min} до {max} символів"
+#: admin/views/panel.php:162
+msgid "Save this form’s settings as your template? A template you saved earlier will be replaced."
+msgstr "Зберегти налаштування цієї форми як ваш шаблон? Раніше збережений шаблон буде замінено."
 
-#: admin/views/panel.php:211
-msgid "Conditional Validation (Required-If)"
-msgstr "Умовна валідація (Required-If)"
+#: admin/views/panel.php:163
+msgid "Yes, save as template"
+msgstr "Так, зберегти як шаблон"
 
-#: admin/views/panel.php:213
-msgid "Companion Field Name"
-msgstr "Ім'я пов'язаного поля"
+#. translators: %d: number of other contact forms.
+#: admin/views/panel.php:166
+#, php-format
+msgid "Overwrite the validation settings of your %d other contact form with the saved settings of this form? This cannot be undone."
+msgid_plural "Overwrite the validation settings of all %d other contact forms with the saved settings of this form? This cannot be undone."
+msgstr[0] "Перезаписати налаштування валідації %d іншої контактної форми збереженими налаштуваннями цієї форми? Цю дію неможливо скасувати."
+msgstr[1] "Перезаписати налаштування валідації всіх %d інших контактних форм збереженими налаштуваннями цієї форми? Цю дію неможливо скасувати."
+msgstr[2] "Перезаписати налаштування валідації всіх %d інших контактних форм збереженими налаштуваннями цієї форми? Цю дію неможливо скасувати."
 
-#: admin/views/panel.php:242
-msgid "Live Message Preview"
-msgstr "Живий попередній перегляд повідомлення"
+#: admin/views/panel.php:174
+msgid "Yes, overwrite all other forms"
+msgstr "Так, перезаписати всі інші форми"
 
-#: admin/views/panel.php:243
-msgid ""
-"Select a field to preview how its custom messages will render (evaluates "
-"placeholder tokens like {field_label}, {min}, {max})."
-msgstr ""
-"Виберіть поле, щоб побачити, як відображатимуться його повідомлення "
-"(обчислює токени-плейсхолдери на кшталт {field_label}, {min}, {max})."
+#: admin/views/panel.php:175
+msgid "Translating…"
+msgstr "Переклад…"
 
-#: admin/views/panel.php:247
-msgid "-- Choose Field --"
-msgstr "-- Вибрати поле --"
+#: admin/views/panel.php:176
+msgid "Translation failed. Please try again."
+msgstr "Не вдалося виконати переклад. Спробуйте ще раз."
 
-#: admin/views/panel.php:258
-msgid "Extracted Field Label:"
-msgstr "Витягнута підпис поля:"
+#. translators: %d: number of translated messages.
+#: admin/views/panel.php:178
+#, php-format
+msgid "%d messages translated. Check them, then save the form to keep them."
+msgstr "Перекладено повідомлень: %d. Перевірте їх і збережіть форму, щоб вони не загубилися."
 
-#: admin/views/panel.php:263
-msgid "Required Field:"
-msgstr "Обов'язкове поле:"
-
-#: admin/views/panel.php:267
-msgid "Invalid Format:"
-msgstr "Невірний формат:"
-
-#: admin/views/panel.php:271
-msgid "Custom Regex Match Fails:"
-msgstr "Власний regex не збігається:"
-
-#: admin/views/panel.php:275
-msgid "Min/Max Length Violated:"
-msgstr "Порушено мін/макс довжину:"
-
-#: admin/views/panel.php:279
-msgid "Conditional (Required-If) Fails:"
-msgstr "Умова (Required-If) не виконана:"
-
-#: admin/views/panel.php:287
-msgid "No supported fields found in this form layout."
-msgstr "У розмітці цієї форми не знайдено підтримуваних полів."
-
-#: admin/views/panel.php:297
-msgid "Message Translations (Flavor)"
-msgstr "Переклади повідомлень (Flavor)"
-
-#: admin/views/panel.php:317
-msgid "AI Translate"
-msgstr "AI Translate"
-
-#: admin/views/panel.php:353
-msgid "Translate Regex / Length / Conditional error messages"
-msgstr "Перекласти regex-/довжина-/умовні повідомлення про помилки"
-
-#: admin/views/panel.php:380
-msgid "Format translation not supported."
-msgstr "Переклад формату не підтримується."
-
-#: admin/views/panel.php:392
-msgid "Translate Custom Regex Error"
-msgstr "Перекласти повідомлення про помилку regex"
-
-#: admin/views/panel.php:406
-msgid "Translate Length Error"
-msgstr "Перекласти повідомлення про помилку довжини"
-
-#: admin/views/panel.php:420
-msgid "Translate Conditional Error"
-msgstr "Перекласти умовне повідомлення про помилку"
-
-#: includes/class-vmcf7-admin.php:92
+#: admin/views/panel.php:187 includes/class-vmcf7-admin.php:93
 msgid "Custom Validation"
 msgstr "Користувацька валідація"
 
-#: includes/class-vmcf7-admin.php:366
+#: admin/views/panel.php:189
+msgid "Choose what visitors read when they fill in a field incorrectly, and add extra checks such as a minimum length. Fields you leave untouched keep Contact Form 7’s standard messages."
+msgstr "Виберіть, що побачать відвідувачі, якщо заповнять поле неправильно, і додайте додаткові перевірки, наприклад мінімальну довжину. Для полів, яких ви не чіпали, залишаються стандартні повідомлення Contact Form 7."
+
+#: admin/views/panel.php:203
+msgid "Use custom validation on this form"
+msgstr "Використовувати користувацьку валідацію в цій формі"
+
+#: admin/views/panel.php:206
+msgid "On — the messages and rules below are used on your site."
+msgstr "Увімкнено — повідомлення та правила нижче використовуються на вашому сайті."
+
+#: admin/views/panel.php:207
+msgid "Off — visitors see Contact Form 7’s standard messages. Your settings below are kept, so you can switch this back on at any time."
+msgstr "Вимкнено — відвідувачі бачать стандартні повідомлення Contact Form 7. Ваші налаштування нижче зберігаються, тож ви можете ввімкнути це знову будь-коли."
+
+#: admin/views/panel.php:215
+msgid "This form has no fields yet"
+msgstr "У цій формі ще немає полів"
+
+#: admin/views/panel.php:216
+msgid "Add fields on the “Form” tab and save the form. They will then appear here, ready for your own messages and rules."
+msgstr "Додайте поля на вкладці «Форма» та збережіть форму. Після цього вони з’являться тут, і ви зможете задати для них власні повідомлення та правила."
+
+#: admin/views/panel.php:224
+msgid "Find a field"
+msgstr "Знайти поле"
+
+#: admin/views/panel.php:228
+msgid "Find a field…"
+msgstr "Знайти поле…"
+
+#: admin/views/panel.php:234
+msgid "Only show customized fields"
+msgstr "Показувати лише налаштовані поля"
+
+#: admin/views/panel.php:252
+msgid "Open all"
+msgstr "Розгорнути всі"
+
+#: admin/views/panel.php:253
+msgid "Close all"
+msgstr "Згорнути всі"
+
+#: admin/views/panel.php:309
+msgid "Required"
+msgstr "Обов’язкове"
+
+#: admin/views/panel.php:311
+msgid "Optional"
+msgstr "Необов’язкове"
+
+#: admin/views/panel.php:323
+msgid "Message when the field is left empty"
+msgstr "Повідомлення, якщо поле не заповнено"
+
+#: admin/views/panel.php:331
+msgid "e.g. Please fill in {field_label}"
+msgstr "наприклад: Будь ласка, заповніть поле {field_label}"
+
+#: admin/views/panel.php:334
+msgid "Shown when a visitor skips this required field. Leave empty to keep the standard message."
+msgstr "Показується, коли відвідувач пропускає це обов’язкове поле. Залиште порожнім, щоб використовувати стандартне повідомлення."
+
+#: admin/views/panel.php:336
+msgid "This field is optional in your form, so this message is not shown yet. To make the field required, add * after its type on the “Form” tab (for example [text* your-name])."
+msgstr "Це поле у вашій формі необов’язкове, тому повідомлення поки не показується. Щоб зробити поле обов’язковим, додайте * після його типу на вкладці «Форма» (наприклад, [text* your-name])."
+
+#. translators: %s: example message.
+#: admin/views/panel.php:353
+#, php-format
+msgid "e.g. %s"
+msgstr "наприклад: %s"
+
+#: admin/views/panel.php:368
+msgid "Extra rules"
+msgstr "Додаткові правила"
+
+#: admin/views/panel.php:369
+msgid "length limit, allowed characters, required only sometimes"
+msgstr "обмеження довжини, дозволені символи, обов’язковість за умовою"
+
+#: admin/views/panel.php:369
+msgid "required only sometimes"
+msgstr "обов’язковість за умовою"
+
+#: admin/views/panel.php:377
+msgid "Length limit"
+msgstr "Обмеження довжини"
+
+#: admin/views/panel.php:378
+msgid "How many characters the answer may have. Fill in one or both; leave empty for no limit."
+msgstr "Скільки символів може бути у відповіді. Заповніть одне або обидва значення; залиште порожніми, щоб не обмежувати."
+
+#: admin/views/panel.php:381
+msgid "At least"
+msgstr "Не менше"
+
+#: admin/views/panel.php:391
+msgid "At most"
+msgstr "Не більше"
+
+#: admin/views/panel.php:400
+msgid "characters"
+msgstr "символів"
+
+#: admin/views/panel.php:404
+msgid "Message when the answer is too short or too long"
+msgstr "Повідомлення, якщо відповідь закоротка або задовга"
+
+#: admin/views/panel.php:411
+msgid "e.g. Please use between {min} and {max} characters"
+msgstr "наприклад: Будь ласка, введіть від {min} до {max} символів"
+
+#: admin/views/panel.php:418
+msgid "Allowed characters (pattern)"
+msgstr "Дозволені символи (шаблон)"
+
+#: admin/views/panel.php:419
+msgid "Advanced"
+msgstr "Додатково"
+
+#: admin/views/panel.php:421
+msgid "Only accept answers that match a pattern (a “regular expression”). Not sure how to write one? Pick a ready-made example."
+msgstr "Приймати лише відповіді, що відповідають шаблону («регулярному виразу»). Не знаєте, як його написати? Виберіть готовий приклад."
+
+#: admin/views/panel.php:423
+msgid "Ready-made examples"
+msgstr "Готові приклади"
+
+#: admin/views/panel.php:425
+msgid "— Choose an example —"
+msgstr "— Виберіть приклад —"
+
+#: admin/views/panel.php:431
+msgid "Pattern"
+msgstr "Шаблон"
+
+#: admin/views/panel.php:441
+msgid "Write it without the surrounding slashes. Important: the pattern only has to be found somewhere in the answer, so [0-9]+ also accepts “abc1”. To check the whole answer, start with ^ and end with $, like ^[0-9]+$. Leave empty for no pattern check."
+msgstr "Пишіть його без скісних рисок по краях. Важливо: достатньо, щоб шаблон знайшовся будь-де у відповіді, тому [0-9]+ прийме й «abc1». Щоб перевіряти відповідь повністю, почніть із ^ і закінчіть $, наприклад ^[0-9]+$. Залиште порожнім, щоб не перевіряти за шаблоном."
+
+#: admin/views/panel.php:443
+msgid "The saved pattern is not valid, so it is currently ignored on your site. Correct it or clear it."
+msgstr "Збережений шаблон некоректний, тому зараз він на вашому сайті не враховується. Виправте його або очистьте."
+
+#: admin/views/panel.php:448
+msgid "Try it: type an example answer"
+msgstr "Спробуйте: введіть приклад відповіді"
+
+#: admin/views/panel.php:456
+msgid "Message when the answer does not match"
+msgstr "Повідомлення, якщо відповідь не відповідає шаблону"
+
+#: admin/views/panel.php:463
+msgid "e.g. Please use digits only"
+msgstr "наприклад: Будь ласка, використовуйте лише цифри"
+
+#: admin/views/panel.php:471
+msgid "Required only sometimes"
+msgstr "Обов’язкове за умовою"
+
+#: admin/views/panel.php:472
+msgid "Make this field required only when the visitor has filled in (or ticked) another field. Example: ask for a phone number only if “Call me back” is ticked."
+msgstr "Зробіть це поле обов’язковим, лише якщо відвідувач заповнив (або позначив) інше поле. Приклад: просити номер телефону, лише якщо позначено «Передзвоніть мені»."
+
+#: admin/views/panel.php:474
+msgid "Required when this field is filled in"
+msgstr "Обов’язкове, якщо заповнено це поле"
+
+#: admin/views/panel.php:479
+msgid "— Not used —"
+msgstr "— Не використовується —"
+
+#. translators: %s: field name.
+#: admin/views/panel.php:498
+#, php-format
+msgid "%s (not found in this form)"
+msgstr "%s (не знайдено в цій формі)"
+
+#: admin/views/panel.php:504
+msgid "Message when it is then left empty"
+msgstr "Повідомлення, якщо поле при цьому не заповнено"
+
+#: admin/views/panel.php:511
+msgid "e.g. Please add your phone number so we can call you back"
+msgstr "наприклад: Будь ласка, вкажіть номер телефону, щоб ми могли вам передзвонити"
+
+#: admin/views/panel.php:519
+msgid "Clear all settings of this field"
+msgstr "Скинути всі налаштування цього поля"
+
+#: admin/views/panel.php:526
+msgid "What visitors will see"
+msgstr "Що побачать відвідувачі"
+
+#: admin/views/panel.php:545
+msgid "Smart words"
+msgstr "Розумні слова"
+
+#: admin/views/panel.php:546
+msgid "Click one to add it to the message you are writing. It is replaced automatically on your site."
+msgstr "Натисніть на слово, щоб додати його до повідомлення, яке ви пишете. На сайті воно замінюється автоматично."
+
+#: admin/views/panel.php:550
+msgid "the field’s label, e.g. “Your email”"
+msgstr "підпис поля, наприклад «Ваш e-mail»"
+
+#: admin/views/panel.php:554
+msgid "the “at least” number from Length limit"
+msgstr "число «Не менше» з обмеження довжини"
+
+#: admin/views/panel.php:558
+msgid "the “at most” number from Length limit"
+msgstr "число «Не більше» з обмеження довжини"
+
+#: admin/views/panel.php:567
+msgid "No fields match. Clear the search or untick “Only show customized fields”."
+msgstr "Відповідних полів немає. Очистьте пошук або зніміть позначку «Показувати лише налаштовані поля»."
+
+#: admin/views/panel.php:572
+msgid "Changes take effect after you save the form. Added a new field on the “Form” tab? Save the form and it will show up here."
+msgstr "Зміни набувають чинності після збереження форми. Додали нове поле на вкладці «Форма»? Збережіть форму, і воно з’явиться тут."
+
+#: admin/views/panel.php:580 admin/views/panel.php:609
+msgid "Translations"
+msgstr "Переклади"
+
+#: admin/views/panel.php:582
+msgid "Your messages are registered for translation each time you save the form. Save first, then translate them here:"
+msgstr "Ваші повідомлення реєструються для перекладу під час кожного збереження форми. Спочатку збережіть форму, потім перекладіть їх тут:"
+
+#: admin/views/panel.php:587
+msgid "(opens in a new tab)"
+msgstr "(відкриється в новій вкладці)"
+
+#. translators: %s: text domain / string group name.
+#: admin/views/panel.php:590
+#, php-format
+msgid "(look for the group “%s”)"
+msgstr "(знайдіть групу «%s»)"
+
+#: admin/views/panel.php:611
+msgid "Your messages in the other languages of your site (via the Flavor plugin). A message without a translation is shown in the original language."
+msgstr "Ваші повідомлення іншими мовами сайту (через плагін Flavor). Повідомлення без перекладу показується мовою оригіналу."
+
+#: admin/views/panel.php:614
+msgid "Languages"
+msgstr "Мови"
+
+#: admin/views/panel.php:684
+msgid "Also show messages that have no original text yet"
+msgstr "Показувати також повідомлення, для яких ще немає початкового тексту"
+
+#. translators: %s: language name.
+#: admin/views/panel.php:694
+#, php-format
+msgid "Translate into %s automatically"
+msgstr "Перекласти автоматично: %s"
+
+#: admin/views/panel.php:700
+msgid "Automatic translation uses the messages from the last time you saved the form, and replaces what is typed below. Nothing is stored until you save."
+msgstr "Автоматичний переклад використовує повідомлення з останнього збереження форми й замінює те, що введено нижче. Нічого не зберігається, доки ви не збережете форму."
+
+#: admin/views/panel.php:705
+msgid "Nothing to translate yet. Write your messages in the fields above and save the form — they will then appear here."
+msgstr "Поки нічого перекладати. Напишіть повідомлення в полях вище та збережіть форму — після цього вони з’являться тут."
+
+#: admin/views/panel.php:734
+msgid "Original:"
+msgstr "Оригінал:"
+
+#: admin/views/panel.php:737
+msgid "No original message written yet."
+msgstr "Початкове повідомлення ще не написано."
+
+#: admin/views/panel.php:761
+msgid "Copy, back up and reuse"
+msgstr "Копіювання, резервна копія та повторне використання"
+
+#: admin/views/panel.php:762
+msgid "move your messages and rules between forms or sites"
+msgstr "переносьте повідомлення та правила між формами й сайтами"
+
+#: admin/views/panel.php:769
+msgid "Save this form first. These tools become available once the form exists."
+msgstr "Спочатку збережіть цю форму. Ці інструменти стануть доступними, коли форму буде створено."
+
+#: admin/views/panel.php:772
+msgid "These tools work with the last saved version of your forms."
+msgstr "Ці інструменти працюють з останньою збереженою версією ваших форм."
+
+#: admin/views/panel.php:773
+msgid "You have unsaved changes on this tab — save the form first if you want them included."
+msgstr "На цій вкладці є незбережені зміни — спочатку збережіть форму, якщо хочете, щоб їх було враховано."
+
+#: admin/views/panel.php:780
+msgid "Copy from another form"
+msgstr "Скопіювати з іншої форми"
+
+#: admin/views/panel.php:781
+msgid "Take the messages and rules of another form and use them here. Works best when both forms use the same field names."
+msgstr "Візьміть повідомлення та правила іншої форми й використайте їх тут. Найкраще працює, коли в обох формах однакові назви полів."
+
+#: admin/views/panel.php:785
+msgid "Form to copy from"
+msgstr "Форма-джерело"
+
+#: admin/views/panel.php:787
+msgid "— Choose a form —"
+msgstr "— Виберіть форму —"
+
+#: admin/views/panel.php:793
+msgid "Copy to this form"
+msgstr "Скопіювати в цю форму"
+
+#: admin/views/panel.php:796 admin/views/panel.php:845
+msgid "You have no other contact forms yet."
+msgstr "У вас ще немає інших контактних форм."
+
+#: admin/views/panel.php:803
+msgid "Back up or move to another site"
+msgstr "Резервна копія або перенесення на інший сайт"
+
+#: admin/views/panel.php:804
+msgid "Download this form’s messages and rules as a file, or load a file you downloaded earlier."
+msgstr "Завантажте повідомлення та правила цієї форми як файл або відкрийте файл, завантажений раніше."
+
+#: admin/views/panel.php:809
+msgid "Download file"
+msgstr "Завантажити файл"
+
+#: admin/views/panel.php:813
+msgid "Load from file…"
+msgstr "Відкрити з файлу…"
+
+#: admin/views/panel.php:821
+msgid "Your template"
+msgstr "Ваш шаблон"
+
+#: admin/views/panel.php:822
+msgid "Keep one favourite set of messages and rules as a template, then reuse it on any form with one click."
+msgstr "Збережіть улюблений набір повідомлень і правил як шаблон і застосовуйте його до будь-якої форми одним натисканням."
+
+#: admin/views/panel.php:826
+msgid "Save this form as template"
+msgstr "Зберегти цю форму як шаблон"
+
+#: admin/views/panel.php:829
+msgid "Use template on this form"
+msgstr "Застосувати шаблон до цієї форми"
+
+#: admin/views/panel.php:836
+msgid "Use on all forms"
+msgstr "Застосувати до всіх форм"
+
+#: admin/views/panel.php:837
+msgid "Copy this form’s messages and rules to every other contact form on this site. Their current validation settings are overwritten."
+msgstr "Скопіюйте повідомлення та правила цієї форми в усі інші контактні форми на сайті. Їхні поточні налаштування валідації буде перезаписано."
+
+#: admin/views/panel.php:842
+msgid "Copy to all other forms…"
+msgstr "Скопіювати в усі інші форми…"
+
+#: includes/class-vmcf7-admin.php:144
+msgid "WPML → String Translation"
+msgstr "WPML → Переклад рядків"
+
+#: includes/class-vmcf7-admin.php:152
+msgid "Languages → Translations"
+msgstr "Мови → Переклади"
+
+#: includes/class-vmcf7-admin.php:431
 msgid "Please enter a valid email address"
 msgstr "Будь ласка, введіть коректну адресу електронної пошти"
 
-#: includes/class-vmcf7-admin.php:367
+#: includes/class-vmcf7-admin.php:432
 msgid "Please enter a valid URL"
 msgstr "Будь ласка, введіть коректну URL-адресу"
 
-#: includes/class-vmcf7-admin.php:368
+#: includes/class-vmcf7-admin.php:433
 msgid "Please enter a valid phone number"
 msgstr "Будь ласка, введіть коректний номер телефону"
 
-#: includes/class-vmcf7-admin.php:369 includes/class-vmcf7-admin.php:370
+#: includes/class-vmcf7-admin.php:434 includes/class-vmcf7-admin.php:435
 msgid "Please enter a valid number"
 msgstr "Будь ласка, введіть коректне число"
 
-#: includes/class-vmcf7-admin.php:371
+#: includes/class-vmcf7-admin.php:436
 msgid "Please enter a valid date"
 msgstr "Будь ласка, введіть коректну дату"
 
-#: includes/class-vmcf7-admin.php:372
+#: includes/class-vmcf7-admin.php:437
 msgid "Please enter a valid time"
 msgstr "Будь ласка, введіть коректний час"
 
-#: includes/class-vmcf7-admin.php:389 includes/class-vmcf7-admin.php:463
-#: includes/class-vmcf7-admin.php:509 includes/class-vmcf7-admin.php:608
-#: includes/class-vmcf7-admin.php:677
+#: includes/class-vmcf7-admin.php:438
+msgid "The answer is not correct"
+msgstr "Відповідь неправильна"
+
+#: includes/class-vmcf7-admin.php:439
+msgid "This file cannot be uploaded"
+msgstr "Цей файл не можна завантажити"
+
+#: includes/class-vmcf7-admin.php:455 includes/class-vmcf7-admin.php:605
 msgid "Permission denied."
 msgstr "Доступ заборонено."
 
-#: includes/class-vmcf7-admin.php:393
+#: includes/class-vmcf7-admin.php:609
 msgid "Flavor plugin is not active."
 msgstr "Плагін Flavor не активний."
 
-#: includes/class-vmcf7-admin.php:397
-msgid ""
-"AI translation provider is not configured. Please check Flavor settings."
-msgstr ""
-"Провайдер AI-перекладу не налаштований. Перевірте налаштування Flavor."
+#: includes/class-vmcf7-admin.php:613
+msgid "AI translation provider is not configured. Please check Flavor settings."
+msgstr "Провайдер AI-перекладу не налаштований. Перевірте налаштування Flavor."
 
-#: includes/class-vmcf7-admin.php:404
+#: includes/class-vmcf7-admin.php:620
 msgid "Missing form ID or language."
 msgstr "Не вказано ID форми або мову."
 
-#: includes/class-vmcf7-admin.php:410
+#: includes/class-vmcf7-admin.php:625 includes/class-vmcf7-admin.php:664
+#: includes/class-vmcf7-admin.php:695 includes/class-vmcf7-admin.php:766
+#: includes/class-vmcf7-admin.php:798
 msgid "Invalid form ID."
 msgstr "Невірний ID форми."
 
-#: includes/class-vmcf7-admin.php:416
+#: includes/class-vmcf7-admin.php:631
 msgid "Invalid target language."
 msgstr "Невірна цільова мова."
 
-#: includes/class-vmcf7-admin.php:435
-msgid ""
-"No custom validation messages written yet. Please write and save them in the"
-" main language first."
-msgstr ""
-"Користувацькі повідомлення валідації ще не написані. Спочатку напишіть і "
-"збережіть їх основною мовою."
+#: includes/class-vmcf7-admin.php:636
+msgid "No custom validation messages written yet. Please write and save them in the main language first."
+msgstr "Користувацькі повідомлення валідації ще не написані. Спочатку напишіть і збережіть їх основною мовою."
 
-#: includes/class-vmcf7-admin.php:441
-msgid ""
-"AI translation service failed. Please check your network connection or "
-"provider limits."
-msgstr ""
-"Збій сервісу AI-перекладу. Перевірте мережеве з'єднання або ліміти "
-"провайдера."
+#: includes/class-vmcf7-admin.php:642
+msgid "AI translation service failed. Please check your network connection or provider limits."
+msgstr "Збій сервісу AI-перекладу. Перевірте мережеве з'єднання або ліміти провайдера."
 
-#: includes/class-vmcf7-admin.php:468 includes/class-vmcf7-admin.php:514
+#: includes/class-vmcf7-admin.php:660 includes/class-vmcf7-admin.php:691
 msgid "Missing form ID."
 msgstr "Не вказано ID форми."
 
-#: includes/class-vmcf7-admin.php:518
+#: includes/class-vmcf7-admin.php:699
 msgid "No file uploaded."
 msgstr "Файл не завантажено."
 
-#: includes/class-vmcf7-admin.php:524
+#: includes/class-vmcf7-admin.php:705
 msgid "Only JSON files are allowed."
 msgstr "Дозволені лише файли JSON."
 
-#: includes/class-vmcf7-admin.php:541
+#: includes/class-vmcf7-admin.php:715 includes/class-vmcf7-admin.php:729
 msgid "Invalid file type. Only JSON is allowed."
 msgstr "Невірний тип файлу. Дозволено лише JSON."
 
-#: includes/class-vmcf7-admin.php:548
+#: includes/class-vmcf7-admin.php:737
 msgid "Invalid JSON format."
 msgstr "Невірний формат JSON."
 
-#: includes/class-vmcf7-admin.php:595
+#: includes/class-vmcf7-admin.php:743
 msgid "Rules imported successfully."
 msgstr "Правила успішно імпортовано."
 
-#: includes/class-vmcf7-admin.php:615
+#: includes/class-vmcf7-admin.php:761
 msgid "Missing source or target form ID."
 msgstr "Не вказано ID вихідної або цільової форми."
 
-#: includes/class-vmcf7-admin.php:664
+#: includes/class-vmcf7-admin.php:776
 msgid "Rules copied successfully."
 msgstr "Правила успішно скопійовано."
 
-#: includes/class-vmcf7-admin.php:684
+#: includes/class-vmcf7-admin.php:794
 msgid "Missing form ID or action type."
 msgstr "Не вказано ID форми або тип дії."
 
-#: includes/class-vmcf7-admin.php:710
+#: includes/class-vmcf7-admin.php:811
 msgid "Default template saved successfully."
 msgstr "Шаблон за замовчуванням успішно збережено."
 
-#: includes/class-vmcf7-admin.php:716
+#: includes/class-vmcf7-admin.php:817
 msgid "No default template saved yet."
 msgstr "Шаблон за замовчуванням ще не збережено."
 
-#: includes/class-vmcf7-admin.php:755
+#: includes/class-vmcf7-admin.php:826
 msgid "Default template applied successfully."
 msgstr "Шаблон за замовчуванням успішно застосовано."
 
-#: includes/class-vmcf7-admin.php:766
+#: includes/class-vmcf7-admin.php:842
 msgid "No other forms to apply templates to."
 msgstr "Немає інших форм для застосування шаблонів."
 
 #. translators: %d: number of forms the rules were applied to.
-#: includes/class-vmcf7-admin.php:825
+#: includes/class-vmcf7-admin.php:860
 #, php-format
 msgid "Rules applied to %d other forms successfully."
-msgstr "Правила успішно застосовано до %d інших форм."
+msgstr "Правила успішно застосовано до інших форм (%d)."
 
-#: includes/class-vmcf7-admin.php:828
+#: includes/class-vmcf7-admin.php:863
 msgid "Invalid bulk action type."
 msgstr "Невірний тип масової дії."
 
-#: includes/class-vmcf7-loader.php:193
-msgid "Invalid format."
-msgstr "Невірний формат."
+#: includes/class-vmcf7-review-notice.php:102
+msgid "Enjoying Validation Muse?"
+msgstr "Подобається Validation Muse?"
 
-#: includes/class-vmcf7-loader.php:207 includes/class-vmcf7-loader.php:636
-#: includes/class-vmcf7-loader.php:652
-msgid "Invalid length."
-msgstr "Невірна довжина."
+#: includes/class-vmcf7-review-notice.php:103
+msgid "Your custom validation messages have been in use for a while. If the plugin saves you time, a short review on WordPress.org helps other sites find it."
+msgstr "Ваші повідомлення валідації використовуються вже деякий час. Якщо плагін заощаджує вам час, короткий відгук на WordPress.org допоможе іншим сайтам його знайти."
+
+#: includes/class-vmcf7-review-notice.php:106
+msgid "Leave a review"
+msgstr "Залишити відгук"
+
+#: includes/class-vmcf7-review-notice.php:107
+msgid "Maybe later"
+msgstr "Можливо, пізніше"
+
+#: includes/class-vmcf7-review-notice.php:108
+msgid "Already did / don't ask again"
+msgstr "Уже залишив(-ла) / більше не питати"
+
+#: includes/class-vmcf7-review-notice.php:122
+msgid "You are not allowed to do this."
+msgstr "У вас немає прав на цю дію."
 
 #: validation-muse-for-contact-form-7.php:72
 msgid "This plugin requires Contact Form 7 to be installed and activated."
@@ -403,12 +875,5 @@ msgstr "Перевірка залежностей плагіна"
 #. translators: 1: opening link tag, 2: closing link tag.
 #: validation-muse-for-contact-form-7.php:117
 #, php-format
-msgid ""
-"Validation Muse requires Contact Form 7 to be installed and activated. "
-"%1$sInstall Contact Form 7%2$s"
-msgstr ""
-"Validation Muse потребує встановлення та активації Contact Form 7. "
-"%1$sВстановити Contact Form 7%2$s"
-
-#~ msgid "No required fields found in this form."
-#~ msgstr "У цій формі не знайдено обов'язкових полів."
+msgid "Validation Muse requires Contact Form 7 to be installed and activated. %1$sInstall Contact Form 7%2$s"
+msgstr "Validation Muse потребує встановлення та активації Contact Form 7. %1$sВстановити Contact Form 7%2$s"

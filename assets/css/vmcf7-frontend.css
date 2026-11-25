@@ -1,24 +1,31 @@
 /**
  * Frontend styles for Validation Muse for Contact Form 7 validation messages.
  *
+ * Themes can restyle the errors without overriding these rules by setting
+ * the custom properties below, for example:
+ *
+ *   .wpcf7-form { --vmcf7-error-color: #b00020; --vmcf7-error-font-size: 14px; }
+ *
  * @package ValidationMuse
  * @since   1.6.0
  */
 
 .wpcf7-form .wpcf7-not-valid-tip {
 	display: block;
-	color: #dc3232;
-	font-size: 0.85em;
-	font-weight: 600;
-	margin-top: 5px;
+	margin-top: var(--vmcf7-error-spacing, 5px);
+	color: var(--vmcf7-error-color, #dc3232);
+	font-size: var(--vmcf7-error-font-size, 0.85em);
+	font-weight: var(--vmcf7-error-font-weight, 600);
+	line-height: 1.4;
 	animation: vmcf7-fade-in 0.25s ease-out;
 }
 
+/* !important is deliberate: themes commonly set the field border with higher specificity. */
 .wpcf7-form input.wpcf7-not-valid,
 .wpcf7-form select.wpcf7-not-valid,
 .wpcf7-form textarea.wpcf7-not-valid {
-	border-color: #dc3232 !important;
-	box-shadow: 0 0 2px rgba(220, 50, 50, 0.4);
+	border-color: var(--vmcf7-error-border-color, var(--vmcf7-error-color, #dc3232)) !important;
+	box-shadow: var(--vmcf7-error-shadow, 0 0 2px rgba(220, 50, 50, 0.4));
 }
 
 @keyframes vmcf7-fade-in {
@@ -29,5 +36,11 @@
 	to {
 		opacity: 1;
 		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.wpcf7-form .wpcf7-not-valid-tip {
+		animation: none;
 	}
 }

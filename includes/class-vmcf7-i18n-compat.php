@@ -27,8 +27,16 @@ class VMCF7_I18n_Compat {
 	 * @return void
 	 */
 	public function init() {
-		// Register strings when a contact form is saved.
-		add_action( 'wpcf7_save_contact_form', array( $this, 'register_strings_on_save' ) );
+		// Register strings when a contact form is saved. Priority 20: after
+		// VMCF7_Admin::save_messages() has written the new messages, otherwise
+		// the strings registered are the ones from the previous save.
+		add_action( 'wpcf7_save_contact_form', array( $this, 'register_strings_on_save' ), 20 );
+
+		// Polylang keeps registered strings in memory only, so its "Translations"
+		// screen lists them only if they are registered on that very request.
+		if ( is_admin() ) {
+			add_action( 'admin_init', array( $this, 'register_polylang_strings' ) );
+		}
 
 		// Translate messages on load.
 		add_filter( 'vmcf7_translate_message', array( $this, 'translate_message' ), 10, 4 );
@@ -56,22 +64,67 @@ class VMCF7_I18n_Compat {
 
 			$field_name = sanitize_key( $tag->name );
 
-			// Types of messages we want to translate.
-			$types = array(
-				'required',
-				'invalid',
-				'regex_message',
-				'length_message',
-				'required_if_message',
-			);
-
-			foreach ( $types as $type ) {
+			foreach ( VMCF7_Rules::MESSAGE_TYPES as $type ) {
 				$meta_key = sprintf( '_vmcf7_%s_%s', $field_name, $type );
 				$message  = get_post_meta( $form_id, $meta_key, true );
 
 				if ( ! empty( $message ) && is_string( $message ) ) {
 					$string_name = sprintf( 'vmcf7_%d_%s_%s', $form_id, $field_name, $type );
 					$this->register_string( $string_name, $message );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Register the messages of every enabled form with Polylang.
+	 *
+	 * Runs on Polylang's own admin screens only (string translations list and
+	 * its save request), so other admin pages pay nothing.
+	 *
+	 * @since 1.8.0
+	 * @return void
+	 */
+	public function register_polylang_strings() {
+		if ( ! function_exists( 'pll_register_string' ) ) {
+			return;
+		}
+
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only screen check.
+		$page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+		if ( ! str_starts_with( $page, 'mlang' ) ) {
+			return;
+		}
+
+		$form_ids = get_posts(
+			array(
+				'post_type'      => 'wpcf7_contact_form',
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'no_found_rows'  => true,
+				'meta_key'       => '_vmcf7_enabled', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- Admin screen, small post type.
+				'meta_value'     => '1', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value -- Admin screen, small post type.
+			)
+		);
+
+		foreach ( (array) $form_ids as $form_id ) {
+			$meta = get_post_meta( $form_id );
+			if ( ! is_array( $meta ) ) {
+				continue;
+			}
+
+			foreach ( $meta as $key => $values ) {
+				$key   = (string) $key;
+				$parts = str_starts_with( $key, '_' ) ? VMCF7_Rules::parse_key( $key, true ) : null;
+				$value = is_array( $values ) && isset( $values[0] ) ? $values[0] : '';
+
+				if ( $parts && is_string( $value ) && '' !== $value ) {
+					pll_register_string(
+						sprintf( 'vmcf7_%d_%s_%s', $form_id, $parts['field'], $parts['type'] ),
+						$value,
+						'validation-muse-for-contact-form-7'
+					);
 				}
 			}
 		}
@@ -86,16 +139,22 @@ class VMCF7_I18n_Compat {
 	 * @return void
 	 */
 	private function register_string( $name, $value ) {
+		// Polylang emulates icl_register_string() and stores those strings for
+		// good, which listed every message twice next to the pll_register_string()
+		// copy. Use only Polylang's own API there and drop the stored duplicate.
+		if ( function_exists( 'pll_register_string' ) ) {
+			if ( function_exists( 'icl_unregister_string' ) ) {
+				icl_unregister_string( 'validation-muse-for-contact-form-7', $name );
+			}
+			pll_register_string( $name, $value, 'validation-muse-for-contact-form-7' );
+			return;
+		}
+
 		// WPML
 		if ( function_exists( 'icl_register_string' ) ) {
 			icl_register_string( 'validation-muse-for-contact-form-7', $name, $value );
 		} elseif ( has_action( 'wpml_register_string' ) ) {
 			do_action( 'wpml_register_string', $value, $name, array( 'domain' => 'validation-muse-for-contact-form-7' ), $name, 'LITE' );
-		}
-
-		// Polylang
-		if ( function_exists( 'pll_register_string' ) ) {
-			pll_register_string( $name, $value, 'validation-muse-for-contact-form-7' );
 		}
 	}
 

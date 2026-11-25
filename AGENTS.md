@@ -28,15 +28,16 @@ validation-muse-for-contact-form-7/
 │   ├── class-vmcf7-migrations.php          # One-time _cf7cv_ → _vmcf7_ post-meta prefix migration
 │   └── class-vmcf7-flavor.php              # Static bridge to the optional Flavor translation plugin
 ├── admin/
-│   ├── views/panel.php                     # "Custom Validation" editor panel markup
+│   ├── views/panel.php                     # "Custom Validation" editor panel: per-field cards, translations, tools; JS strings via data-i18n
 │   ├── css/vmcf7-admin.css
 │   └── js/vmcf7-admin.js                   # Toggles, rule-set AJAX, live preview, Flavor tabs, AI translate
 ├── assets/
 │   └── css/vmcf7-frontend.css              # Enqueued only on pages/blocks containing a CF7 form
-├── languages/                              # .pot + de/es/fr/pt_BR/ru/uk .po/.mo
+├── languages/                              # .pot + de/es/fr/it/ja/pl/pt_BR/ru/uk .po/.mo
 ├── tests/
 │   ├── bootstrap.php                       # Defines VMCF7_* constants, requires Composer autoload
-│   └── VMCF7Test.php                       # PHPUnit + Brain Monkey; CF7 core classes hand-stubbed
+│   ├── VMCF7Test.php                       # PHPUnit + Brain Monkey; CF7 core classes hand-stubbed
+│   └── HardeningTest.php                   # SWV (both CF7 generations), rule-set AJAX, i18n bridges, edge cases
 ├── docs/
 │   └── translation-import-guide.md
 ├── readme.txt + readme-*.txt               # wp.org listing (multilingual readmes)

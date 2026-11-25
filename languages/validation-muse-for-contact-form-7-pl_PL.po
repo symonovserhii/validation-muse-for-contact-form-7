@@ -1,0 +1,878 @@
+# Copyright (C) 2026 simmotorlp
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Validation Muse for Contact Form 7 1.8.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/app\n"
+"POT-Creation-Date: 2026-11-25T07:36:21+00:00\n"
+"PO-Revision-Date: 2026-11-25 00:00+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: validation-muse-for-contact-form-7\n"
+
+#. Plugin Name of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "Validation Muse for Contact Form 7"
+msgstr "Validation Muse for Contact Form 7"
+
+#. Plugin URI of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "https://plugins.symonov.com/validation-muse-for-cf7/"
+msgstr "https://plugins.symonov.com/validation-muse-for-cf7/"
+
+#. Description of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "Customize validation messages for each Contact Form 7 field."
+msgstr "Własne komunikaty walidacji dla każdego pola Contact Form 7."
+
+#. Author of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "simmotorlp"
+msgstr "simmotorlp"
+
+#. Author URI of the plugin
+#: validation-muse-for-contact-form-7.php
+msgid "https://github.com/symonovserhii"
+msgstr "https://github.com/symonovserhii"
+
+#: admin/views/panel.php:33
+msgid "Message when the format is wrong"
+msgstr "Komunikat przy błędnym formacie"
+
+#: admin/views/panel.php:34
+msgid "Shown when the visitor types something that does not fit this kind of field, for example an email address without @. Leave empty to keep the standard message."
+msgstr "Wyświetlany, gdy odwiedzający wpisze coś, co nie pasuje do tego rodzaju pola, na przykład adres e-mail bez znaku @. Puste pole oznacza komunikat standardowy."
+
+#: admin/views/panel.php:35 admin/views/panel.php:75
+msgid "If the format is wrong"
+msgstr "Gdy format jest błędny"
+
+#: admin/views/panel.php:38
+msgid "Message when the answer is wrong"
+msgstr "Komunikat przy błędnej odpowiedzi"
+
+#: admin/views/panel.php:39
+msgid "Shown when the visitor gives the wrong answer to the quiz question. Leave empty to keep the standard message."
+msgstr "Wyświetlany, gdy odwiedzający błędnie odpowie na pytanie quizu. Puste pole oznacza komunikat standardowy."
+
+#: admin/views/panel.php:40
+msgid "If the answer is wrong"
+msgstr "Gdy odpowiedź jest błędna"
+
+#: admin/views/panel.php:43
+msgid "Message when the file is too big or the wrong type"
+msgstr "Komunikat, gdy plik jest za duży lub niewłaściwego typu"
+
+#: admin/views/panel.php:44
+msgid "Shown when the visitor picks a file that is larger than allowed or of a type you do not accept. Leave empty to keep the standard message."
+msgstr "Wyświetlany, gdy odwiedzający wybierze plik większy niż dozwolony lub typu, który nie jest akceptowany. Puste pole oznacza komunikat standardowy."
+
+#: admin/views/panel.php:45
+msgid "If the file is too big or the wrong type"
+msgstr "Gdy plik jest za duży lub niewłaściwego typu"
+
+#: admin/views/panel.php:55
+msgid "Text"
+msgstr "Tekst"
+
+#: admin/views/panel.php:56
+msgid "Email"
+msgstr "E-mail"
+
+#: admin/views/panel.php:57
+msgid "Web address"
+msgstr "Adres strony"
+
+#: admin/views/panel.php:58
+msgid "Phone"
+msgstr "Telefon"
+
+#: admin/views/panel.php:59
+msgid "Number"
+msgstr "Liczba"
+
+#: admin/views/panel.php:60
+msgid "Slider"
+msgstr "Suwak"
+
+#: admin/views/panel.php:61
+msgid "Date"
+msgstr "Data"
+
+#: admin/views/panel.php:62
+msgid "Time"
+msgstr "Godzina"
+
+#: admin/views/panel.php:63
+msgid "Long text"
+msgstr "Długi tekst"
+
+#: admin/views/panel.php:64
+msgid "Drop-down"
+msgstr "Lista rozwijana"
+
+#: admin/views/panel.php:65
+msgid "Checkboxes"
+msgstr "Pola wyboru"
+
+#: admin/views/panel.php:66
+msgid "Radio buttons"
+msgstr "Przyciski opcji"
+
+#: admin/views/panel.php:67
+msgid "File upload"
+msgstr "Przesyłanie pliku"
+
+#: admin/views/panel.php:68
+msgid "Acceptance"
+msgstr "Zgoda"
+
+#: admin/views/panel.php:69
+msgid "Quiz"
+msgstr "Quiz"
+
+#: admin/views/panel.php:74
+msgid "If left empty"
+msgstr "Gdy pole jest puste"
+
+#: admin/views/panel.php:76
+msgid "If too short or too long"
+msgstr "Gdy za krótkie lub za długie"
+
+#: admin/views/panel.php:77
+msgid "If the pattern does not match"
+msgstr "Gdy nie pasuje do wzorca"
+
+#: admin/views/panel.php:78
+msgid "If empty while the other field is filled in"
+msgstr "Gdy puste, a drugie pole jest wypełnione"
+
+#: admin/views/panel.php:95
+msgid "Digits only"
+msgstr "Tylko cyfry"
+
+#: admin/views/panel.php:96
+msgid "Exactly 5 digits (e.g. a ZIP code)"
+msgstr "Dokładnie 5 cyfr (np. kod pocztowy)"
+
+#: admin/views/panel.php:97
+msgid "Letters only (names)"
+msgstr "Tylko litery (imiona i nazwiska)"
+
+#: admin/views/panel.php:98
+msgid "Letters, digits, dash and underscore"
+msgstr "Litery, cyfry, myślnik i podkreślnik"
+
+#: admin/views/panel.php:99
+msgid "Phone number"
+msgstr "Numer telefonu"
+
+#: admin/views/panel.php:100
+msgid "No links allowed"
+msgstr "Bez odnośników"
+
+#: admin/views/panel.php:129 admin/views/panel.php:314
+msgid "Customized"
+msgstr "Dostosowane"
+
+#: admin/views/panel.php:130 admin/views/panel.php:314
+msgid "Default messages"
+msgstr "Komunikaty domyślne"
+
+#. translators: 1: number of customized fields, 2: total number of fields.
+#: admin/views/panel.php:132 admin/views/panel.php:244
+#, php-format
+msgid "%1$s of %2$s fields customized"
+msgstr "Dostosowane pola: %1$s z %2$s"
+
+#: admin/views/panel.php:133
+msgid "Contact Form 7’s standard message"
+msgstr "Standardowy komunikat Contact Form 7"
+
+#: admin/views/panel.php:134 includes/class-vmcf7-loader.php:180
+msgid "This field is required"
+msgstr "To pole jest wymagane"
+
+#: admin/views/panel.php:135 includes/class-vmcf7-loader.php:204
+msgid "Invalid format."
+msgstr "Nieprawidłowy format."
+
+#: admin/views/panel.php:136 includes/class-vmcf7-loader.php:214
+#: includes/class-vmcf7-loader.php:878
+msgid "Invalid length."
+msgstr "Nieprawidłowa długość."
+
+#. translators: %d: number of characters.
+#: admin/views/panel.php:138
+#, php-format
+msgid "This message is very long (%d characters). Short messages are easier to read."
+msgstr "Ten komunikat jest bardzo długi (liczba znaków: %d). Krótkie komunikaty czyta się łatwiej."
+
+#. translators: %s: list of HTML tags.
+#: admin/views/panel.php:140
+#, php-format
+msgid "These HTML tags are not allowed and will be removed when you save: %s"
+msgstr "Te znaczniki HTML są niedozwolone i zostaną usunięte przy zapisie: %s"
+
+#: admin/views/panel.php:141
+msgid "This field has no length limit yet (Extra rules → Length limit), so {min} and {max} will be left blank."
+msgstr "To pole nie ma jeszcze limitu długości (Dodatkowe reguły → Limit długości), więc {min} i {max} pozostaną puste."
+
+#: admin/views/panel.php:142
+msgid "The minimum is larger than the maximum, so no value can ever pass."
+msgstr "Minimum jest większe niż maksimum, więc żadna wartość nie zostanie zaakceptowana."
+
+#: admin/views/panel.php:143
+msgid "This pattern may be invalid. Please test it on the live form before relying on it."
+msgstr "Ten wzorzec może być nieprawidłowy. Przed użyciem proszę sprawdzić go w działającym formularzu."
+
+#: admin/views/panel.php:144
+msgid "Accepted — no error would be shown."
+msgstr "Zaakceptowano — błąd nie zostałby wyświetlony."
+
+#: admin/views/panel.php:145
+msgid "Rejected — the visitor would see the error message."
+msgstr "Odrzucono — odwiedzający zobaczyłby komunikat o błędzie."
+
+#: admin/views/panel.php:146
+msgid "This pattern cannot be tested here."
+msgstr "Tego wzorca nie można tutaj przetestować."
+
+#: admin/views/panel.php:147
+msgid "Working…"
+msgstr "Trwa przetwarzanie…"
+
+#: admin/views/panel.php:148
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: admin/views/panel.php:149
+msgid "Reloading the page…"
+msgstr "Ponowne wczytywanie strony…"
+
+#: admin/views/panel.php:150
+msgid "Something went wrong. Please try again."
+msgstr "Coś poszło nie tak. Proszę spróbować ponownie."
+
+#: admin/views/panel.php:151
+msgid "Network error. Please check your internet connection and try again."
+msgstr "Błąd sieci. Proszę sprawdzić połączenie z Internetem i spróbować ponownie."
+
+#: admin/views/panel.php:152
+msgid "Please choose a form to copy from first."
+msgstr "Najpierw należy wybrać formularz, z którego mają zostać skopiowane ustawienia."
+
+#. translators: %s: form title.
+#: admin/views/panel.php:154
+#, php-format
+msgid "Replace all validation settings of this form with the ones from “%s”? Everything set up here, including unsaved changes, will be overwritten."
+msgstr "Zastąpić wszystkie ustawienia walidacji tego formularza ustawieniami z „%s”? Wszystko, co tutaj skonfigurowano, łącznie z niezapisanymi zmianami, zostanie nadpisane."
+
+#: admin/views/panel.php:155
+msgid "Yes, copy and replace"
+msgstr "Tak, skopiuj i zastąp"
+
+#. translators: %s: file name.
+#: admin/views/panel.php:157
+#, php-format
+msgid "Replace all validation settings of this form with the contents of “%s”? Everything set up here, including unsaved changes, will be overwritten."
+msgstr "Zastąpić wszystkie ustawienia walidacji tego formularza zawartością pliku „%s”? Wszystko, co tutaj skonfigurowano, łącznie z niezapisanymi zmianami, zostanie nadpisane."
+
+#: admin/views/panel.php:158
+msgid "Yes, load the file"
+msgstr "Tak, wczytaj plik"
+
+#: admin/views/panel.php:159
+msgid "Please choose a .json file that was downloaded from this plugin."
+msgstr "Należy wybrać plik .json pobrany z tej wtyczki."
+
+#: admin/views/panel.php:160
+msgid "Replace all validation settings of this form with your saved template? Everything set up here, including unsaved changes, will be overwritten."
+msgstr "Zastąpić wszystkie ustawienia walidacji tego formularza zapisanym szablonem? Wszystko, co tutaj skonfigurowano, łącznie z niezapisanymi zmianami, zostanie nadpisane."
+
+#: admin/views/panel.php:161
+msgid "Yes, use the template"
+msgstr "Tak, użyj szablonu"
+
+#: admin/views/panel.php:162
+msgid "Save this form’s settings as your template? A template you saved earlier will be replaced."
+msgstr "Zapisać ustawienia tego formularza jako szablon? Wcześniej zapisany szablon zostanie zastąpiony."
+
+#: admin/views/panel.php:163
+msgid "Yes, save as template"
+msgstr "Tak, zapisz jako szablon"
+
+#. translators: %d: number of other contact forms.
+#: admin/views/panel.php:166
+#, php-format
+msgid "Overwrite the validation settings of your %d other contact form with the saved settings of this form? This cannot be undone."
+msgid_plural "Overwrite the validation settings of all %d other contact forms with the saved settings of this form? This cannot be undone."
+msgstr[0] "Nadpisać ustawienia walidacji %d innego formularza kontaktowego zapisanymi ustawieniami tego formularza? Tej operacji nie można cofnąć."
+msgstr[1] "Nadpisać ustawienia walidacji wszystkich %d innych formularzy kontaktowych zapisanymi ustawieniami tego formularza? Tej operacji nie można cofnąć."
+msgstr[2] "Nadpisać ustawienia walidacji wszystkich %d innych formularzy kontaktowych zapisanymi ustawieniami tego formularza? Tej operacji nie można cofnąć."
+
+#: admin/views/panel.php:174
+msgid "Yes, overwrite all other forms"
+msgstr "Tak, nadpisz wszystkie pozostałe formularze"
+
+#: admin/views/panel.php:175
+msgid "Translating…"
+msgstr "Trwa tłumaczenie…"
+
+#: admin/views/panel.php:176
+msgid "Translation failed. Please try again."
+msgstr "Tłumaczenie nie powiodło się. Proszę spróbować ponownie."
+
+#. translators: %d: number of translated messages.
+#: admin/views/panel.php:178
+#, php-format
+msgid "%d messages translated. Check them, then save the form to keep them."
+msgstr "Przetłumaczone komunikaty: %d. Należy je sprawdzić, a następnie zapisać formularz, aby je zachować."
+
+#: admin/views/panel.php:187 includes/class-vmcf7-admin.php:93
+msgid "Custom Validation"
+msgstr "Własna walidacja"
+
+#: admin/views/panel.php:189
+msgid "Choose what visitors read when they fill in a field incorrectly, and add extra checks such as a minimum length. Fields you leave untouched keep Contact Form 7’s standard messages."
+msgstr "Tutaj można określić, co zobaczą odwiedzający po błędnym wypełnieniu pola, oraz dodać dodatkowe sprawdzenia, na przykład minimalną długość. Pola pozostawione bez zmian zachowują standardowe komunikaty Contact Form 7."
+
+#: admin/views/panel.php:203
+msgid "Use custom validation on this form"
+msgstr "Używaj własnej walidacji w tym formularzu"
+
+#: admin/views/panel.php:206
+msgid "On — the messages and rules below are used on your site."
+msgstr "Włączone — poniższe komunikaty i reguły są używane w witrynie."
+
+#: admin/views/panel.php:207
+msgid "Off — visitors see Contact Form 7’s standard messages. Your settings below are kept, so you can switch this back on at any time."
+msgstr "Wyłączone — odwiedzający widzą standardowe komunikaty Contact Form 7. Poniższe ustawienia są zachowane, więc w każdej chwili można włączyć tę opcję ponownie."
+
+#: admin/views/panel.php:215
+msgid "This form has no fields yet"
+msgstr "Ten formularz nie ma jeszcze pól"
+
+#: admin/views/panel.php:216
+msgid "Add fields on the “Form” tab and save the form. They will then appear here, ready for your own messages and rules."
+msgstr "Należy dodać pola na karcie „Formularz” i zapisać formularz. Pojawią się one tutaj, gotowe na własne komunikaty i reguły."
+
+#: admin/views/panel.php:224
+msgid "Find a field"
+msgstr "Znajdź pole"
+
+#: admin/views/panel.php:228
+msgid "Find a field…"
+msgstr "Znajdź pole…"
+
+#: admin/views/panel.php:234
+msgid "Only show customized fields"
+msgstr "Pokaż tylko dostosowane pola"
+
+#: admin/views/panel.php:252
+msgid "Open all"
+msgstr "Rozwiń wszystkie"
+
+#: admin/views/panel.php:253
+msgid "Close all"
+msgstr "Zwiń wszystkie"
+
+#: admin/views/panel.php:309
+msgid "Required"
+msgstr "Wymagane"
+
+#: admin/views/panel.php:311
+msgid "Optional"
+msgstr "Opcjonalne"
+
+#: admin/views/panel.php:323
+msgid "Message when the field is left empty"
+msgstr "Komunikat, gdy pole pozostanie puste"
+
+#: admin/views/panel.php:331
+msgid "e.g. Please fill in {field_label}"
+msgstr "np. Proszę wypełnić pole {field_label}"
+
+#: admin/views/panel.php:334
+msgid "Shown when a visitor skips this required field. Leave empty to keep the standard message."
+msgstr "Wyświetlany, gdy odwiedzający pominie to wymagane pole. Puste pole oznacza komunikat standardowy."
+
+#: admin/views/panel.php:336
+msgid "This field is optional in your form, so this message is not shown yet. To make the field required, add * after its type on the “Form” tab (for example [text* your-name])."
+msgstr "To pole jest w formularzu opcjonalne, więc ten komunikat nie jest jeszcze wyświetlany. Aby pole było wymagane, należy dodać * po jego typie na karcie „Formularz” (na przykład [text* your-name])."
+
+#. translators: %s: example message.
+#: admin/views/panel.php:353
+#, php-format
+msgid "e.g. %s"
+msgstr "np. %s"
+
+#: admin/views/panel.php:368
+msgid "Extra rules"
+msgstr "Dodatkowe reguły"
+
+#: admin/views/panel.php:369
+msgid "length limit, allowed characters, required only sometimes"
+msgstr "limit długości, dozwolone znaki, wymagane tylko czasami"
+
+#: admin/views/panel.php:369
+msgid "required only sometimes"
+msgstr "wymagane tylko czasami"
+
+#: admin/views/panel.php:377
+msgid "Length limit"
+msgstr "Limit długości"
+
+#: admin/views/panel.php:378
+msgid "How many characters the answer may have. Fill in one or both; leave empty for no limit."
+msgstr "Ile znaków może mieć odpowiedź. Można wypełnić jedną lub obie wartości; puste pola oznaczają brak limitu."
+
+#: admin/views/panel.php:381
+msgid "At least"
+msgstr "Co najmniej"
+
+#: admin/views/panel.php:391
+msgid "At most"
+msgstr "Co najwyżej"
+
+#: admin/views/panel.php:400
+msgid "characters"
+msgstr "znaków"
+
+#: admin/views/panel.php:404
+msgid "Message when the answer is too short or too long"
+msgstr "Komunikat, gdy odpowiedź jest za krótka lub za długa"
+
+#: admin/views/panel.php:411
+msgid "e.g. Please use between {min} and {max} characters"
+msgstr "np. Proszę wpisać od {min} do {max} znaków"
+
+#: admin/views/panel.php:418
+msgid "Allowed characters (pattern)"
+msgstr "Dozwolone znaki (wzorzec)"
+
+#: admin/views/panel.php:419
+msgid "Advanced"
+msgstr "Zaawansowane"
+
+#: admin/views/panel.php:421
+msgid "Only accept answers that match a pattern (a “regular expression”). Not sure how to write one? Pick a ready-made example."
+msgstr "Akceptowane będą tylko odpowiedzi pasujące do wzorca („wyrażenia regularnego”). W razie wątpliwości, jak go napisać, można wybrać gotowy przykład."
+
+#: admin/views/panel.php:423
+msgid "Ready-made examples"
+msgstr "Gotowe przykłady"
+
+#: admin/views/panel.php:425
+msgid "— Choose an example —"
+msgstr "— Wybierz przykład —"
+
+#: admin/views/panel.php:431
+msgid "Pattern"
+msgstr "Wzorzec"
+
+#: admin/views/panel.php:441
+msgid "Write it without the surrounding slashes. Important: the pattern only has to be found somewhere in the answer, so [0-9]+ also accepts “abc1”. To check the whole answer, start with ^ and end with $, like ^[0-9]+$. Leave empty for no pattern check."
+msgstr "Wzorzec należy wpisać bez otaczających ukośników. Ważne: wystarczy, że wzorzec zostanie znaleziony w dowolnym miejscu odpowiedzi, więc [0-9]+ zaakceptuje także „abc1”. Aby sprawdzać całą odpowiedź, należy zacząć od ^ i zakończyć znakiem $, na przykład ^[0-9]+$. Puste pole oznacza brak sprawdzania wzorca."
+
+#: admin/views/panel.php:443
+msgid "The saved pattern is not valid, so it is currently ignored on your site. Correct it or clear it."
+msgstr "Zapisany wzorzec jest nieprawidłowy, więc obecnie jest w witrynie ignorowany. Należy go poprawić lub wyczyścić."
+
+#: admin/views/panel.php:448
+msgid "Try it: type an example answer"
+msgstr "Test: wpisz przykładową odpowiedź"
+
+#: admin/views/panel.php:456
+msgid "Message when the answer does not match"
+msgstr "Komunikat, gdy odpowiedź nie pasuje"
+
+#: admin/views/panel.php:463
+msgid "e.g. Please use digits only"
+msgstr "np. Proszę używać tylko cyfr"
+
+#: admin/views/panel.php:471
+msgid "Required only sometimes"
+msgstr "Wymagane tylko czasami"
+
+#: admin/views/panel.php:472
+msgid "Make this field required only when the visitor has filled in (or ticked) another field. Example: ask for a phone number only if “Call me back” is ticked."
+msgstr "To pole będzie wymagane tylko wtedy, gdy odwiedzający wypełni (lub zaznaczy) inne pole. Przykład: numer telefonu jest wymagany tylko po zaznaczeniu „Proszę o telefon”."
+
+#: admin/views/panel.php:474
+msgid "Required when this field is filled in"
+msgstr "Wymagane, gdy to pole jest wypełnione"
+
+#: admin/views/panel.php:479
+msgid "— Not used —"
+msgstr "— Nie używane —"
+
+#. translators: %s: field name.
+#: admin/views/panel.php:498
+#, php-format
+msgid "%s (not found in this form)"
+msgstr "%s (nie znaleziono w tym formularzu)"
+
+#: admin/views/panel.php:504
+msgid "Message when it is then left empty"
+msgstr "Komunikat, gdy pole pozostanie wtedy puste"
+
+#: admin/views/panel.php:511
+msgid "e.g. Please add your phone number so we can call you back"
+msgstr "np. Proszę podać numer telefonu, abyśmy mogli oddzwonić"
+
+#: admin/views/panel.php:519
+msgid "Clear all settings of this field"
+msgstr "Wyczyść wszystkie ustawienia tego pola"
+
+#: admin/views/panel.php:526
+msgid "What visitors will see"
+msgstr "Co zobaczą odwiedzający"
+
+#: admin/views/panel.php:545
+msgid "Smart words"
+msgstr "Inteligentne słowa"
+
+#: admin/views/panel.php:546
+msgid "Click one to add it to the message you are writing. It is replaced automatically on your site."
+msgstr "Kliknięcie słowa dodaje je do właśnie pisanego komunikatu. W witrynie jest ono zastępowane automatycznie."
+
+#: admin/views/panel.php:550
+msgid "the field’s label, e.g. “Your email”"
+msgstr "etykieta pola, np. „Twój e-mail”"
+
+#: admin/views/panel.php:554
+msgid "the “at least” number from Length limit"
+msgstr "liczba „Co najmniej” z limitu długości"
+
+#: admin/views/panel.php:558
+msgid "the “at most” number from Length limit"
+msgstr "liczba „Co najwyżej” z limitu długości"
+
+#: admin/views/panel.php:567
+msgid "No fields match. Clear the search or untick “Only show customized fields”."
+msgstr "Brak pasujących pól. Należy wyczyścić wyszukiwanie lub odznaczyć „Pokaż tylko dostosowane pola”."
+
+#: admin/views/panel.php:572
+msgid "Changes take effect after you save the form. Added a new field on the “Form” tab? Save the form and it will show up here."
+msgstr "Zmiany zaczną obowiązywać po zapisaniu formularza. Po dodaniu nowego pola na karcie „Formularz” wystarczy zapisać formularz, a pole pojawi się tutaj."
+
+#: admin/views/panel.php:580 admin/views/panel.php:609
+msgid "Translations"
+msgstr "Tłumaczenia"
+
+#: admin/views/panel.php:582
+msgid "Your messages are registered for translation each time you save the form. Save first, then translate them here:"
+msgstr "Komunikaty są rejestrowane do tłumaczenia przy każdym zapisie formularza. Najpierw należy zapisać formularz, a następnie przetłumaczyć je tutaj:"
+
+#: admin/views/panel.php:587
+msgid "(opens in a new tab)"
+msgstr "(otwiera się w nowej karcie)"
+
+#. translators: %s: text domain / string group name.
+#: admin/views/panel.php:590
+#, php-format
+msgid "(look for the group “%s”)"
+msgstr "(należy odszukać grupę „%s”)"
+
+#: admin/views/panel.php:611
+msgid "Your messages in the other languages of your site (via the Flavor plugin). A message without a translation is shown in the original language."
+msgstr "Komunikaty w pozostałych językach witryny (za pośrednictwem wtyczki Flavor). Komunikat bez tłumaczenia jest wyświetlany w języku oryginału."
+
+#: admin/views/panel.php:614
+msgid "Languages"
+msgstr "Języki"
+
+#: admin/views/panel.php:684
+msgid "Also show messages that have no original text yet"
+msgstr "Pokaż także komunikaty, które nie mają jeszcze tekstu oryginalnego"
+
+#. translators: %s: language name.
+#: admin/views/panel.php:694
+#, php-format
+msgid "Translate into %s automatically"
+msgstr "Przetłumacz automatycznie na: %s"
+
+#: admin/views/panel.php:700
+msgid "Automatic translation uses the messages from the last time you saved the form, and replaces what is typed below. Nothing is stored until you save."
+msgstr "Tłumaczenie automatyczne korzysta z komunikatów z ostatniego zapisu formularza i zastępuje to, co wpisano poniżej. Nic nie zostanie zachowane do momentu zapisania."
+
+#: admin/views/panel.php:705
+msgid "Nothing to translate yet. Write your messages in the fields above and save the form — they will then appear here."
+msgstr "Nie ma jeszcze nic do przetłumaczenia. Po wpisaniu komunikatów w polach powyżej i zapisaniu formularza pojawią się one tutaj."
+
+#: admin/views/panel.php:734
+msgid "Original:"
+msgstr "Oryginał:"
+
+#: admin/views/panel.php:737
+msgid "No original message written yet."
+msgstr "Nie wpisano jeszcze komunikatu oryginalnego."
+
+#: admin/views/panel.php:761
+msgid "Copy, back up and reuse"
+msgstr "Kopiowanie, kopia zapasowa i ponowne użycie"
+
+#: admin/views/panel.php:762
+msgid "move your messages and rules between forms or sites"
+msgstr "przenoszenie komunikatów i reguł między formularzami lub witrynami"
+
+#: admin/views/panel.php:769
+msgid "Save this form first. These tools become available once the form exists."
+msgstr "Najpierw należy zapisać ten formularz. Narzędzia te staną się dostępne, gdy formularz zostanie utworzony."
+
+#: admin/views/panel.php:772
+msgid "These tools work with the last saved version of your forms."
+msgstr "Narzędzia te działają na ostatnio zapisanej wersji formularzy."
+
+#: admin/views/panel.php:773
+msgid "You have unsaved changes on this tab — save the form first if you want them included."
+msgstr "Na tej karcie są niezapisane zmiany — aby zostały uwzględnione, należy najpierw zapisać formularz."
+
+#: admin/views/panel.php:780
+msgid "Copy from another form"
+msgstr "Kopiowanie z innego formularza"
+
+#: admin/views/panel.php:781
+msgid "Take the messages and rules of another form and use them here. Works best when both forms use the same field names."
+msgstr "Komunikaty i reguły innego formularza można wykorzystać tutaj. Działa najlepiej, gdy oba formularze używają tych samych nazw pól."
+
+#: admin/views/panel.php:785
+msgid "Form to copy from"
+msgstr "Formularz źródłowy"
+
+#: admin/views/panel.php:787
+msgid "— Choose a form —"
+msgstr "— Wybierz formularz —"
+
+#: admin/views/panel.php:793
+msgid "Copy to this form"
+msgstr "Skopiuj do tego formularza"
+
+#: admin/views/panel.php:796 admin/views/panel.php:845
+msgid "You have no other contact forms yet."
+msgstr "Nie ma jeszcze innych formularzy kontaktowych."
+
+#: admin/views/panel.php:803
+msgid "Back up or move to another site"
+msgstr "Kopia zapasowa lub przeniesienie do innej witryny"
+
+#: admin/views/panel.php:804
+msgid "Download this form’s messages and rules as a file, or load a file you downloaded earlier."
+msgstr "Komunikaty i reguły tego formularza można pobrać jako plik albo wczytać plik pobrany wcześniej."
+
+#: admin/views/panel.php:809
+msgid "Download file"
+msgstr "Pobierz plik"
+
+#: admin/views/panel.php:813
+msgid "Load from file…"
+msgstr "Wczytaj z pliku…"
+
+#: admin/views/panel.php:821
+msgid "Your template"
+msgstr "Własny szablon"
+
+#: admin/views/panel.php:822
+msgid "Keep one favourite set of messages and rules as a template, then reuse it on any form with one click."
+msgstr "Ulubiony zestaw komunikatów i reguł można zachować jako szablon, a potem jednym kliknięciem użyć go w dowolnym formularzu."
+
+#: admin/views/panel.php:826
+msgid "Save this form as template"
+msgstr "Zapisz ten formularz jako szablon"
+
+#: admin/views/panel.php:829
+msgid "Use template on this form"
+msgstr "Użyj szablonu w tym formularzu"
+
+#: admin/views/panel.php:836
+msgid "Use on all forms"
+msgstr "Użycie we wszystkich formularzach"
+
+#: admin/views/panel.php:837
+msgid "Copy this form’s messages and rules to every other contact form on this site. Their current validation settings are overwritten."
+msgstr "Komunikaty i reguły tego formularza zostaną skopiowane do wszystkich pozostałych formularzy kontaktowych w tej witrynie. Ich obecne ustawienia walidacji zostaną nadpisane."
+
+#: admin/views/panel.php:842
+msgid "Copy to all other forms…"
+msgstr "Skopiuj do wszystkich pozostałych formularzy…"
+
+#: includes/class-vmcf7-admin.php:144
+msgid "WPML → String Translation"
+msgstr "WPML → Tłumaczenie ciągów znaków"
+
+#: includes/class-vmcf7-admin.php:152
+msgid "Languages → Translations"
+msgstr "Języki → Tłumaczenia"
+
+#: includes/class-vmcf7-admin.php:431
+msgid "Please enter a valid email address"
+msgstr "Proszę wpisać prawidłowy adres e-mail"
+
+#: includes/class-vmcf7-admin.php:432
+msgid "Please enter a valid URL"
+msgstr "Proszę wpisać prawidłowy adres URL"
+
+#: includes/class-vmcf7-admin.php:433
+msgid "Please enter a valid phone number"
+msgstr "Proszę wpisać prawidłowy numer telefonu"
+
+#: includes/class-vmcf7-admin.php:434 includes/class-vmcf7-admin.php:435
+msgid "Please enter a valid number"
+msgstr "Proszę wpisać prawidłową liczbę"
+
+#: includes/class-vmcf7-admin.php:436
+msgid "Please enter a valid date"
+msgstr "Proszę wpisać prawidłową datę"
+
+#: includes/class-vmcf7-admin.php:437
+msgid "Please enter a valid time"
+msgstr "Proszę wpisać prawidłową godzinę"
+
+#: includes/class-vmcf7-admin.php:438
+msgid "The answer is not correct"
+msgstr "Odpowiedź jest nieprawidłowa"
+
+#: includes/class-vmcf7-admin.php:439
+msgid "This file cannot be uploaded"
+msgstr "Tego pliku nie można przesłać"
+
+#: includes/class-vmcf7-admin.php:455 includes/class-vmcf7-admin.php:605
+msgid "Permission denied."
+msgstr "Brak uprawnień."
+
+#: includes/class-vmcf7-admin.php:609
+msgid "Flavor plugin is not active."
+msgstr "Wtyczka Flavor nie jest włączona."
+
+#: includes/class-vmcf7-admin.php:613
+msgid "AI translation provider is not configured. Please check Flavor settings."
+msgstr "Dostawca tłumaczeń AI nie jest skonfigurowany. Proszę sprawdzić ustawienia Flavor."
+
+#: includes/class-vmcf7-admin.php:620
+msgid "Missing form ID or language."
+msgstr "Brak identyfikatora formularza lub języka."
+
+#: includes/class-vmcf7-admin.php:625 includes/class-vmcf7-admin.php:664
+#: includes/class-vmcf7-admin.php:695 includes/class-vmcf7-admin.php:766
+#: includes/class-vmcf7-admin.php:798
+msgid "Invalid form ID."
+msgstr "Nieprawidłowy identyfikator formularza."
+
+#: includes/class-vmcf7-admin.php:631
+msgid "Invalid target language."
+msgstr "Nieprawidłowy język docelowy."
+
+#: includes/class-vmcf7-admin.php:636
+msgid "No custom validation messages written yet. Please write and save them in the main language first."
+msgstr "Nie wpisano jeszcze własnych komunikatów walidacji. Najpierw należy je wpisać i zapisać w języku głównym."
+
+#: includes/class-vmcf7-admin.php:642
+msgid "AI translation service failed. Please check your network connection or provider limits."
+msgstr "Usługa tłumaczenia AI zawiodła. Proszę sprawdzić połączenie sieciowe lub limity dostawcy."
+
+#: includes/class-vmcf7-admin.php:660 includes/class-vmcf7-admin.php:691
+msgid "Missing form ID."
+msgstr "Brak identyfikatora formularza."
+
+#: includes/class-vmcf7-admin.php:699
+msgid "No file uploaded."
+msgstr "Nie przesłano pliku."
+
+#: includes/class-vmcf7-admin.php:705
+msgid "Only JSON files are allowed."
+msgstr "Dozwolone są tylko pliki JSON."
+
+#: includes/class-vmcf7-admin.php:715 includes/class-vmcf7-admin.php:729
+msgid "Invalid file type. Only JSON is allowed."
+msgstr "Nieprawidłowy typ pliku. Dozwolony jest tylko JSON."
+
+#: includes/class-vmcf7-admin.php:737
+msgid "Invalid JSON format."
+msgstr "Nieprawidłowy format JSON."
+
+#: includes/class-vmcf7-admin.php:743
+msgid "Rules imported successfully."
+msgstr "Reguły zostały zaimportowane."
+
+#: includes/class-vmcf7-admin.php:761
+msgid "Missing source or target form ID."
+msgstr "Brak identyfikatora formularza źródłowego lub docelowego."
+
+#: includes/class-vmcf7-admin.php:776
+msgid "Rules copied successfully."
+msgstr "Reguły zostały skopiowane."
+
+#: includes/class-vmcf7-admin.php:794
+msgid "Missing form ID or action type."
+msgstr "Brak identyfikatora formularza lub typu działania."
+
+#: includes/class-vmcf7-admin.php:811
+msgid "Default template saved successfully."
+msgstr "Domyślny szablon został zapisany."
+
+#: includes/class-vmcf7-admin.php:817
+msgid "No default template saved yet."
+msgstr "Nie zapisano jeszcze domyślnego szablonu."
+
+#: includes/class-vmcf7-admin.php:826
+msgid "Default template applied successfully."
+msgstr "Domyślny szablon został zastosowany."
+
+#: includes/class-vmcf7-admin.php:842
+msgid "No other forms to apply templates to."
+msgstr "Brak innych formularzy, do których można zastosować szablony."
+
+#. translators: %d: number of forms the rules were applied to.
+#: includes/class-vmcf7-admin.php:860
+#, php-format
+msgid "Rules applied to %d other forms successfully."
+msgstr "Reguły zostały zastosowane do innych formularzy (%d)."
+
+#: includes/class-vmcf7-admin.php:863
+msgid "Invalid bulk action type."
+msgstr "Nieprawidłowy typ działania zbiorczego."
+
+#: includes/class-vmcf7-review-notice.php:102
+msgid "Enjoying Validation Muse?"
+msgstr "Validation Muse się sprawdza?"
+
+#: includes/class-vmcf7-review-notice.php:103
+msgid "Your custom validation messages have been in use for a while. If the plugin saves you time, a short review on WordPress.org helps other sites find it."
+msgstr "Własne komunikaty walidacji są używane już od pewnego czasu. Jeśli wtyczka oszczędza czas, krótka recenzja na WordPress.org pomoże innym witrynom ją znaleźć."
+
+#: includes/class-vmcf7-review-notice.php:106
+msgid "Leave a review"
+msgstr "Dodaj recenzję"
+
+#: includes/class-vmcf7-review-notice.php:107
+msgid "Maybe later"
+msgstr "Może później"
+
+#: includes/class-vmcf7-review-notice.php:108
+msgid "Already did / don't ask again"
+msgstr "Już dodano / nie pytaj ponownie"
+
+#: includes/class-vmcf7-review-notice.php:122
+msgid "You are not allowed to do this."
+msgstr "Brak uprawnień do wykonania tej operacji."
+
+#: validation-muse-for-contact-form-7.php:72
+msgid "This plugin requires Contact Form 7 to be installed and activated."
+msgstr "Ta wtyczka wymaga zainstalowania i włączenia Contact Form 7."
+
+#: validation-muse-for-contact-form-7.php:73
+msgid "Plugin dependency check"
+msgstr "Sprawdzanie zależności wtyczki"
+
+#. translators: 1: opening link tag, 2: closing link tag.
+#: validation-muse-for-contact-form-7.php:117
+#, php-format
+msgid "Validation Muse requires Contact Form 7 to be installed and activated. %1$sInstall Contact Form 7%2$s"
+msgstr "Validation Muse wymaga zainstalowania i włączenia Contact Form 7. %1$sZainstaluj Contact Form 7%2$s"
