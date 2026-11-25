@@ -8,11 +8,11 @@ Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Mensagens personalizadas de erro e de campo obrigatório para Contact Form 7. Por formulário, por campo, compatível com CF7 6.x SWV, multilíngue.
+Regras e mensagens de validação personalizadas para Contact Form 7 — regex, comprimento, required-if, por campo, compatível com CF7 6.x SWV, multilíngue.
 
 == Description ==
 
-**Validation Muse** permite escrever suas próprias mensagens de erro para cada campo do Contact Form 7 — diretamente no editor do formulário, por formulário e por campo. Sem código, sem página global de configurações, sem hacks JavaScript.
+**Validation Muse** permite escrever suas próprias regras de validação e mensagens de erro para cada campo do Contact Form 7 — diretamente no editor do formulário, por formulário e por campo. Sem código, sem página global de configurações, sem hacks JavaScript.
 
 A maioria dos plugins de validação do CF7 parou de funcionar quando o Contact Form 7 6.x introduziu o **Schema-based Validation (SWV)**. O Validation Muse executa seus filtros com prioridade 20 (após o core do CF7) e usa Reflection para substituir o texto de erro do SWV em campos já invalidados — assim sua cópia personalizada realmente aparece, mesmo no novo motor de validação.
 
@@ -27,7 +27,7 @@ A maioria dos plugins de validação do CF7 parou de funcionar quando o Contact 
 * **Por formulário, por campo** — cada formulário mantém suas próprias mensagens; sem sobrescrita global.
 * **Armazenado em post meta** — as mensagens vivem com o formulário, compatíveis com a duplicação de formulário do CF7 e com plugins de import/export de terceiros.
 * **Multilíngue via WPML, Polylang e Flavor** — traduz as regras usando os hooks padrão do WPML/Polylang, e conta com abas de idioma + botão AI Translate em um click quando o Flavor está ativo.
-* **Amigável ao desenvolvedor** — os hooks de extensibilidade `vmcf7_loaded` e `vmcf7_validation_tag_types` permitem adicionar tipos de campo personalizados.
+* **Amigável ao desenvolvedor** — os hooks de extensibilidade `vmcf7_loaded` e `vmcf7_validation_tag_types` permitem adicionar tipos de campo personalizados; os filtros `vmcf7_message`, `vmcf7_default_message`, `vmcf7_placeholders` e `vmcf7_field_label` permitem ler as mensagens, definir mensagens padrão para todo o site e adicionar seus próprios `{tokens}`.
 * **Leve** — sem inchaço admin, sem tracking, sem upsells.
 
 = Tipos de campo suportados =
@@ -36,17 +36,17 @@ A maioria dos plugins de validação do CF7 parou de funcionar quando o Contact 
 * Mensagens de formato inválido: `email`, `url`, `tel`, `number` (incluindo `range`), `date` e `time`.
 * Mensagens de erro personalizadas em falhas de validação: `file` (verificações de tamanho/tipo), `acceptance` (estado não aceito) e `quiz` (resposta incorreta).
 * HTML dentro das mensagens é permitido e sanitizado via `wp_kses_post()`.
-* Regras personalizadas de regex e comprimento mín/máx funcionam em todos os campos de entrada (exceto acceptance e quiz).
+* Regras personalizadas de Regex e comprimento Mín/Máx estão disponíveis para todos os tipos de campo, exceto `file`.
 
 = Traduções =
 
-O plugin acompanha um arquivo `.pot` e já está traduzido para alemão, espanhol, francês, português (Brasil), russo e ucraniano. [Ajude a traduzi-lo para o seu idioma.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
+O plugin acompanha um arquivo `.pot` e já está traduzido para alemão, espanhol, francês, italiano, japonês, polonês, português (Brasil), russo e ucraniano. [Ajude a traduzi-lo para o seu idioma.](https://translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-form-7)
 
 == Installation ==
 
 1. Instale via **Plugins → Adicionar novo** procurando *Validation Muse for Contact Form 7*, ou faça upload da pasta `validation-muse-for-contact-form-7` para `/wp-content/plugins/`.
 2. Ative o plugin. O Contact Form 7 deve já estar ativo — o Validation Muse se autodesativa com um aviso admin se o CF7 estiver faltando.
-3. Edite qualquer formulário do Contact Form 7, abra o painel **Custom Validation**, ative-o e escreva suas mensagens.
+3. Edite qualquer formulário do Contact Form 7, abra a aba **Validação personalizada**, ative-a e escreva suas mensagens.
 4. (Opcional) Instale o plugin de tradução Flavor para traduzir mensagens por idioma com assistência de AI.
 
 == Frequently Asked Questions ==
@@ -57,15 +57,19 @@ Sim. Desde a versão 1.3.0, o Validation Muse engata na prioridade 20 (após o c
 
 = Como isso difere de outros plugins de validação do CF7? =
 
-O Validation Muse é o único plugin de validação do CF7 que (1) é compatível com CF7 6.x SWV de fábrica — tanto no lado do servidor quanto na própria validação do lado do cliente do CF7, (2) armazena mensagens no post meta do formulário para que vivam com ele (compatível com duplicação CF7 e plugins import/export), e (3) integra-se ao plugin Flavor para mensagens por idioma com tradução AI em um click.
+O Validation Muse é o único plugin de validação do CF7 que (1) é compatível com CF7 6.x SWV de fábrica — tanto no lado do servidor quanto na própria validação do lado do cliente do CF7, (2) armazena mensagens no post meta do formulário para que vivam com ele (compatível com duplicação CF7 e plugins import/export), e (3) oferece mensagens por idioma via WPML, Polylang ou o plugin Flavor (com tradução AI em um click).
 
 = Posso traduzir mensagens de validação por idioma? =
 
-Sim — instale o plugin Flavor e o Validation Muse mostrará abas de idioma no editor do formulário além de um botão *AI Translate*. As traduções são armazenadas no banco de dados do Flavor; desinstalar o Validation Muse as limpa.
+Sim. WPML (String Translation) e Polylang são compatíveis nativamente: suas mensagens são registradas para tradução sempre que você salva o formulário, e a aba **Validação personalizada** leva à tela onde você as traduz. Com o plugin Flavor, o Validation Muse também mostra abas de idioma no editor do formulário e um botão *AI Translate*; essas traduções são armazenadas no banco de dados do Flavor, e desinstalar o Validation Muse as limpa.
 
-= Quais tipos de campo suportam mensagens de formato inválido personalizadas? =
+= Quais tipos de campo suportam mensagens personalizadas de formato inválido ou falha de validação? =
 
-`email`, `url`, `tel`, `number` (incluindo `range`) e `date`. Qualquer campo obrigatório de qualquer tipo pode ter uma mensagem de obrigatoriedade personalizada.
+* `email`, `url`, `tel`, `number` (incluindo `range`), `date` e `time` suportam mensagens de formato inválido personalizadas.
+* `file` suporta mensagens de erro de validação de tamanho/tipo de arquivo personalizadas.
+* `acceptance` suporta mensagens de erro personalizadas quando a caixa não é aceita.
+* `quiz` suporta mensagens de erro personalizadas quando a resposta é incorreta.
+* Qualquer campo obrigatório de qualquer tipo pode ter uma mensagem de obrigatoriedade personalizada.
 
 = Onde as mensagens são armazenadas? =
 
@@ -81,7 +85,7 @@ Sim. O CF7 deve estar instalado e ativo. O plugin mostra um aviso admin e se aut
 
 = Existe uma página de configurações? =
 
-Não. A configuração vive dentro de cada formulário, no painel **Custom Validation**. Não há página global de configurações por design — cada formulário guarda suas próprias mensagens.
+Não. A configuração vive dentro de cada formulário, na aba **Validação personalizada**. Não há página global de configurações por design — cada formulário guarda suas próprias mensagens.
 
 = O plugin trackeia ou envia algum dado? =
 
@@ -89,12 +93,47 @@ Não. O Validation Muse não faz nenhuma requisição externa. O botão opcional
 
 == Screenshots ==
 
-1. O painel **Custom Validation** dentro do editor do Contact Form 7 — ativação por formulário, mensagens por campo.
-2. Abas de idioma e o botão **AI Translate** (visíveis quando o plugin Flavor está ativo).
+1. A aba **Validação personalizada** dentro do editor do Contact Form 7 — um cartão por campo com mensagens, regras extras (comprimento, padrão com testador ao vivo, obrigatório só às vezes) e uma pré-visualização do que os visitantes verão.
+2. **Copiar, fazer backup e reutilizar** — copie regras de outro formulário, baixe/carregue-as como arquivo, guarde um modelo ou use-as em todos os formulários.
 3. Mensagem de campo obrigatório renderizada no frontend.
 4. Mensagem de formato inválido para um campo email renderizada no frontend.
 
 == Changelog ==
+
+= 1.8.0 =
+* Novo: a aba "Validação personalizada" foi redesenhada. Cada campo é um cartão com seu rótulo, seu tipo e a indicação de estar ou não personalizado; as regras extras (comprimento, padrão, obrigatório só às vezes) ficam atrás de uma única chave "Regras extras"; cada cartão mostra o que os visitantes verão. A busca, "Mostrar apenas campos personalizados" e abrir/fechar tudo ajudam em formulários longos.
+* Novo: exemplos prontos de padrões e uma caixa "Experimente: digite uma resposta de exemplo" que verifica um padrão do mesmo jeito que o site.
+* Novo: as ferramentas de cópia, backup, modelo e "Usar em todos os formulários" estão agrupadas e explicadas, pedem confirmação no próprio painel e mostram o resultado nele, em vez de em pop-ups do navegador.
+* Novo: quando o WPML String Translation ou o Polylang está ativo, a aba leva direto à tela onde as mensagens são traduzidas.
+* Novo: mensagem personalizada de "resposta errada" para campos quiz e de "arquivo errado" para campos file.
+* Novo: `{min}` e `{max}` funcionam em todas as mensagens; filtros para desenvolvedores `vmcf7_default_message`, `vmcf7_placeholders`, `vmcf7_field_label`, `vmcf7_supports_text_rules` e `vmcf7_swv_invalid_rules`.
+* Novo: o estilo dos erros no frontend pode ser alterado com propriedades personalizadas de CSS (`--vmcf7-error-color`, `--vmcf7-error-font-size` e outras).
+* Novo: traduções para japonês, italiano e polonês.
+* Fix: o editor do Contact Form 7 não pergunta mais "Sair do site? As alterações feitas talvez não sejam salvas" quando nada foi alterado.
+* Fix: mensagens personalizadas e limites de comprimento voltam a chegar à validação do lado do cliente do Contact Form 7 6.2+ (o hook do esquema silenciosamente não fazia nada na 6.2).
+* Fix: as barras invertidas eram removidas dos padrões e mensagens salvos (`^\d+$` era armazenado como `^d+$`), também ao importar, copiar e em "Usar em todos os formulários".
+* Fix: um padrão inválido não rejeita mais todas as respostas; uma regra de padrão ou de comprimento em caixas de seleção ou seleções múltiplas não causa mais erro no envio.
+* Fix: copiar as regras de um formulário para o mesmo formulário não as apaga mais; as ferramentas de conjuntos de regras aceitam apenas formulários do Contact Form 7 que o usuário pode editar, e os arquivos de importação são verificados e têm tamanho limitado.
+* Fix: WPML/Polylang recebiam cada mensagem com um salvamento de atraso, o Polylang não listava as mensagens em sua tela Traduções e depois as listava duas vezes.
+* Fix: a mensagem personalizada de campo obrigatório agora também se aplica às caixas de aceitação; required-if funciona quando o nome do outro campo tem letras maiúsculas.
+* Fix: o AI Translate não envia mais padrões e números ao tradutor.
+* Fix: a desinstalação remove todas as opções do plugin; os estilos do frontend também são carregados para formulários colocados em widgets e modelos.
+
+= 1.7.2 =
+* Fix: abrir Contato → Adicionar novo com o Flavor ativo não para mais com um erro fatal. Um formulário que ainda não foi salvo não tem ID, e o Validation Muse agora ignora suas traduções até que o formulário seja salvo.
+
+= 1.7.1 =
+* Fix: o arquivo que o GitHub e o Composer geram a partir de uma tag não traz mais testes, ferramentas de desenvolvimento e documentação, de modo que um projeto que instala o plugin a partir do Git recebe apenas o plugin. Nenhuma mudança no comportamento do plugin.
+
+= 1.7.0 =
+* Novo: o filtro `vmcf7_message` entrega a outro código uma mensagem escrita aqui: `apply_filters( 'vmcf7_message', $default, $form_id, $field_name, $type )` retorna a mensagem personalizada, ou `$default` quando nenhuma foi escrita ou a validação personalizada está desativada para o formulário. Nada muda para os visitantes, a menos que outro código peça.
+
+= 1.6.5 =
+* Novo: um pedido único e dispensável para deixar uma avaliação no WordPress.org. Ele aparece apenas uma semana depois de você salvar pela primeira vez uma mensagem de validação personalizada, apenas para usuários que podem editar formulários do Contact Form 7 e apenas nas telas do Contact Form 7. "Talvez mais tarde" adia por 30 dias, "Não perguntar de novo" oculta de vez. Nada é enviado a lugar nenhum.
+
+= 1.6.4 =
+* Testado com WordPress 7.1 (verificado na 7.1.1 com Contact Form 7 6.1).
+* Fix: removidas as chamadas obsoletas no PHP 8.5 (`finfo_close()`, e `ReflectionProperty::setAccessible()` no PHP 8.1+), de modo que o plugin não gera mais avisos de obsolescência no PHP 8.5.
 
 = 1.6.3 =
 * i18n: catálogo de tradução `.pot` totalmente regenerado — o catálogo estava congelado desde a 1.2.0 e cobria apenas cerca de 20% das strings traduzíveis do plugin (regras de regex/comprimento, modelos de regras, erros do AI Translate e mais nunca eram extraíveis antes). Os seis idiomas disponíveis (alemão, espanhol, francês, português, russo e ucraniano) agora estão totalmente traduzidos de acordo com a interface atual.
@@ -139,44 +178,62 @@ Não. O Validation Muse não faz nenhuma requisição externa. O botão opcional
 * Abas de idioma aparecem automaticamente quando o plugin Flavor está ativo
 * Botão AI Translate para tradução automática em um click de todas as mensagens
 * Traduções armazenadas no banco de dados do Flavor — os dados do plugin permanecem portáveis
-* Zero overhead quando o Flavor não está instalado — todas as chamadas atrás de `class_exists()`
+* Zero overhead quando o Flavor não está instalado — todas as chamadas atrás de class_exists()
 * Traduções do Flavor são limpas ao desinstalar o plugin
 
 = 1.3.0 =
-* Fixed compatibility with Contact Form 7 6.x SWV (Schema-based Validation)
-* Validation filters now run at priority 20 (after CF7 core) to replace SWV error messages
-* Added Reflection-based error replacement for already-invalidated fields
-* Custom messages now correctly override default CF7 "The field is required." text
+* Corrigida a compatibilidade com Contact Form 7 6.x SWV (Schema-based Validation)
+* Filtros de validação agora rodam com prioridade 20 (após o core do CF7) para substituir mensagens de erro SWV
+* Adicionada substituição de erro baseada em Reflection para campos já invalidados
+* Mensagens personalizadas agora substituem corretamente o texto padrão "The field is required." do CF7
 
 = 1.2.1 =
-* Fixed variable name mismatch causing "No required fields" error
+* Corrigida a incompatibilidade de nome de variável que causava o erro "No required fields"
 
 = 1.2.0 =
-* Refactored codebase to follow WordPress Coding Standards
-* Reorganized file structure for better maintainability
-* Added PHPDoc blocks to all functions and methods
-* Improved accessibility with ARIA labels
-* Fixed JavaScript prefix inconsistency
-* Fixed uninstall script to use correct meta prefix
-* Added extensibility hooks (`vmcf7_loaded`, `vmcf7_validation_tag_types`)
-* Changed capability check from `manage_options` to `wpcf7_edit_contact_forms`
-* Updated POT file name to match text domain
+* Base de código refatorada para seguir os WordPress Coding Standards
+* Estrutura de arquivos reorganizada para melhor manutenibilidade
+* Adicionados blocos PHPDoc a todas as funções e métodos
+* Acessibilidade melhorada com rótulos ARIA
+* Corrigida a inconsistência de prefixo no JavaScript
+* Corrigido o script de desinstalação para usar o prefixo meta correto
+* Adicionados hooks de extensibilidade (`vmcf7_loaded`, `vmcf7_validation_tag_types`)
+* Verificação de capacidade alterada de `manage_options` para `wpcf7_edit_contact_forms`
+* Nome do arquivo POT atualizado para corresponder ao domínio de texto
 
 = 1.1.2 =
-* Changed plugin name.
+* Nome do plugin alterado.
 
 = 1.1.1 =
-* Added .gitignore file.
+* Adicionado arquivo .gitignore.
 
 = 1.1.0 =
-* Added WordPress repository collateral (readme, license, POT file).
-* Reworked validation hooks to override required and invalid messages without relying on AJAX filters.
-* Hardened sanitization, text domain loading, and uninstall cleanup for release readiness.
+* Adicionado material do repositório WordPress (readme, licença, arquivo POT).
+* Hooks de validação retrabalhados para substituir mensagens required e invalid sem depender de filtros AJAX.
+* Sanitização, carregamento do domínio de texto e limpeza de desinstalação reforçados para prontidão de lançamento.
 
 = 1.0.1 =
-* Initial public iteration bundled with the project.
+* Iteração pública inicial incluída no projeto.
 
 == Upgrade Notice ==
+
+= 1.8.0 =
+Aba "Validação personalizada" redesenhada, mensagens do lado do cliente funcionando de novo no Contact Form 7 6.2+ e várias correções de validação. As regras e mensagens existentes são mantidas como estão.
+
+= 1.7.2 =
+Corrige um erro fatal em Contato → Adicionar novo quando o Flavor está ativo. Sem mudanças no comportamento da validação.
+
+= 1.7.1 =
+Apenas empacotamento: o arquivo do Git não traz mais testes e ferramentas. Sem mudanças no comportamento da validação.
+
+= 1.7.0 =
+Adiciona o filtro `vmcf7_message` para que outro código leia as mensagens escritas aqui. Sem mudanças no comportamento da validação.
+
+= 1.6.5 =
+Adiciona um pedido de avaliação único e dispensável (exibido uma semana depois de você salvar pela primeira vez uma mensagem personalizada). Sem mudanças no comportamento da validação.
+
+= 1.6.4 =
+Lançamento de compatibilidade: testado com WordPress 7.1 e limpo no PHP 8.5. Sem mudanças de comportamento.
 
 = 1.6.3 =
 Lançamento de documentação e tradução — sem mudanças funcionais ou de comportamento. Atualiza totalmente os readmes traduzidos e o catálogo de tradução .pot/.po/.mo.

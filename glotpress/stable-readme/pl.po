@@ -1,0 +1,1043 @@
+# Translation of Plugins - Validation Muse for Contact Form 7 - Stable Readme (latest release) in Polish
+# This file is distributed under the same license as the Plugins - Validation Muse for Contact Form 7 - Stable Readme (latest release) package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugins - Validation Muse for Contact Form 7 - Stable "
+"Readme (latest release)\n"
+"PO-Revision-Date: 2026-11-25 00:00:00+0000\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n % 10 >= 2 && n % 10 <= 4 "
+"&& (n % 100 < 12 || n % 100 > 14)) ? 1 : 2);\n"
+"X-Generator: GlotPress/4.0.3\n"
+
+#. Short description.
+msgid ""
+"Custom validation rules &amp; messages for Contact Form 7 — regex, length, "
+"required-if, per field, CF7 6.x SWV-compatible, multilingual."
+msgstr ""
+"Własne reguły i komunikaty walidacji dla Contact Form 7 — regex, długość, "
+"wymagane warunkowo, dla każdego pola, zgodność z SWV w CF7 6.x, "
+"wielojęzyczność."
+
+#. Plugin name.
+msgid "Validation Muse for Contact Form 7"
+msgstr "Validation Muse for Contact Form 7"
+
+#. Found in description paragraph.
+msgid ""
+"<strong>Validation Muse</strong> lets you write your own validation rules and "
+"error messages for every Contact Form 7 field — directly in the form editor, "
+"per form, per field. No code, no global settings page, no JavaScript hacks."
+msgstr ""
+"<strong>Validation Muse</strong> pozwala tworzyć własne reguły walidacji i "
+"komunikaty o błędach dla każdego pola Contact Form 7 — bezpośrednio w "
+"edytorze formularza, osobno dla każdego formularza i każdego pola. Bez kodu, "
+"bez globalnej strony ustawień, bez sztuczek w JavaScripcie."
+
+#. Found in description paragraph.
+msgid ""
+"Most CF7 validation plugins broke when Contact Form 7 6.x introduced "
+"<strong>Schema-based Validation (SWV)</strong>. Validation Muse runs its "
+"filters at priority 20 (after CF7 core) and uses Reflection to replace SWV "
+"error text on already-invalidated fields, so your custom copy actually shows "
+"up — even on the new validation engine."
+msgstr ""
+"Większość wtyczek walidacji dla CF7 przestała działać, gdy Contact Form 7 6.x "
+"wprowadził <strong>Schema-based Validation (SWV)</strong>. Validation Muse "
+"uruchamia swoje filtry z priorytetem 20 (po rdzeniu CF7) i za pomocą "
+"Reflection podmienia tekst błędu SWV w polach już oznaczonych jako "
+"nieprawidłowe, dzięki czemu własne komunikaty faktycznie się wyświetlają — "
+"także w nowym silniku walidacji."
+
+#. Found in description header.
+msgid "Why Validation Muse"
+msgstr "Dlaczego Validation Muse"
+
+#. Found in description list item.
+msgid ""
+"<strong>CF7 6.x SWV compatible</strong> — works with the new Schema-based "
+"Validation engine, not just legacy hooks."
+msgstr ""
+"<strong>Zgodność z SWV w CF7 6.x</strong> — działa z nowym silnikiem Schema-"
+"based Validation, a nie tylko ze starszymi hakami."
+
+#. Found in description list item.
+msgid ""
+"<strong>Custom Regex &amp; Length Rules</strong> — define custom regular "
+"expression patterns, min length, and max length rules per field with their "
+"own error messages."
+msgstr ""
+"<strong>Własne reguły regex i długości</strong> — własne wzorce wyrażeń "
+"regularnych oraz minimalna i maksymalna długość dla każdego pola, każda "
+"reguła z własnym komunikatem o błędzie."
+
+#. Found in description list item.
+msgid ""
+"<strong>Conditional \"Required-If\" Rules</strong> — make fields required "
+"only when a companion field is filled/checked."
+msgstr ""
+"<strong>Reguły warunkowe „wymagane, jeśli”</strong> — pole staje się wymagane "
+"tylko wtedy, gdy powiązane pole jest wypełnione lub zaznaczone."
+
+#. Found in description list item.
+msgid ""
+"<strong>Client-Side SWV Integration</strong> — standard validation rules "
+"(required, email, length) are injected into CF7's native SWV engine for "
+"instant frontend feedback with full accessibility (A11y) support."
+msgstr ""
+"<strong>Integracja z SWV po stronie klienta</strong> — standardowe reguły "
+"walidacji (wymagane, e-mail, długość) są dodawane do natywnego silnika SWV w "
+"CF7, co zapewnia natychmiastową informację zwrotną na froncie witryny z pełną "
+"obsługą dostępności (A11y)."
+
+#. Found in description list item.
+msgid ""
+"<strong>Rule Sets Import/Export &amp; Templates</strong> — export/import "
+"validation rules as JSON, copy them from other forms, and bulk apply global "
+"templates."
+msgstr ""
+"<strong>Import/eksport zestawów reguł i szablony</strong> — eksport i import "
+"reguł walidacji w formacie JSON, kopiowanie ich z innych formularzy oraz "
+"zbiorcze stosowanie globalnych szablonów."
+
+#. Found in description list item.
+msgid ""
+"<strong>Placeholder Tokens</strong> — use <code>{field_label}</code>, "
+"<code>{min}</code>, and <code>{max}</code> in validation messages to generate "
+"dynamic texts."
+msgstr ""
+"<strong>Znaczniki zastępcze</strong> — <code>{field_label}</code>, <code>{min}"
+"</code> i <code>{max}</code> w komunikatach walidacji pozwalają tworzyć "
+"dynamiczne teksty."
+
+#. Found in description list item.
+msgid ""
+"<strong>Per-form, per-field</strong> — each form keeps its own messages; no "
+"global override."
+msgstr ""
+"<strong>Dla każdego formularza i każdego pola</strong> — każdy formularz "
+"zachowuje własne komunikaty; bez globalnego nadpisywania."
+
+#. Found in description list item.
+msgid ""
+"<strong>Stored in post meta</strong> — messages live with the form, "
+"compatible with CF7 form duplication and third-party CF7 import/export "
+"plugins."
+msgstr ""
+"<strong>Zapis w metadanych wpisu</strong> — komunikaty są przechowywane razem "
+"z formularzem, zgodnie z duplikowaniem formularzy w CF7 i zewnętrznymi "
+"wtyczkami importu/eksportu dla CF7."
+
+#. Found in description list item.
+msgid ""
+"<strong>Multilingual via WPML, Polylang &amp; Flavor</strong> — translates "
+"rules using standard WPML/Polylang hooks, and features language tabs + one-"
+"click AI Translate when Flavor is active."
+msgstr ""
+"<strong>Wielojęzyczność dzięki WPML, Polylang i Flavor</strong> — reguły są "
+"tłumaczone za pomocą standardowych haków WPML/Polylang, a gdy włączona jest "
+"wtyczka Flavor, dostępne są karty języków i AI Translate jednym kliknięciem."
+
+#. Found in description list item.
+msgid ""
+"<strong>Developer-friendly</strong> — extensibility hooks <code>vmcf7_loaded</"
+"code> and <code>vmcf7_validation_tag_types</code> let you add custom field "
+"types; <code>vmcf7_message</code>, <code>vmcf7_default_message</code>, "
+"<code>vmcf7_placeholders</code> and <code>vmcf7_field_label</code> filters "
+"let you read messages, set site-wide defaults and add your own <code>{tokens}"
+"</code>."
+msgstr ""
+"<strong>Przyjazna dla programistów</strong> — haki rozszerzeń "
+"<code>vmcf7_loaded</code> i <code>vmcf7_validation_tag_types</code> pozwalają "
+"dodawać własne typy pól; filtry <code>vmcf7_message</code>, "
+"<code>vmcf7_default_message</code>, <code>vmcf7_placeholders</code> i "
+"<code>vmcf7_field_label</code> pozwalają odczytywać komunikaty, ustawiać "
+"wartości domyślne dla całej witryny i dodawać własne <code>{tokens}</code>."
+
+#. Found in description list item.
+msgid "<strong>Lightweight</strong> — no admin bloat, no tracking, no upsells."
+msgstr ""
+"<strong>Lekka</strong> — bez zbędnych elementów w kokpicie, bez śledzenia, "
+"bez nachalnej sprzedaży."
+
+#. Found in description header.
+msgid "Supported field types"
+msgstr "Obsługiwane typy pól"
+
+#. Found in description list item.
+msgid ""
+"Required-field messages: any required tag (<code>text</code>, <code>textarea</"
+"code>, <code>select</code>, <code>checkbox</code>, <code>radio</code>, "
+"<code>file</code>, etc.)."
+msgstr ""
+"Komunikaty dla pól wymaganych: dowolny wymagany znacznik (<code>text</code>, "
+"<code>textarea</code>, <code>select</code>, <code>checkbox</code>, "
+"<code>radio</code>, <code>file</code> itd.)."
+
+#. Found in description list item.
+msgid ""
+"Invalid-format messages: <code>email</code>, <code>url</code>, <code>tel</"
+"code>, <code>number</code> (including <code>range</code>), <code>date</code>, "
+"and <code>time</code> fields."
+msgstr ""
+"Komunikaty o nieprawidłowym formacie: pola <code>email</code>, <code>url</"
+"code>, <code>tel</code>, <code>number</code> (w tym <code>range</code>), "
+"<code>date</code> i <code>time</code>."
+
+#. Found in description list item.
+msgid ""
+"Custom error messages on validation failure: <code>file</code> (size/type "
+"checks), <code>acceptance</code> (unchecked/unaccepted state), and "
+"<code>quiz</code> (incorrect answer)."
+msgstr ""
+"Własne komunikaty o błędach walidacji: <code>file</code> (sprawdzanie "
+"rozmiaru/typu), <code>acceptance</code> (pole niezaznaczone/brak zgody) i "
+"<code>quiz</code> (błędna odpowiedź)."
+
+#. Found in description list item.
+msgid ""
+"HTML inside messages is allowed and sanitized through <code>wp_kses_post()</"
+"code>."
+msgstr ""
+"HTML w komunikatach jest dozwolony i oczyszczany za pomocą "
+"<code>wp_kses_post()</code>."
+
+#. Found in description list item.
+msgid ""
+"Custom Regex and Min/Max Length rules are available for every field type "
+"except <code>file</code>."
+msgstr ""
+"Własne reguły regex oraz minimalnej/maksymalnej długości są dostępne dla "
+"każdego typu pola z wyjątkiem <code>file</code>."
+
+#. Found in description header.
+msgid "Translations"
+msgstr "Tłumaczenia"
+
+#. Found in description paragraph.
+msgid ""
+"The plugin ships with a <code>.pot</code> file and is already translated into "
+"German, Spanish, French, Italian, Japanese, Polish, Portuguese (Brazil), "
+"Russian, and Ukrainian. <a href=\"https://translate.wordpress.org/projects/wp-"
+"plugins/validation-muse-for-contact-form-7\">Help translate it into your "
+"language.</a>"
+msgstr ""
+"Wtyczka zawiera plik <code>.pot</code> i jest już przetłumaczona na "
+"niemiecki, hiszpański, francuski, włoski, japoński, polski, portugalski "
+"(Brazylia), rosyjski i ukraiński. <a href=\"https://translate.wordpress.org/"
+"projects/wp-plugins/validation-muse-for-contact-form-7\">Pomóż przetłumaczyć "
+"ją na swój język.</a>"
+
+#. Found in installation list item.
+msgid ""
+"Install from <strong>Plugins → Add New</strong> and search for <em>Validation "
+"Muse for Contact Form 7</em>, or upload the <code>validation-muse-for-contact-"
+"form-7</code> folder to <code>/wp-content/plugins/</code>."
+msgstr ""
+"Wtyczkę można zainstalować z ekranu <strong>Wtyczki → Dodaj wtyczkę</strong>, "
+"wyszukując <em>Validation Muse for Contact Form 7</em>, albo wgrać katalog "
+"<code>validation-muse-for-contact-form-7</code> do <code>/wp-content/plugins/"
+"</code>."
+
+#. Found in installation list item.
+msgid ""
+"Activate the plugin. Contact Form 7 must already be active — Validation Muse "
+"will deactivate itself with an admin notice if it is not."
+msgstr ""
+"Należy włączyć wtyczkę. Contact Form 7 musi być już włączony — w przeciwnym "
+"razie Validation Muse wyłączy się samoczynnie i wyświetli powiadomienie w "
+"kokpicie."
+
+#. Found in installation list item.
+msgid ""
+"Edit any Contact Form 7 form, open the <strong>Custom Validation</strong> "
+"tab, enable it, and write your messages."
+msgstr ""
+"Należy otworzyć edycję dowolnego formularza Contact Form 7, przejść na kartę "
+"<strong>Własna walidacja</strong>, włączyć ją i wpisać własne komunikaty."
+
+#. Found in installation list item.
+msgid ""
+"(Optional) Install the Flavor translation plugin to translate messages per "
+"language with AI assistance."
+msgstr ""
+"(Opcjonalnie) Można zainstalować wtyczkę tłumaczeń Flavor, aby tłumaczyć "
+"komunikaty na poszczególne języki z pomocą AI."
+
+#. Found in faq header.
+msgid ""
+"Does this work with Contact Form 7 6.x and Schema-based Validation (SWV)?"
+msgstr "Czy to działa z Contact Form 7 6.x i Schema-based Validation (SWV)?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. Since version 1.3.0, Validation Muse hooks at priority 20 (after CF7 "
+"core) and uses Reflection to replace SWV error text on already-invalidated "
+"fields. Since 1.6.1, standard rules (required, email/url/tel/number/date/"
+"time, min/max length) are also injected directly into CF7's own SWV schema, "
+"so client-side (frontend JS) validation shows your custom messages instantly "
+"— through CF7's native validation engine, with no extra script from this "
+"plugin."
+msgstr ""
+"Tak. Od wersji 1.3.0 Validation Muse podpina się z priorytetem 20 (po rdzeniu "
+"CF7) i za pomocą Reflection podmienia tekst błędu SWV w polach już "
+"oznaczonych jako nieprawidłowe. Od wersji 1.6.1 standardowe reguły (wymagane, "
+"email/url/tel/number/date/time, minimalna/maksymalna długość) są też dodawane "
+"bezpośrednio do schematu SWV w CF7, więc walidacja po stronie klienta (JS na "
+"froncie witryny) od razu pokazuje własne komunikaty — przez natywny silnik "
+"walidacji CF7, bez dodatkowego skryptu tej wtyczki."
+
+#. Found in faq header.
+msgid "How is this different from other CF7 validation plugins?"
+msgstr "Czym ta wtyczka różni się od innych wtyczek walidacji dla CF7?"
+
+#. Found in faq paragraph.
+msgid ""
+"Validation Muse is the only CF7 validation plugin that (1) is compatible with "
+"CF7 6.x SWV out of the box — both server-side and in CF7's own client-side "
+"validation, (2) stores messages in form post meta so they live with the form "
+"(compatible with CF7 form duplication and import/export plugins), and (3) "
+"supports per-language messages through WPML, Polylang, or the Flavor "
+"translation plugin (with one-click AI translation)."
+msgstr ""
+"Validation Muse to jedyna wtyczka walidacji dla CF7, która (1) od razu jest "
+"zgodna z SWV w CF7 6.x — zarówno po stronie serwera, jak i we własnej "
+"walidacji CF7 po stronie klienta, (2) zapisuje komunikaty w metadanych wpisu "
+"formularza, dzięki czemu są przechowywane razem z formularzem (zgodnie z "
+"duplikowaniem formularzy w CF7 i wtyczkami importu/eksportu), oraz (3) "
+"obsługuje komunikaty w poszczególnych językach za pomocą WPML, Polylang lub "
+"wtyczki tłumaczeń Flavor (z tłumaczeniem AI jednym kliknięciem)."
+
+#. Found in faq header.
+msgid "Can I translate validation messages per language?"
+msgstr "Czy komunikaty walidacji można tłumaczyć na poszczególne języki?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. WPML (String Translation) and Polylang are supported natively: your "
+"messages are registered for translation each time you save the form, and the "
+"<strong>Custom Validation</strong> tab links to the screen where you "
+"translate them. With the Flavor translation plugin, Validation Muse also "
+"shows language tabs in the form editor plus an <em>AI Translate</em> button; "
+"those translations are stored in Flavor's database, and uninstalling "
+"Validation Muse cleans them up."
+msgstr ""
+"Tak. WPML (String Translation) i Polylang są obsługiwane natywnie: komunikaty "
+"są rejestrowane do tłumaczenia przy każdym zapisie formularza, a karta "
+"<strong>Własna walidacja</strong> zawiera odnośnik do ekranu, na którym można "
+"je przetłumaczyć. Z wtyczką tłumaczeń Flavor Validation Muse pokazuje ponadto "
+"karty języków w edytorze formularza oraz przycisk <em>AI Translate</em>; te "
+"tłumaczenia są zapisywane w bazie danych Flavor, a odinstalowanie Validation "
+"Muse je usuwa."
+
+#. Found in faq header.
+msgid "Which field types support custom invalid or validation failure messages?"
+msgstr ""
+"Które typy pól obsługują własne komunikaty o nieprawidłowym formacie lub "
+"błędach walidacji?"
+
+#. Found in faq list item.
+msgid ""
+"<code>email</code>, <code>url</code>, <code>tel</code>, <code>number</code> "
+"(including <code>range</code>), <code>date</code>, and <code>time</code> "
+"support custom invalid-format messages."
+msgstr ""
+"<code>email</code>, <code>url</code>, <code>tel</code>, <code>number</code> "
+"(w tym <code>range</code>), <code>date</code> i <code>time</code> obsługują "
+"własne komunikaty o nieprawidłowym formacie."
+
+#. Found in faq list item.
+msgid ""
+"<code>file</code> supports custom file size/type validation error messages."
+msgstr ""
+"<code>file</code> obsługuje własne komunikaty o błędach walidacji rozmiaru/"
+"typu pliku."
+
+#. Found in faq list item.
+msgid ""
+"<code>acceptance</code> supports custom error messages when the checkbox is "
+"not accepted."
+msgstr ""
+"<code>acceptance</code> obsługuje własne komunikaty o błędach, gdy pole "
+"wyboru nie zostało zaznaczone."
+
+#. Found in faq list item.
+msgid ""
+"<code>quiz</code> supports custom error messages when the answer is incorrect."
+msgstr ""
+"<code>quiz</code> obsługuje własne komunikaty o błędach, gdy odpowiedź jest "
+"nieprawidłowa."
+
+#. Found in faq list item.
+msgid "Any required field of any type can have a custom required-field message."
+msgstr ""
+"Każde wymagane pole dowolnego typu może mieć własny komunikat dla pola "
+"wymaganego."
+
+#. Found in faq header.
+msgid "Where are the messages stored?"
+msgstr "Gdzie są przechowywane komunikaty?"
+
+#. Found in faq paragraph.
+msgid ""
+"In each form's post meta. They live with the form, so duplicating a form "
+"(built into CF7) keeps the messages. CF7 has no native export, but third-"
+"party CF7 import/export plugins read post meta — so migrations across sites "
+"work without a separate import step."
+msgstr ""
+"W metadanych wpisu każdego formularza. Są przechowywane razem z formularzem, "
+"więc duplikowanie formularza (funkcja wbudowana w CF7) zachowuje komunikaty. "
+"CF7 nie ma natywnego eksportu, ale zewnętrzne wtyczki importu/eksportu dla "
+"CF7 odczytują metadane wpisu — przenoszenie między witrynami działa więc bez "
+"osobnego kroku importu."
+
+#. Found in faq header.
+msgid "Can I use HTML in validation messages?"
+msgstr "Czy w komunikatach walidacji można używać HTML?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes, basic HTML is allowed and sanitized via <code>wp_kses_post()</code>."
+msgstr ""
+"Tak, podstawowy HTML jest dozwolony i oczyszczany za pomocą "
+"<code>wp_kses_post()</code>."
+
+#. Found in faq header.
+msgid "Does this plugin require Contact Form 7?"
+msgstr "Czy ta wtyczka wymaga Contact Form 7?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. CF7 must be installed and active. The plugin shows an admin notice and "
+"self-deactivates if CF7 is missing."
+msgstr ""
+"Tak. CF7 musi być zainstalowany i włączony. Jeśli CF7 brakuje, wtyczka "
+"wyświetla powiadomienie w kokpicie i wyłącza się samoczynnie."
+
+#. Found in faq header.
+msgid "Is there a settings page?"
+msgstr "Czy jest strona ustawień?"
+
+#. Found in faq paragraph.
+msgid ""
+"No. Configuration lives inside each form, in the <strong>Custom Validation</"
+"strong> tab. There is no global settings page by design — every form keeps "
+"its own messages."
+msgstr ""
+"Nie. Konfiguracja znajduje się w każdym formularzu, na karcie <strong>Własna "
+"walidacja</strong>. Globalnej strony ustawień celowo nie ma — każdy formularz "
+"zachowuje własne komunikaty."
+
+#. Found in faq header.
+msgid "Does the plugin track or send any data?"
+msgstr "Czy wtyczka śledzi lub wysyła jakiekolwiek dane?"
+
+#. Found in faq paragraph.
+msgid ""
+"No. Validation Muse makes no external requests. The optional AI Translate "
+"button (Flavor integration) routes through Flavor's own configured provider."
+msgstr ""
+"Nie. Validation Muse nie wysyła żadnych żądań zewnętrznych. Opcjonalny "
+"przycisk AI Translate (integracja z Flavor) korzysta z dostawcy "
+"skonfigurowanego we wtyczce Flavor."
+
+#. Screenshot description.
+msgid ""
+"The <strong>Custom Validation</strong> tab inside the Contact Form 7 editor — "
+"one card per field with messages, extra rules (length, pattern with a live "
+"tester, required only sometimes) and a preview of what visitors will see."
+msgstr ""
+"Karta <strong>Własna walidacja</strong> w edytorze Contact Form 7 — jedna "
+"karta dla każdego pola z komunikatami, dodatkowymi regułami (długość, wzorzec "
+"z testerem na żywo, wymagane tylko czasami) i podglądem tego, co zobaczą "
+"odwiedzający."
+
+#. Screenshot description.
+msgid ""
+"<strong>Copy, back up and reuse</strong> — copy rules from another form, "
+"download/load them as a file, keep a template, or use them on all forms."
+msgstr ""
+"<strong>Kopiowanie, kopia zapasowa i ponowne użycie</strong> — kopiowanie "
+"reguł z innego formularza, pobieranie/wczytywanie ich jako pliku, zachowanie "
+"szablonu lub użycie we wszystkich formularzach."
+
+#. Screenshot description.
+msgid "Required-field message rendered on the frontend."
+msgstr "Komunikat dla pola wymaganego wyświetlony na froncie witryny."
+
+#. Screenshot description.
+msgid "Invalid-format message for an email field rendered on the frontend."
+msgstr ""
+"Komunikat o nieprawidłowym formacie dla pola e-mail wyświetlony na froncie "
+"witryny."
+
+#. Found in changelog list item.
+msgid ""
+"New: the Custom Validation tab is redesigned. Each field is a card with its "
+"label, type and whether it is customized; extra rules (length, pattern, "
+"required only sometimes) sit behind one \"Extra rules\" switch; every card "
+"shows what visitors will see. Search, \"only show customized fields\" and "
+"open/close all help on long forms."
+msgstr ""
+"Nowość: przeprojektowana karta „Własna walidacja”. Każde pole to karta z "
+"etykietą, typem i informacją, czy zostało dostosowane; dodatkowe reguły "
+"(długość, wzorzec, wymagane tylko czasami) kryją się za jednym przełącznikiem "
+"„Dodatkowe reguły”; każda karta pokazuje, co zobaczą odwiedzający. "
+"Wyszukiwanie, „Pokaż tylko dostosowane pola” oraz rozwijanie/zwijanie "
+"wszystkich ułatwiają pracę z długimi formularzami."
+
+#. Found in changelog list item.
+msgid ""
+"New: ready-made pattern examples and a \"try an example answer\" box that "
+"checks a pattern the same way the site does."
+msgstr ""
+"Nowość: gotowe przykłady wzorców oraz pole „Test: wpisz przykładową "
+"odpowiedź”, które sprawdza wzorzec tak samo, jak robi to witryna."
+
+#. Found in changelog list item.
+msgid ""
+"New: copy, back-up, template and \"use on all forms\" tools are grouped and "
+"explained, ask for confirmation inline and show the result in the panel "
+"instead of browser pop-ups."
+msgstr ""
+"Nowość: narzędzia kopiowania, kopii zapasowej, szablonu i „Użycie we "
+"wszystkich formularzach” są pogrupowane i opisane, proszą o potwierdzenie na "
+"miejscu i pokazują wynik w panelu zamiast w wyskakujących oknach przeglądarki."
+
+#. Found in changelog list item.
+msgid ""
+"New: when WPML String Translation or Polylang is active, the tab links "
+"straight to the screen where the messages are translated."
+msgstr ""
+"Nowość: gdy włączona jest wtyczka WPML String Translation lub Polylang, karta "
+"zawiera bezpośredni odnośnik do ekranu, na którym tłumaczy się komunikaty."
+
+#. Found in changelog list item.
+msgid ""
+"New: custom \"wrong answer\" message for quiz fields and \"wrong file\" "
+"message for file fields."
+msgstr ""
+"Nowość: własny komunikat „błędna odpowiedź” dla pól quizu oraz „niewłaściwy "
+"plik” dla pól pliku."
+
+#. Found in changelog list item.
+msgid ""
+"New: <code>{min}</code> and <code>{max}</code> work in every message; "
+"developer filters <code>vmcf7_default_message</code>, "
+"<code>vmcf7_placeholders</code>, <code>vmcf7_field_label</code>, "
+"<code>vmcf7_supports_text_rules</code> and <code>vmcf7_swv_invalid_rules</"
+"code>."
+msgstr ""
+"Nowość: <code>{min}</code> i <code>{max}</code> działają w każdym "
+"komunikacie; filtry dla programistów <code>vmcf7_default_message</code>, "
+"<code>vmcf7_placeholders</code>, <code>vmcf7_field_label</code>, "
+"<code>vmcf7_supports_text_rules</code> i <code>vmcf7_swv_invalid_rules</code>."
+
+#. Found in changelog list item.
+msgid ""
+"New: front-end error style can be changed with CSS custom properties (<code>--"
+"vmcf7-error-color</code>, <code>--vmcf7-error-font-size</code> and others)."
+msgstr ""
+"Nowość: wygląd błędów na froncie witryny można zmieniać za pomocą własności "
+"niestandardowych CSS (<code>--vmcf7-error-color</code>, <code>--vmcf7-error-"
+"font-size</code> i innych)."
+
+#. Found in changelog list item.
+msgid "New: Japanese, Italian and Polish translations."
+msgstr "Nowość: tłumaczenia na japoński, włoski i polski."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: the Contact Form 7 editor no longer asks \"Leave site? Changes you made "
+"may not be saved\" when nothing was changed."
+msgstr ""
+"Poprawka: edytor Contact Form 7 nie pyta już „Opuścić stronę? Wprowadzone "
+"zmiany mogą nie zostać zapisane”, gdy nic nie zostało zmienione."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: custom messages and length limits now reach Contact Form 7 6.2+ client-"
+"side validation again (the schema hook silently did nothing on 6.2)."
+msgstr ""
+"Poprawka: własne komunikaty i limity długości znów trafiają do walidacji po "
+"stronie klienta w Contact Form 7 6.2+ (w wersji 6.2 hak schematu po cichu nic "
+"nie robił)."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: backslashes were stripped from saved patterns and messages (<code>^\\d+"
+"$</code> was stored as <code>^d+$</code>), also on import, copy and \"use on "
+"all forms\"."
+msgstr ""
+"Poprawka: z zapisywanych wzorców i komunikatów usuwane były ukośniki wsteczne "
+"(<code>^\\d+$</code> zapisywano jako <code>^d+$</code>), także przy imporcie, "
+"kopiowaniu i w narzędziu „Użycie we wszystkich formularzach”."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: an invalid pattern no longer rejects every answer; a pattern or length "
+"rule on checkboxes or multi-selects no longer causes an error on submit."
+msgstr ""
+"Poprawka: nieprawidłowy wzorzec nie odrzuca już każdej odpowiedzi; reguła "
+"wzorca lub długości w polach wyboru i listach wielokrotnego wyboru nie "
+"powoduje już błędu przy wysyłaniu."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: copying a form's rules onto the same form no longer erases them; rule-"
+"set tools accept only Contact Form 7 forms the user may edit, and import "
+"files are checked and size-limited."
+msgstr ""
+"Poprawka: skopiowanie reguł formularza do tego samego formularza już ich nie "
+"usuwa; narzędzia zestawów reguł przyjmują wyłącznie formularze Contact Form "
+"7, które użytkownik może edytować, a importowane pliki są sprawdzane i mają "
+"ograniczony rozmiar."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: WPML/Polylang received each message one save late, Polylang did not list "
+"the messages on its Translations screen, and then listed them twice."
+msgstr ""
+"Poprawka: WPML/Polylang otrzymywały każdy komunikat z opóźnieniem o jeden "
+"zapis, a Polylang nie pokazywał komunikatów na ekranie tłumaczeń, a następnie "
+"pokazywał je dwukrotnie."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: the custom required message now also applies to acceptance checkboxes; "
+"required-if works when the other field's name has capital letters."
+msgstr ""
+"Poprawka: własny komunikat dla pola wymaganego dotyczy teraz także pól wyboru "
+"zgody (acceptance); reguła „wymagane, jeśli” działa, gdy nazwa drugiego pola "
+"zawiera wielkie litery."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: AI Translate no longer sends patterns and numbers to the translator."
+msgstr "Poprawka: AI Translate nie wysyła już wzorców i liczb do tłumacza."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: uninstall removes all plugin options; front-end styles also load for "
+"forms placed in widgets and templates."
+msgstr ""
+"Poprawka: odinstalowanie usuwa wszystkie opcje wtyczki; style frontu witryny "
+"są wczytywane także dla formularzy umieszczonych w widżetach i szablonach."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: opening Contact → Add New with Flavor active no longer stops with a "
+"fatal error. A form that has not been saved yet has no ID, and Validation "
+"Muse now skips its translations until the form is saved."
+msgstr ""
+"Poprawka: otwarcie ekranu Formularze → Dodaj nowy przy włączonej wtyczce "
+"Flavor nie kończy się już błędem krytycznym. Formularz, który nie został "
+"jeszcze zapisany, nie ma identyfikatora, więc Validation Muse pomija teraz "
+"jego tłumaczenia do momentu zapisania formularza."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: the archive GitHub and Composer build from a tag no longer carries "
+"tests, development tooling and documentation, so a project that installs the "
+"plugin from Git gets only the plugin. No change to the plugin's behavior."
+msgstr ""
+"Poprawka: archiwum, które GitHub i Composer budują z tagu, nie zawiera już "
+"testów, narzędzi deweloperskich ani dokumentacji, więc projekt instalujący "
+"wtyczkę z Gita otrzymuje tylko samą wtyczkę. Bez zmian w działaniu wtyczki."
+
+#. Found in changelog list item.
+msgid ""
+"New: the <code>vmcf7_message</code> filter hands a message written here to "
+"other code: <code>apply_filters( 'vmcf7_message', $default, $form_id, "
+"$field_name, $type )</code> returns the custom message, or <code>$default</"
+"code> when none was written or custom validation is off for the form. Nothing "
+"changes for visitors unless other code asks."
+msgstr ""
+"Nowość: filtr <code>vmcf7_message</code> przekazuje wpisany tutaj komunikat "
+"innemu kodowi: <code>apply_filters( 'vmcf7_message', $default, $form_id, "
+"$field_name, $type )</code> zwraca własny komunikat albo <code>$default</"
+"code>, gdy żadnego nie wpisano lub własna walidacja jest dla formularza "
+"wyłączona. Dla odwiedzających nic się nie zmienia, dopóki inny kod o to nie "
+"poprosi."
+
+#. Found in changelog list item.
+msgid ""
+"New: a one-time, dismissible request to leave a review on WordPress.org. It "
+"appears only a week after you first save a custom validation message, only to "
+"users who can edit Contact Form 7 forms and only on the Contact Form 7 "
+"screens. \"Maybe later\" snoozes it for 30 days, \"Don't ask again\" hides it "
+"for good. Nothing is sent anywhere."
+msgstr ""
+"Nowość: jednorazowa, możliwa do odrzucenia prośba o dodanie recenzji na "
+"WordPress.org. Pojawia się dopiero tydzień po pierwszym zapisaniu własnego "
+"komunikatu walidacji, tylko u użytkowników, którzy mogą edytować formularze "
+"Contact Form 7, i tylko na ekranach Contact Form 7. „Może później” odkłada ją "
+"na 30 dni, „Nie pytaj ponownie” ukrywa ją na stałe. Nic nie jest nigdzie "
+"wysyłane."
+
+#. Found in changelog list item.
+msgid "Tested with WordPress 7.1 (verified on 7.1.1 with Contact Form 7 6.1)."
+msgstr ""
+"Przetestowano z WordPressem 7.1 (sprawdzono na 7.1.1 z Contact Form 7 6.1)."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: removed calls deprecated in PHP 8.5 (<code>finfo_close()</code>, and "
+"<code>ReflectionProperty::setAccessible()</code> on PHP 8.1+), so the plugin "
+"no longer triggers deprecation notices on PHP 8.5."
+msgstr ""
+"Poprawka: usunięto wywołania przestarzałe w PHP 8.5 (<code>finfo_close()</"
+"code> oraz <code>ReflectionProperty::setAccessible()</code> w PHP 8.1+), więc "
+"wtyczka nie wywołuje już ostrzeżeń o przestarzałych funkcjach w PHP 8.5."
+
+#. Found in changelog list item.
+msgid ""
+"i18n: fully regenerated the <code>.pot</code> translation template — the "
+"catalog was frozen since 1.2.0 and covered only about 20% of the plugin's "
+"translatable strings (regex/length rules, rule templates, AI Translate "
+"errors, and more were never extractable before). All six shipped languages "
+"(German, Spanish, French, Portuguese, Russian, Ukrainian) are now fully "
+"translated against the current UI."
+msgstr ""
+"i18n: całkowicie wygenerowano na nowo szablon tłumaczeń <code>.pot</code> — "
+"katalog był zamrożony od wersji 1.2.0 i obejmował tylko około 20% tekstów "
+"wtyczki do przetłumaczenia (reguł regex/długości, szablonów reguł, błędów AI "
+"Translate i innych nie dało się wcześniej wyodrębnić). Wszystkie sześć "
+"dostarczanych języków (niemiecki, hiszpański, francuski, portugalski, "
+"rosyjski, ukraiński) jest teraz w pełni przetłumaczonych zgodnie z aktualnym "
+"interfejsem."
+
+#. Found in changelog list item.
+msgid ""
+"Docs: synced all translated readme files — feature list, supported field "
+"types, and FAQ now reflect 1.6.0–1.6.2 functionality (custom regex/length "
+"rules, required-if, native SWV client-side validation, rule templates); their "
+"Changelog/Upgrade Notice sections, previously stuck at 1.4.2, now cover every "
+"release up to 1.6.2."
+msgstr ""
+"Dokumentacja: zsynchronizowano wszystkie przetłumaczone pliki readme — lista "
+"funkcji, obsługiwane typy pól i FAQ odzwierciedlają teraz funkcje wersji "
+"1.6.0–1.6.2 (własne reguły regex/długości, „wymagane, jeśli”, natywna "
+"walidacja SWV po stronie klienta, szablony reguł); ich sekcje Changelog/"
+"Upgrade Notice, dotąd zatrzymane na wersji 1.4.2, obejmują teraz wszystkie "
+"wydania do 1.6.2."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: added a missing <code>translators:</code> comment for a placeholder "
+"string (i18n code quality, no behavior change)."
+msgstr ""
+"Poprawka: dodano brakujący komentarz <code>translators:</code> do tekstu z "
+"symbolem zastępczym (jakość kodu i18n, bez zmian w działaniu)."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: messages saved by versions prior to the plugin rename (stored under the "
+"legacy <code>_cf7cv_</code> meta prefix) were invisible to the current code. "
+"A one-time migration now renames them to the <code>_vmcf7_</code> prefix "
+"automatically, restoring lost messages. Collision-safe and runs once."
+msgstr ""
+"Poprawka: komunikaty zapisane przez wersje sprzed zmiany nazwy wtyczki "
+"(przechowywane pod starym prefiksem metadanych <code>_cf7cv_</code>) były "
+"niewidoczne dla obecnego kodu. Jednorazowa migracja automatycznie zmienia "
+"teraz ich prefiks na <code>_vmcf7_</code>, przywracając utracone komunikaty. "
+"Bez ryzyka kolizji, uruchamia się tylko raz."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: duplicate/overwritten validation messages on frontend by integrating "
+"with CF7's native SWV engine."
+msgstr ""
+"Poprawka: zduplikowane/nadpisywane komunikaty walidacji na froncie witryny — "
+"dzięki integracji z natywnym silnikiem SWV w CF7."
+
+#. Found in changelog list item.
+msgid ""
+"Fix: admin panel drawers and preview cards rendered expanded due to CF7 "
+"editor panel stripping inline styles."
+msgstr ""
+"Poprawka: wysuwane sekcje panelu administracyjnego i karty podglądu "
+"wyświetlały się rozwinięte, ponieważ panel edytora CF7 usuwał style inline."
+
+#. Found in changelog list item.
+msgid ""
+"New: custom regex and min/max-length validation rules per field, each with "
+"its own message."
+msgstr ""
+"Nowość: własne reguły walidacji regex oraz minimalnej/maksymalnej długości "
+"dla każdego pola, każda z własnym komunikatem."
+
+#. Found in changelog list item.
+msgid ""
+"New: validation messages for <code>file</code>, <code>acceptance</code>, and "
+"<code>quiz</code> fields; conditional \"required-if\" messages."
+msgstr ""
+"Nowość: komunikaty walidacji dla pól <code>file</code>, <code>acceptance</"
+"code> i <code>quiz</code>; warunkowe komunikaty „wymagane, jeśli”."
+
+#. Found in changelog list item.
+msgid ""
+"New: message placeholder tokens <code>{field_label}</code>, <code>{min}</"
+"code>, <code>{max}</code>."
+msgstr ""
+"Nowość: znaczniki zastępcze w komunikatach: <code>{field_label}</code>, "
+"<code>{min}</code>, <code>{max}</code>."
+
+#. Found in changelog list item.
+msgid ""
+"New: client-side inline validation mirroring the server messages, with "
+"<code>aria-describedby</code> accessibility."
+msgstr ""
+"Nowość: walidacja inline po stronie klienta odzwierciedlająca komunikaty "
+"serwera, z dostępnością dzięki <code>aria-describedby</code>."
+
+#. Found in changelog list item.
+msgid ""
+"New: live message preview, copy messages between forms, JSON import/export of "
+"message sets, and editor lint."
+msgstr ""
+"Nowość: podgląd komunikatów na żywo, kopiowanie komunikatów między "
+"formularzami, import/eksport zestawów komunikatów w formacie JSON oraz lint w "
+"edytorze."
+
+#. Found in changelog list item.
+msgid ""
+"New: WPML/Polylang string registration alongside the Flavor bridge; "
+"translation import/export."
+msgstr ""
+"Nowość: rejestracja ciągów znaków w WPML/Polylang obok mostu Flavor; import/"
+"eksport tłumaczeń."
+
+#. Found in changelog list item.
+msgid ""
+"Minimum PHP raised to 8.0; minimum WordPress raised to 6.0; tested up to "
+"WordPress 7.0."
+msgstr ""
+"Minimalna wersja PHP podniesiona do 8.0; minimalna wersja WordPressa "
+"podniesiona do 6.0; przetestowano do WordPressa 7.0."
+
+#. Found in changelog list item.
+msgid "New: custom validation messages for <code>time</code> fields."
+msgstr "Nowość: własne komunikaty walidacji dla pól <code>time</code>."
+
+#. Found in changelog list item.
+msgid "Clearer AI Translate error feedback in the form editor."
+msgstr "Czytelniejsze informacje o błędach AI Translate w edytorze formularza."
+
+#. Found in changelog list item.
+msgid ""
+"Reflection-based SWV message replacement now logs failures under WP_DEBUG for "
+"easier diagnosis."
+msgstr ""
+"Podmiana komunikatów SWV oparta na Reflection zapisuje teraz niepowodzenia w "
+"dzienniku przy włączonym WP_DEBUG, co ułatwia diagnostykę."
+
+#. Found in changelog list item.
+msgid ""
+"Improved handling of pending translations (no more silent fallback) with per-"
+"request caching."
+msgstr ""
+"Ulepszona obsługa oczekujących tłumaczeń (koniec z cichym użyciem wartości "
+"zastępczej) z pamięcią podręczną w obrębie żądania."
+
+#. Found in changelog list item.
+msgid ""
+"Code modernized to PHP 8 idioms; output escaping hardened; first unit-test "
+"suite added."
+msgstr ""
+"Kod unowocześniony do idiomów PHP 8; wzmocnione zabezpieczanie danych "
+"wyjściowych; dodano pierwszy zestaw testów jednostkowych."
+
+#. Found in changelog list item.
+msgid ""
+"Plugin URI: now points to the dedicated landing page at https://"
+"plugins.symonov.com/validation-muse-for-cf7/"
+msgstr ""
+"Plugin URI: wskazuje teraz dedykowaną stronę docelową pod adresem https://"
+"plugins.symonov.com/validation-muse-for-cf7/"
+
+#. Found in changelog list item.
+msgid "No code or behavior changes"
+msgstr "Bez zmian w kodzie i działaniu"
+
+#. Found in changelog list item.
+msgid "Readme: USP-first rewrite for SEO discoverability"
+msgstr ""
+"Readme: przepisane od nowa z naciskiem na główne zalety, dla lepszej "
+"widoczności w wyszukiwarkach"
+
+#. Found in changelog list item.
+msgid ""
+"Tags: replaced generic <code>messages</code>/<code>forms</code>/"
+"<code>customization</code> with targeted <code>contact-form-7</code>, "
+"<code>cf7</code>, <code>validation</code>, <code>error-message</code>, "
+"<code>multilingual</code>"
+msgstr ""
+"Tagi: ogólne <code>messages</code>/<code>forms</code>/<code>customization</"
+"code> zastąpiono precyzyjnymi <code>contact-form-7</code>, <code>cf7</code>, "
+"<code>validation</code>, <code>error-message</code>, <code>multilingual</code>"
+
+#. Found in changelog list item.
+msgid ""
+"FAQ: added entries for CF7 6.x SWV compatibility, comparison with other CF7 "
+"validation plugins, and multilingual via Flavor"
+msgstr ""
+"FAQ: dodano pozycje o zgodności z SWV w CF7 6.x, porównaniu z innymi "
+"wtyczkami walidacji dla CF7 oraz wielojęzyczności dzięki Flavor"
+
+#. Found in changelog list item.
+msgid "Added multilingual support via Flavor translation plugin integration"
+msgstr ""
+"Dodano obsługę wielu języków dzięki integracji z wtyczką tłumaczeń Flavor"
+
+#. Found in changelog list item.
+msgid ""
+"Validation messages can now be translated per language in the form editor"
+msgstr ""
+"Komunikaty walidacji można teraz tłumaczyć na poszczególne języki w edytorze "
+"formularza"
+
+#. Found in changelog list item.
+msgid "Language tabs appear automatically when Flavor plugin is active"
+msgstr ""
+"Karty języków pojawiają się automatycznie, gdy wtyczka Flavor jest włączona"
+
+#. Found in changelog list item.
+msgid "AI Translate button for one-click machine translation of all messages"
+msgstr ""
+"Przycisk AI Translate do tłumaczenia maszynowego wszystkich komunikatów "
+"jednym kliknięciem"
+
+#. Found in changelog list item.
+msgid "Translations stored in Flavor's database, keeping plugin data portable"
+msgstr ""
+"Tłumaczenia są zapisywane w bazie danych Flavor, dzięki czemu dane wtyczki "
+"pozostają przenośne"
+
+#. Found in changelog list item.
+msgid ""
+"Zero overhead when Flavor is not installed — all calls behind class_exists() "
+"checks"
+msgstr ""
+"Zero narzutu, gdy Flavor nie jest zainstalowany — wszystkie wywołania są "
+"poprzedzone sprawdzeniem class_exists()"
+
+#. Found in changelog list item.
+msgid "Flavor translations cleaned up on plugin uninstall"
+msgstr "Tłumaczenia Flavor są usuwane przy odinstalowaniu wtyczki"
+
+#. Found in changelog list item.
+msgid ""
+"Fixed compatibility with Contact Form 7 6.x SWV (Schema-based Validation)"
+msgstr ""
+"Naprawiono zgodność z SWV (Schema-based Validation) w Contact Form 7 6.x"
+
+#. Found in changelog list item.
+msgid ""
+"Validation filters now run at priority 20 (after CF7 core) to replace SWV "
+"error messages"
+msgstr ""
+"Filtry walidacji działają teraz z priorytetem 20 (po rdzeniu CF7), aby "
+"podmieniać komunikaty o błędach SWV"
+
+#. Found in changelog list item.
+msgid "Added Reflection-based error replacement for already-invalidated fields"
+msgstr ""
+"Dodano opartą na Reflection podmianę błędów w polach już oznaczonych jako "
+"nieprawidłowe"
+
+#. Found in changelog list item.
+msgid ""
+"Custom messages now correctly override default CF7 \"The field is required.\" "
+"text"
+msgstr ""
+"Własne komunikaty poprawnie zastępują teraz domyślny tekst CF7 „The field is "
+"required.”"
+
+#. Found in changelog list item.
+msgid "Fixed variable name mismatch causing \"No required fields\" error"
+msgstr ""
+"Naprawiono niezgodność nazw zmiennych powodującą błąd „No required fields”"
+
+#. Found in changelog list item.
+msgid "Refactored codebase to follow WordPress Coding Standards"
+msgstr ""
+"Zrefaktoryzowano kod zgodnie ze standardami kodowania WordPressa (WordPress "
+"Coding Standards)"
+
+#. Found in changelog list item.
+msgid "Reorganized file structure for better maintainability"
+msgstr "Zreorganizowano strukturę plików dla łatwiejszego utrzymania"
+
+#. Found in changelog list item.
+msgid "Added PHPDoc blocks to all functions and methods"
+msgstr "Dodano bloki PHPDoc do wszystkich funkcji i metod"
+
+#. Found in changelog list item.
+msgid "Improved accessibility with ARIA labels"
+msgstr "Poprawiono dostępność dzięki etykietom ARIA"
+
+#. Found in changelog list item.
+msgid "Fixed JavaScript prefix inconsistency"
+msgstr "Naprawiono niespójność prefiksu w JavaScripcie"
+
+#. Found in changelog list item.
+msgid "Fixed uninstall script to use correct meta prefix"
+msgstr ""
+"Poprawiono skrypt odinstalowania, aby używał właściwego prefiksu metadanych"
+
+#. Found in changelog list item.
+msgid ""
+"Added extensibility hooks (<code>vmcf7_loaded</code>, "
+"<code>vmcf7_validation_tag_types</code>)"
+msgstr ""
+"Dodano haki rozszerzeń (<code>vmcf7_loaded</code>, "
+"<code>vmcf7_validation_tag_types</code>)"
+
+#. Found in changelog list item.
+msgid ""
+"Changed capability check from <code>manage_options</code> to "
+"<code>wpcf7_edit_contact_forms</code>"
+msgstr ""
+"Zmieniono sprawdzane uprawnienie z <code>manage_options</code> na "
+"<code>wpcf7_edit_contact_forms</code>"
+
+#. Found in changelog list item.
+msgid "Updated POT file name to match text domain"
+msgstr "Zaktualizowano nazwę pliku POT, aby odpowiadała domenie tekstowej"
+
+#. Found in changelog list item.
+msgid "Changed plugin name."
+msgstr "Zmieniono nazwę wtyczki."
+
+#. Found in changelog list item.
+msgid "Added .gitignore file."
+msgstr "Dodano plik .gitignore."
+
+#. Found in changelog list item.
+msgid "Added WordPress repository collateral (readme, license, POT file)."
+msgstr ""
+"Dodano materiały do repozytorium WordPressa (readme, licencja, plik POT)."
+
+#. Found in changelog list item.
+msgid ""
+"Reworked validation hooks to override required and invalid messages without "
+"relying on AJAX filters."
+msgstr ""
+"Przebudowano haki walidacji, aby zastępowały komunikaty o polach wymaganych i "
+"nieprawidłowych bez polegania na filtrach AJAX."
+
+#. Found in changelog list item.
+msgid ""
+"Hardened sanitization, text domain loading, and uninstall cleanup for release "
+"readiness."
+msgstr ""
+"Wzmocniono oczyszczanie danych, wczytywanie domeny tekstowej i sprzątanie "
+"przy odinstalowaniu przed wydaniem."
+
+#. Found in changelog list item.
+msgid "Initial public iteration bundled with the project."
+msgstr "Pierwsza publiczna wersja dołączona do projektu."

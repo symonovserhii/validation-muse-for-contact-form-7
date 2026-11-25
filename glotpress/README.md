@@ -24,5 +24,5 @@ project, different import target. Nothing here is bundled into the plugin packag
 ## Locale slugs
 
 GlotPress locale slugs don't always match our `languages/*-XX_YY.po` filenames:
-`pt-br` (hyphenated) not `pt_BR`, `uk` not `uk_UA`, `es`/`de`/`fr`/`ru` (bare) not the
-`_XX` region-suffixed forms.
+`pt-br` (hyphenated) not `pt_BR`, `uk` not `uk_UA`, `es`/`de`/`fr`/`it`/`pl`/`ru` (bare) not the
+`_XX` region-suffixed forms; `ja` is the same in both.

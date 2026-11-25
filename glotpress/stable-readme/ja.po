@@ -1,0 +1,1024 @@
+# Translation of Plugins - Validation Muse for Contact Form 7 - Stable Readme (latest release) in Japanese
+# This file is distributed under the same license as the Plugins - Validation Muse for Contact Form 7 - Stable Readme (latest release) package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugins - Validation Muse for Contact Form 7 - Stable "
+"Readme (latest release)\n"
+"PO-Revision-Date: 2026-11-25 00:00:00+0000\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: GlotPress/4.0.3\n"
+
+#. Short description.
+msgid ""
+"Custom validation rules &amp; messages for Contact Form 7 — regex, length, "
+"required-if, per field, CF7 6.x SWV-compatible, multilingual."
+msgstr ""
+"Contact Form 7 用の独自の検証ルールとメッセージ — 正規表現、文字数、条件付き必"
+"須、項目ごとの設定、CF7 6.x SWV 対応、多言語対応。"
+
+#. Plugin name.
+msgid "Validation Muse for Contact Form 7"
+msgstr "Validation Muse for Contact Form 7"
+
+#. Found in description paragraph.
+msgid ""
+"<strong>Validation Muse</strong> lets you write your own validation rules and "
+"error messages for every Contact Form 7 field — directly in the form editor, "
+"per form, per field. No code, no global settings page, no JavaScript hacks."
+msgstr ""
+"<strong>Validation Muse</strong> を使うと、Contact Form 7 のすべての項目に独自"
+"の検証ルールとエラーメッセージを設定できます — フォームエディター内で、フォー"
+"ムごと、項目ごとに直接設定します。コードも、全体設定ページも、JavaScript の"
+"ハックも不要です。"
+
+#. Found in description paragraph.
+msgid ""
+"Most CF7 validation plugins broke when Contact Form 7 6.x introduced "
+"<strong>Schema-based Validation (SWV)</strong>. Validation Muse runs its "
+"filters at priority 20 (after CF7 core) and uses Reflection to replace SWV "
+"error text on already-invalidated fields, so your custom copy actually shows "
+"up — even on the new validation engine."
+msgstr ""
+"Contact Form 7 6.x で <strong>Schema-based Validation (SWV)</strong> が導入さ"
+"れたとき、多くの CF7 検証プラグインが動作しなくなりました。Validation Muse は"
+"フィルターを優先度 20 (CF7 コアの後) で実行し、Reflection を使ってすでに無効と"
+"判定された項目の SWV エラーテキストを置き換えるため、新しい検証エンジンでも独"
+"自の文言が確実に表示されます。"
+
+#. Found in description header.
+msgid "Why Validation Muse"
+msgstr "Validation Muse を選ぶ理由"
+
+#. Found in description list item.
+msgid ""
+"<strong>CF7 6.x SWV compatible</strong> — works with the new Schema-based "
+"Validation engine, not just legacy hooks."
+msgstr ""
+"<strong>CF7 6.x SWV 対応</strong> — 従来のフックだけでなく、新しい Schema-"
+"based Validation エンジンでも動作します。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Custom Regex &amp; Length Rules</strong> — define custom regular "
+"expression patterns, min length, and max length rules per field with their "
+"own error messages."
+msgstr ""
+"<strong>独自の正規表現ルールと文字数ルール</strong> — 項目ごとに独自の正規表現"
+"パターン、最小文字数、最大文字数のルールを定義し、それぞれに専用のエラーメッ"
+"セージを設定できます。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Conditional \"Required-If\" Rules</strong> — make fields required "
+"only when a companion field is filled/checked."
+msgstr ""
+"<strong>条件付き必須 (Required-If) ルール</strong> — 関連する項目が入力または"
+"チェックされている場合にのみ、項目を必須にします。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Client-Side SWV Integration</strong> — standard validation rules "
+"(required, email, length) are injected into CF7's native SWV engine for "
+"instant frontend feedback with full accessibility (A11y) support."
+msgstr ""
+"<strong>クライアント側の SWV 連携</strong> — 標準の検証ルール (必須、メール、"
+"文字数) を CF7 ネイティブの SWV エンジンに組み込み、アクセシビリティ (A11y) に"
+"完全対応した即時のフロントエンドフィードバックを実現します。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Rule Sets Import/Export &amp; Templates</strong> — export/import "
+"validation rules as JSON, copy them from other forms, and bulk apply global "
+"templates."
+msgstr ""
+"<strong>ルールセットのインポート / エクスポートとテンプレート</strong> — 検証"
+"ルールを JSON としてエクスポート / インポートしたり、他のフォームからコピーし"
+"たり、共通のテンプレートを一括適用したりできます。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Placeholder Tokens</strong> — use <code>{field_label}</code>, "
+"<code>{min}</code>, and <code>{max}</code> in validation messages to generate "
+"dynamic texts."
+msgstr ""
+"<strong>プレースホルダートークン</strong> — 検証メッセージ内で "
+"<code>{field_label}</code>、<code>{min}</code>、<code>{max}</code> を使って動"
+"的な文言を生成できます。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Per-form, per-field</strong> — each form keeps its own messages; no "
+"global override."
+msgstr ""
+"<strong>フォームごと、項目ごと</strong> — 各フォームがそれぞれのメッセージを保"
+"持します。全体を上書きする設定はありません。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Stored in post meta</strong> — messages live with the form, "
+"compatible with CF7 form duplication and third-party CF7 import/export "
+"plugins."
+msgstr ""
+"<strong>投稿メタに保存</strong> — メッセージはフォームと一緒に保存されるため、"
+"CF7 のフォーム複製やサードパーティ製の CF7 インポート / エクスポートプラグイン"
+"と互換性があります。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Multilingual via WPML, Polylang &amp; Flavor</strong> — translates "
+"rules using standard WPML/Polylang hooks, and features language tabs + one-"
+"click AI Translate when Flavor is active."
+msgstr ""
+"<strong>WPML、Polylang &amp; Flavor による多言語対応</strong> — WPML / "
+"Polylang の標準フックを使ってルールを翻訳します。Flavor が有効な場合は、言語タ"
+"ブとワンクリックの AI Translate も利用できます。"
+
+#. Found in description list item.
+msgid ""
+"<strong>Developer-friendly</strong> — extensibility hooks <code>vmcf7_loaded</"
+"code> and <code>vmcf7_validation_tag_types</code> let you add custom field "
+"types; <code>vmcf7_message</code>, <code>vmcf7_default_message</code>, "
+"<code>vmcf7_placeholders</code> and <code>vmcf7_field_label</code> filters "
+"let you read messages, set site-wide defaults and add your own <code>{tokens}"
+"</code>."
+msgstr ""
+"<strong>開発者にやさしい設計</strong> — 拡張用フック <code>vmcf7_loaded</"
+"code> と <code>vmcf7_validation_tag_types</code> で独自の項目タイプを追加でき"
+"ます。<code>vmcf7_message</code>、<code>vmcf7_default_message</code>、"
+"<code>vmcf7_placeholders</code>、<code>vmcf7_field_label</code> フィルターを使"
+"えば、メッセージの取得、サイト全体のデフォルト設定、独自の <code>{tokens}</"
+"code> の追加が可能です。"
+
+#. Found in description list item.
+msgid "<strong>Lightweight</strong> — no admin bloat, no tracking, no upsells."
+msgstr ""
+"<strong>軽量</strong> — 管理画面の肥大化なし、トラッキングなし、アップセルな"
+"し。"
+
+#. Found in description header.
+msgid "Supported field types"
+msgstr "対応している項目タイプ"
+
+#. Found in description list item.
+msgid ""
+"Required-field messages: any required tag (<code>text</code>, <code>textarea</"
+"code>, <code>select</code>, <code>checkbox</code>, <code>radio</code>, "
+"<code>file</code>, etc.)."
+msgstr ""
+"必須項目のメッセージ: すべての必須タグ (<code>text</code>、<code>textarea</"
+"code>、<code>select</code>、<code>checkbox</code>、<code>radio</code>、"
+"<code>file</code> など)。"
+
+#. Found in description list item.
+msgid ""
+"Invalid-format messages: <code>email</code>, <code>url</code>, <code>tel</"
+"code>, <code>number</code> (including <code>range</code>), <code>date</code>, "
+"and <code>time</code> fields."
+msgstr ""
+"形式エラーのメッセージ: <code>email</code>、<code>url</code>、<code>tel</"
+"code>、<code>number</code> (<code>range</code> を含む)、<code>date</code>、"
+"<code>time</code> の各項目。"
+
+#. Found in description list item.
+msgid ""
+"Custom error messages on validation failure: <code>file</code> (size/type "
+"checks), <code>acceptance</code> (unchecked/unaccepted state), and "
+"<code>quiz</code> (incorrect answer)."
+msgstr ""
+"検証失敗時の独自エラーメッセージ: <code>file</code> (サイズ / 種類のチェッ"
+"ク)、<code>acceptance</code> (未チェック / 未承諾の状態)、<code>quiz</code> "
+"(不正解)。"
+
+#. Found in description list item.
+msgid ""
+"HTML inside messages is allowed and sanitized through <code>wp_kses_post()</"
+"code>."
+msgstr ""
+"メッセージ内で HTML を使用でき、<code>wp_kses_post()</code> でサニタイズされま"
+"す。"
+
+#. Found in description list item.
+msgid ""
+"Custom Regex and Min/Max Length rules are available for every field type "
+"except <code>file</code>."
+msgstr ""
+"独自の正規表現ルールと最小 / 最大文字数ルールは、<code>file</code> を除くすべ"
+"ての項目タイプで利用できます。"
+
+#. Found in description header.
+msgid "Translations"
+msgstr "翻訳"
+
+#. Found in description paragraph.
+msgid ""
+"The plugin ships with a <code>.pot</code> file and is already translated into "
+"German, Spanish, French, Italian, Japanese, Polish, Portuguese (Brazil), "
+"Russian, and Ukrainian. <a href=\"https://translate.wordpress.org/projects/wp-"
+"plugins/validation-muse-for-contact-form-7\">Help translate it into your "
+"language.</a>"
+msgstr ""
+"このプラグインには <code>.pot</code> ファイルが同梱されており、すでに日本語、"
+"ドイツ語、スペイン語、フランス語、イタリア語、ポーランド語、ポルトガル語 (ブラ"
+"ジル)、ロシア語、ウクライナ語に翻訳されています。<a href=\"https://"
+"translate.wordpress.org/projects/wp-plugins/validation-muse-for-contact-"
+"form-7\">あなたの言語への翻訳にご協力ください。</a>"
+
+#. Found in installation list item.
+msgid ""
+"Install from <strong>Plugins → Add New</strong> and search for <em>Validation "
+"Muse for Contact Form 7</em>, or upload the <code>validation-muse-for-contact-"
+"form-7</code> folder to <code>/wp-content/plugins/</code>."
+msgstr ""
+"<strong>プラグイン → 新規プラグインを追加</strong> から <em>Validation Muse "
+"for Contact Form 7</em> を検索してインストールするか、<code>validation-muse-"
+"for-contact-form-7</code> フォルダーを <code>/wp-content/plugins/</code> に"
+"アップロードします。"
+
+#. Found in installation list item.
+msgid ""
+"Activate the plugin. Contact Form 7 must already be active — Validation Muse "
+"will deactivate itself with an admin notice if it is not."
+msgstr ""
+"プラグインを有効化します。Contact Form 7 があらかじめ有効化されている必要があ"
+"ります — 有効でない場合、Validation Muse は管理画面に通知を表示して自動的に無"
+"効化されます。"
+
+#. Found in installation list item.
+msgid ""
+"Edit any Contact Form 7 form, open the <strong>Custom Validation</strong> "
+"tab, enable it, and write your messages."
+msgstr ""
+"任意の Contact Form 7 フォームを編集し、<strong>カスタム検証</strong>タブを開"
+"いて有効にし、メッセージを入力します。"
+
+#. Found in installation list item.
+msgid ""
+"(Optional) Install the Flavor translation plugin to translate messages per "
+"language with AI assistance."
+msgstr ""
+"(任意) Flavor 翻訳プラグインをインストールすると、AI の支援を受けて言語ごとに"
+"メッセージを翻訳できます。"
+
+#. Found in faq header.
+msgid ""
+"Does this work with Contact Form 7 6.x and Schema-based Validation (SWV)?"
+msgstr "Contact Form 7 6.x と Schema-based Validation (SWV) で動作しますか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. Since version 1.3.0, Validation Muse hooks at priority 20 (after CF7 "
+"core) and uses Reflection to replace SWV error text on already-invalidated "
+"fields. Since 1.6.1, standard rules (required, email/url/tel/number/date/"
+"time, min/max length) are also injected directly into CF7's own SWV schema, "
+"so client-side (frontend JS) validation shows your custom messages instantly "
+"— through CF7's native validation engine, with no extra script from this "
+"plugin."
+msgstr ""
+"はい。バージョン 1.3.0 以降、Validation Muse は優先度 20 (CF7 コアの後) でフッ"
+"クし、Reflection を使ってすでに無効と判定された項目の SWV エラーテキストを置き"
+"換えます。1.6.1 以降は、標準ルール (必須、email/url/tel/number/date/time、最"
+"小 / 最大文字数) も CF7 自体の SWV スキーマに直接組み込まれるため、クライアン"
+"ト側 (フロントエンド JS) の検証でも独自のメッセージが即座に表示されます — この"
+"プラグインが追加のスクリプトを読み込むことなく、CF7 ネイティブの検証エンジンを"
+"通じて行われます。"
+
+#. Found in faq header.
+msgid "How is this different from other CF7 validation plugins?"
+msgstr "他の CF7 検証プラグインとの違いは何ですか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"Validation Muse is the only CF7 validation plugin that (1) is compatible with "
+"CF7 6.x SWV out of the box — both server-side and in CF7's own client-side "
+"validation, (2) stores messages in form post meta so they live with the form "
+"(compatible with CF7 form duplication and import/export plugins), and (3) "
+"supports per-language messages through WPML, Polylang, or the Flavor "
+"translation plugin (with one-click AI translation)."
+msgstr ""
+"Validation Muse は、次の 3 点を満たす唯一の CF7 検証プラグインです。(1) そのま"
+"まで CF7 6.x SWV に対応 — サーバー側でも CF7 自体のクライアント側検証でも動作"
+"します。(2) メッセージをフォームの投稿メタに保存するため、メッセージがフォーム"
+"と一緒に保持されます (CF7 のフォーム複製やインポート / エクスポートプラグイン"
+"と互換)。(3) WPML、Polylang、または Flavor 翻訳プラグイン (ワンクリックの AI "
+"翻訳付き) による言語ごとのメッセージに対応しています。"
+
+#. Found in faq header.
+msgid "Can I translate validation messages per language?"
+msgstr "検証メッセージを言語ごとに翻訳できますか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. WPML (String Translation) and Polylang are supported natively: your "
+"messages are registered for translation each time you save the form, and the "
+"<strong>Custom Validation</strong> tab links to the screen where you "
+"translate them. With the Flavor translation plugin, Validation Muse also "
+"shows language tabs in the form editor plus an <em>AI Translate</em> button; "
+"those translations are stored in Flavor's database, and uninstalling "
+"Validation Muse cleans them up."
+msgstr ""
+"はい。WPML (String Translation) と Polylang にネイティブ対応しています。フォー"
+"ムを保存するたびにメッセージが翻訳用に登録され、<strong>カスタム検証</strong>"
+"タブから翻訳画面へのリンクが表示されます。Flavor 翻訳プラグインを使用している"
+"場合は、フォームエディターに言語タブと <em>AI Translate</em> ボタンも表示され"
+"ます。その翻訳は Flavor のデータベースに保存され、Validation Muse をアンインス"
+"トールすると削除されます。"
+
+#. Found in faq header.
+msgid "Which field types support custom invalid or validation failure messages?"
+msgstr ""
+"形式エラーや検証失敗時の独自メッセージに対応している項目タイプはどれですか ?"
+
+#. Found in faq list item.
+msgid ""
+"<code>email</code>, <code>url</code>, <code>tel</code>, <code>number</code> "
+"(including <code>range</code>), <code>date</code>, and <code>time</code> "
+"support custom invalid-format messages."
+msgstr ""
+"<code>email</code>、<code>url</code>、<code>tel</code>、<code>number</code> "
+"(<code>range</code> を含む)、<code>date</code>、<code>time</code> は、形式エ"
+"ラーの独自メッセージに対応しています。"
+
+#. Found in faq list item.
+msgid ""
+"<code>file</code> supports custom file size/type validation error messages."
+msgstr ""
+"<code>file</code> は、ファイルのサイズ / 種類の検証エラーの独自メッセージに対"
+"応しています。"
+
+#. Found in faq list item.
+msgid ""
+"<code>acceptance</code> supports custom error messages when the checkbox is "
+"not accepted."
+msgstr ""
+"<code>acceptance</code> は、チェックボックスが承諾されていない場合の独自エラー"
+"メッセージに対応しています。"
+
+#. Found in faq list item.
+msgid ""
+"<code>quiz</code> supports custom error messages when the answer is incorrect."
+msgstr ""
+"<code>quiz</code> は、答えが間違っている場合の独自エラーメッセージに対応してい"
+"ます。"
+
+#. Found in faq list item.
+msgid "Any required field of any type can have a custom required-field message."
+msgstr ""
+"タイプを問わず、すべての必須項目に独自の必須項目メッセージを設定できます。"
+
+#. Found in faq header.
+msgid "Where are the messages stored?"
+msgstr "メッセージはどこに保存されますか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"In each form's post meta. They live with the form, so duplicating a form "
+"(built into CF7) keeps the messages. CF7 has no native export, but third-"
+"party CF7 import/export plugins read post meta — so migrations across sites "
+"work without a separate import step."
+msgstr ""
+"各フォームの投稿メタに保存されます。メッセージはフォームと一緒に保持されるた"
+"め、フォームを複製 (CF7 の標準機能) してもメッセージはそのまま残ります。CF7 に"
+"はネイティブのエクスポート機能はありませんが、サードパーティ製の CF7 インポー"
+"ト / エクスポートプラグインは投稿メタを読み込むため、別途インポート作業をしな"
+"くてもサイト間の移行が可能です。"
+
+#. Found in faq header.
+msgid "Can I use HTML in validation messages?"
+msgstr "検証メッセージで HTML を使用できますか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes, basic HTML is allowed and sanitized via <code>wp_kses_post()</code>."
+msgstr ""
+"はい。基本的な HTML を使用でき、<code>wp_kses_post()</code> でサニタイズされま"
+"す。"
+
+#. Found in faq header.
+msgid "Does this plugin require Contact Form 7?"
+msgstr "このプラグインには Contact Form 7 が必要ですか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"Yes. CF7 must be installed and active. The plugin shows an admin notice and "
+"self-deactivates if CF7 is missing."
+msgstr ""
+"はい。CF7 がインストールされ、有効化されている必要があります。CF7 が見つからな"
+"い場合、プラグインは管理画面に通知を表示して自動的に無効化されます。"
+
+#. Found in faq header.
+msgid "Is there a settings page?"
+msgstr "設定ページはありますか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"No. Configuration lives inside each form, in the <strong>Custom Validation</"
+"strong> tab. There is no global settings page by design — every form keeps "
+"its own messages."
+msgstr ""
+"いいえ。設定は各フォーム内の<strong>カスタム検証</strong>タブで行います。意図"
+"的に全体設定ページは設けていません — 各フォームがそれぞれのメッセージを保持し"
+"ます。"
+
+#. Found in faq header.
+msgid "Does the plugin track or send any data?"
+msgstr "このプラグインはデータを追跡または送信しますか ?"
+
+#. Found in faq paragraph.
+msgid ""
+"No. Validation Muse makes no external requests. The optional AI Translate "
+"button (Flavor integration) routes through Flavor's own configured provider."
+msgstr ""
+"いいえ。Validation Muse は外部へのリクエストを一切行いません。任意の AI "
+"Translate ボタン (Flavor 連携) は、Flavor 側で設定されたプロバイダーを経由しま"
+"す。"
+
+#. Screenshot description.
+msgid ""
+"The <strong>Custom Validation</strong> tab inside the Contact Form 7 editor — "
+"one card per field with messages, extra rules (length, pattern with a live "
+"tester, required only sometimes) and a preview of what visitors will see."
+msgstr ""
+"Contact Form 7 エディター内の<strong>カスタム検証</strong>タブ — 項目ごとに 1 "
+"枚のカードがあり、メッセージ、追加ルール (文字数、その場で試せるパターン、条件"
+"付き必須)、訪問者に表示される内容のプレビューが並びます。"
+
+#. Screenshot description.
+msgid ""
+"<strong>Copy, back up and reuse</strong> — copy rules from another form, "
+"download/load them as a file, keep a template, or use them on all forms."
+msgstr ""
+"<strong>コピー、バックアップ、再利用</strong> — 別のフォームからルールをコピー"
+"したり、ファイルとしてダウンロード / 読み込みしたり、テンプレートとして保存し"
+"たり、すべてのフォームで使ったりできます。"
+
+#. Screenshot description.
+msgid "Required-field message rendered on the frontend."
+msgstr "フロントエンドに表示された必須項目のメッセージ。"
+
+#. Screenshot description.
+msgid "Invalid-format message for an email field rendered on the frontend."
+msgstr "フロントエンドに表示された、メール項目の形式エラーメッセージ。"
+
+#. Found in changelog list item.
+msgid ""
+"New: the Custom Validation tab is redesigned. Each field is a card with its "
+"label, type and whether it is customized; extra rules (length, pattern, "
+"required only sometimes) sit behind one \"Extra rules\" switch; every card "
+"shows what visitors will see. Search, \"only show customized fields\" and "
+"open/close all help on long forms."
+msgstr ""
+"新機能: カスタム検証タブを一新しました。各項目は、ラベル、タイプ、カスタマイズ"
+"済みかどうかを示すカードになりました。追加ルール (文字数、パターン、条件付き必"
+"須) は「追加ルール」スイッチひとつにまとめられ、どのカードにも訪問者に表示され"
+"る内容が表示されます。項目の多いフォームでは、検索、「カスタマイズ済みの項目の"
+"み表示」、すべて開く / すべて閉じるが役立ちます。"
+
+#. Found in changelog list item.
+msgid ""
+"New: ready-made pattern examples and a \"try an example answer\" box that "
+"checks a pattern the same way the site does."
+msgstr ""
+"新機能: 用意されたパターンの例と、サイトと同じ方法でパターンをチェックする「試"
+"してみる: 回答の例を入力」ボックスを追加しました。"
+
+#. Found in changelog list item.
+msgid ""
+"New: copy, back-up, template and \"use on all forms\" tools are grouped and "
+"explained, ask for confirmation inline and show the result in the panel "
+"instead of browser pop-ups."
+msgstr ""
+"新機能: コピー、バックアップ、テンプレート、「すべてのフォームで使う」の各ツー"
+"ルをグループ化して説明を付けました。確認はその場で求められ、結果はブラウザーの"
+"ポップアップではなくパネル内に表示されます。"
+
+#. Found in changelog list item.
+msgid ""
+"New: when WPML String Translation or Polylang is active, the tab links "
+"straight to the screen where the messages are translated."
+msgstr ""
+"新機能: WPML String Translation または Polylang が有効な場合、メッセージを翻訳"
+"する画面へのリンクがタブに直接表示されます。"
+
+#. Found in changelog list item.
+msgid ""
+"New: custom \"wrong answer\" message for quiz fields and \"wrong file\" "
+"message for file fields."
+msgstr ""
+"新機能: クイズ項目用の「答えが間違っている」場合の独自メッセージと、ファイル項"
+"目用の「ファイルが不適切」な場合の独自メッセージを追加しました。"
+
+#. Found in changelog list item.
+msgid ""
+"New: <code>{min}</code> and <code>{max}</code> work in every message; "
+"developer filters <code>vmcf7_default_message</code>, "
+"<code>vmcf7_placeholders</code>, <code>vmcf7_field_label</code>, "
+"<code>vmcf7_supports_text_rules</code> and <code>vmcf7_swv_invalid_rules</"
+"code>."
+msgstr ""
+"新機能: <code>{min}</code> と <code>{max}</code> がすべてのメッセージで使える"
+"ようになりました。開発者向けフィルター <code>vmcf7_default_message</code>、"
+"<code>vmcf7_placeholders</code>、<code>vmcf7_field_label</code>、"
+"<code>vmcf7_supports_text_rules</code>、<code>vmcf7_swv_invalid_rules</code> "
+"を追加しました。"
+
+#. Found in changelog list item.
+msgid ""
+"New: front-end error style can be changed with CSS custom properties (<code>--"
+"vmcf7-error-color</code>, <code>--vmcf7-error-font-size</code> and others)."
+msgstr ""
+"新機能: フロントエンドのエラー表示のスタイルを CSS カスタムプロパティ "
+"(<code>--vmcf7-error-color</code>、<code>--vmcf7-error-font-size</code> など) "
+"で変更できるようになりました。"
+
+#. Found in changelog list item.
+msgid "New: Japanese, Italian and Polish translations."
+msgstr "新機能: 日本語、イタリア語、ポーランド語の翻訳を追加しました。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: the Contact Form 7 editor no longer asks \"Leave site? Changes you made "
+"may not be saved\" when nothing was changed."
+msgstr ""
+"修正: 何も変更していないのに、Contact Form 7 エディターが「このサイトを離れま"
+"すか ? 行った変更が保存されない可能性があります」と確認する問題を修正しまし"
+"た。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: custom messages and length limits now reach Contact Form 7 6.2+ client-"
+"side validation again (the schema hook silently did nothing on 6.2)."
+msgstr ""
+"修正: 独自メッセージと文字数制限が、Contact Form 7 6.2 以降のクライアント側検"
+"証に再び反映されるようになりました (6.2 ではスキーマのフックが何も行わないまま"
+"無視されていました)。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: backslashes were stripped from saved patterns and messages (<code>^\\d+"
+"$</code> was stored as <code>^d+$</code>), also on import, copy and \"use on "
+"all forms\"."
+msgstr ""
+"修正: 保存したパターンやメッセージからバックスラッシュが取り除かれていた問題を"
+"修正しました (<code>^\\d+$</code> が <code>^d+$</code> として保存されていまし"
+"た)。インポート、コピー、「すべてのフォームで使う」でも同様でした。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: an invalid pattern no longer rejects every answer; a pattern or length "
+"rule on checkboxes or multi-selects no longer causes an error on submit."
+msgstr ""
+"修正: 無効なパターンがすべての回答を拒否することはなくなりました。チェックボッ"
+"クスや複数選択に設定したパターンや文字数のルールが、送信時にエラーを引き起こす"
+"こともなくなりました。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: copying a form's rules onto the same form no longer erases them; rule-"
+"set tools accept only Contact Form 7 forms the user may edit, and import "
+"files are checked and size-limited."
+msgstr ""
+"修正: フォームのルールを同じフォームにコピーしても、ルールが消えなくなりまし"
+"た。ルールセットのツールは、ユーザーが編集できる Contact Form 7 フォームのみを"
+"受け付け、インポートファイルは内容の検査とサイズ制限が行われます。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: WPML/Polylang received each message one save late, Polylang did not list "
+"the messages on its Translations screen, and then listed them twice."
+msgstr ""
+"修正: WPML / Polylang に各メッセージが 1 回分の保存だけ遅れて渡されていた問"
+"題、Polylang の翻訳画面にメッセージが表示されなかった問題、その後に二重に表示"
+"された問題を修正しました。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: the custom required message now also applies to acceptance checkboxes; "
+"required-if works when the other field's name has capital letters."
+msgstr ""
+"修正: 必須項目の独自メッセージが承諾確認チェックボックスにも適用されるようにな"
+"りました。条件付き必須は、相手の項目名に大文字が含まれていても動作します。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: AI Translate no longer sends patterns and numbers to the translator."
+msgstr ""
+"修正: AI Translate がパターンや数値を翻訳サービスに送信しなくなりました。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: uninstall removes all plugin options; front-end styles also load for "
+"forms placed in widgets and templates."
+msgstr ""
+"修正: アンインストール時にプラグインのすべてのオプションが削除されるようになり"
+"ました。ウィジェットやテンプレートに配置したフォームでも、フロントエンドのスタ"
+"イルが読み込まれます。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: opening Contact → Add New with Flavor active no longer stops with a "
+"fatal error. A form that has not been saved yet has no ID, and Validation "
+"Muse now skips its translations until the form is saved."
+msgstr ""
+"修正: Flavor が有効な状態で「お問い合わせ → 新規追加」を開いても、致命的なエ"
+"ラーで停止しなくなりました。まだ保存されていないフォームには ID がないため、"
+"Validation Muse はフォームが保存されるまで翻訳の処理をスキップします。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: the archive GitHub and Composer build from a tag no longer carries "
+"tests, development tooling and documentation, so a project that installs the "
+"plugin from Git gets only the plugin. No change to the plugin's behavior."
+msgstr ""
+"修正: GitHub と Composer がタグから作成するアーカイブに、テスト、開発ツール、"
+"ドキュメントが含まれなくなりました。Git からプラグインをインストールするプロ"
+"ジェクトには、プラグイン本体のみが入ります。プラグインの動作に変更はありませ"
+"ん。"
+
+#. Found in changelog list item.
+msgid ""
+"New: the <code>vmcf7_message</code> filter hands a message written here to "
+"other code: <code>apply_filters( 'vmcf7_message', $default, $form_id, "
+"$field_name, $type )</code> returns the custom message, or <code>$default</"
+"code> when none was written or custom validation is off for the form. Nothing "
+"changes for visitors unless other code asks."
+msgstr ""
+"新機能: <code>vmcf7_message</code> フィルターで、ここで設定したメッセージを他"
+"のコードに渡せるようになりました。<code>apply_filters( 'vmcf7_message', "
+"$default, $form_id, $field_name, $type )</code> は独自メッセージを返し、メッ"
+"セージが設定されていない場合やフォームでカスタム検証がオフの場合は "
+"<code>$default</code> を返します。他のコードが要求しない限り、訪問者への表示は"
+"何も変わりません。"
+
+#. Found in changelog list item.
+msgid ""
+"New: a one-time, dismissible request to leave a review on WordPress.org. It "
+"appears only a week after you first save a custom validation message, only to "
+"users who can edit Contact Form 7 forms and only on the Contact Form 7 "
+"screens. \"Maybe later\" snoozes it for 30 days, \"Don't ask again\" hides it "
+"for good. Nothing is sent anywhere."
+msgstr ""
+"新機能: WordPress.org へのレビュー投稿をお願いする、1 回限りの非表示にできる通"
+"知を追加しました。独自の検証メッセージを初めて保存してから 1 週間後に、"
+"Contact Form 7 フォームを編集できるユーザーに対してのみ、Contact Form 7 の画面"
+"でのみ表示されます。「あとで」を選ぶと 30 日間表示されなくなり、「今後表示しな"
+"い」を選ぶと二度と表示されません。データはどこにも送信されません。"
+
+#. Found in changelog list item.
+msgid "Tested with WordPress 7.1 (verified on 7.1.1 with Contact Form 7 6.1)."
+msgstr ""
+"WordPress 7.1 でテスト済み (7.1.1 と Contact Form 7 6.1 の組み合わせで確認)。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: removed calls deprecated in PHP 8.5 (<code>finfo_close()</code>, and "
+"<code>ReflectionProperty::setAccessible()</code> on PHP 8.1+), so the plugin "
+"no longer triggers deprecation notices on PHP 8.5."
+msgstr ""
+"修正: PHP 8.5 で非推奨となった呼び出し (<code>finfo_close()</code>、および "
+"PHP 8.1 以降での <code>ReflectionProperty::setAccessible()</code>) を削除し、"
+"PHP 8.5 でプラグインが非推奨の通知を出さないようにしました。"
+
+#. Found in changelog list item.
+msgid ""
+"i18n: fully regenerated the <code>.pot</code> translation template — the "
+"catalog was frozen since 1.2.0 and covered only about 20% of the plugin's "
+"translatable strings (regex/length rules, rule templates, AI Translate "
+"errors, and more were never extractable before). All six shipped languages "
+"(German, Spanish, French, Portuguese, Russian, Ukrainian) are now fully "
+"translated against the current UI."
+msgstr ""
+"i18n: <code>.pot</code> 翻訳テンプレートを完全に再生成しました — カタログは "
+"1.2.0 から更新が止まっており、プラグインの翻訳可能な文字列の約 20% しかカバー"
+"していませんでした (正規表現 / 文字数ルール、ルールテンプレート、AI Translate "
+"のエラーなどは、これまで抽出できませんでした)。同梱している 6 言語 (ドイツ語、"
+"スペイン語、フランス語、ポルトガル語、ロシア語、ウクライナ語) はすべて、現在"
+"の UI に合わせて完全に翻訳されました。"
+
+#. Found in changelog list item.
+msgid ""
+"Docs: synced all translated readme files — feature list, supported field "
+"types, and FAQ now reflect 1.6.0–1.6.2 functionality (custom regex/length "
+"rules, required-if, native SWV client-side validation, rule templates); their "
+"Changelog/Upgrade Notice sections, previously stuck at 1.4.2, now cover every "
+"release up to 1.6.2."
+msgstr ""
+"ドキュメント: 翻訳版の readme ファイルをすべて同期しました — 機能一覧、対応し"
+"ている項目タイプ、FAQ が 1.6.0–1.6.2 の機能 (独自の正規表現 / 文字数ルール、条"
+"件付き必須、ネイティブ SWV のクライアント側検証、ルールテンプレート) を反映す"
+"るようになりました。これまで 1.4.2 で止まっていた変更履歴 / アップグレード通知"
+"のセクションも、1.6.2 までのすべてのリリースを網羅しています。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: added a missing <code>translators:</code> comment for a placeholder "
+"string (i18n code quality, no behavior change)."
+msgstr ""
+"修正: プレースホルダーを含む文字列に、不足していた <code>translators:</code> "
+"コメントを追加しました (i18n のコード品質向上、動作の変更なし)。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: messages saved by versions prior to the plugin rename (stored under the "
+"legacy <code>_cf7cv_</code> meta prefix) were invisible to the current code. "
+"A one-time migration now renames them to the <code>_vmcf7_</code> prefix "
+"automatically, restoring lost messages. Collision-safe and runs once."
+msgstr ""
+"修正: プラグイン名の変更より前のバージョンで保存されたメッセージ (旧 "
+"<code>_cf7cv_</code> メタ接頭辞で保存されたもの) が、現在のコードから見えなく"
+"なっていました。1 回限りの移行処理により、自動的に <code>_vmcf7_</code> 接頭辞"
+"へ名前が変更され、失われていたメッセージが復元されます。衝突に対して安全で、実"
+"行は 1 回のみです。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: duplicate/overwritten validation messages on frontend by integrating "
+"with CF7's native SWV engine."
+msgstr ""
+"修正: CF7 ネイティブの SWV エンジンと連携することで、フロントエンドで検証メッ"
+"セージが重複または上書きされる問題を修正しました。"
+
+#. Found in changelog list item.
+msgid ""
+"Fix: admin panel drawers and preview cards rendered expanded due to CF7 "
+"editor panel stripping inline styles."
+msgstr ""
+"修正: CF7 エディターのパネルがインラインスタイルを取り除くために、管理パネルの"
+"ドロワーとプレビューカードが展開された状態で表示される問題を修正しました。"
+
+#. Found in changelog list item.
+msgid ""
+"New: custom regex and min/max-length validation rules per field, each with "
+"its own message."
+msgstr ""
+"新機能: 項目ごとの独自の正規表現ルールと最小 / 最大文字数の検証ルール。それぞ"
+"れに専用のメッセージを設定できます。"
+
+#. Found in changelog list item.
+msgid ""
+"New: validation messages for <code>file</code>, <code>acceptance</code>, and "
+"<code>quiz</code> fields; conditional \"required-if\" messages."
+msgstr ""
+"新機能: <code>file</code>、<code>acceptance</code>、<code>quiz</code> 項目用の"
+"検証メッセージ、および条件付き必須 (required-if) のメッセージ。"
+
+#. Found in changelog list item.
+msgid ""
+"New: message placeholder tokens <code>{field_label}</code>, <code>{min}</"
+"code>, <code>{max}</code>."
+msgstr ""
+"新機能: メッセージ用のプレースホルダートークン <code>{field_label}</code>、"
+"<code>{min}</code>、<code>{max}</code>。"
+
+#. Found in changelog list item.
+msgid ""
+"New: client-side inline validation mirroring the server messages, with "
+"<code>aria-describedby</code> accessibility."
+msgstr ""
+"新機能: サーバー側のメッセージを反映するクライアント側のインライン検証。"
+"<code>aria-describedby</code> によるアクセシビリティ対応付き。"
+
+#. Found in changelog list item.
+msgid ""
+"New: live message preview, copy messages between forms, JSON import/export of "
+"message sets, and editor lint."
+msgstr ""
+"新機能: メッセージのライブプレビュー、フォーム間でのメッセージのコピー、メッ"
+"セージセットの JSON インポート / エクスポート、エディターでの入力チェック "
+"(lint)。"
+
+#. Found in changelog list item.
+msgid ""
+"New: WPML/Polylang string registration alongside the Flavor bridge; "
+"translation import/export."
+msgstr ""
+"新機能: Flavor 連携に加えて、WPML / Polylang への文字列登録に対応。翻訳のイン"
+"ポート / エクスポート。"
+
+#. Found in changelog list item.
+msgid ""
+"Minimum PHP raised to 8.0; minimum WordPress raised to 6.0; tested up to "
+"WordPress 7.0."
+msgstr ""
+"PHP の最低要件を 8.0 に、WordPress の最低要件を 6.0 に引き上げました。"
+"WordPress 7.0 までテスト済みです。"
+
+#. Found in changelog list item.
+msgid "New: custom validation messages for <code>time</code> fields."
+msgstr "新機能: <code>time</code> 項目用の独自検証メッセージ。"
+
+#. Found in changelog list item.
+msgid "Clearer AI Translate error feedback in the form editor."
+msgstr ""
+"フォームエディターでの AI Translate のエラー表示をよりわかりやすくしました。"
+
+#. Found in changelog list item.
+msgid ""
+"Reflection-based SWV message replacement now logs failures under WP_DEBUG for "
+"easier diagnosis."
+msgstr ""
+"Reflection による SWV メッセージの置き換えが失敗した場合、診断しやすいよう "
+"WP_DEBUG 有効時にログへ記録するようにしました。"
+
+#. Found in changelog list item.
+msgid ""
+"Improved handling of pending translations (no more silent fallback) with per-"
+"request caching."
+msgstr ""
+"保留中の翻訳の扱いを改善し (暗黙のフォールバックを廃止)、リクエスト単位の"
+"キャッシュを追加しました。"
+
+#. Found in changelog list item.
+msgid ""
+"Code modernized to PHP 8 idioms; output escaping hardened; first unit-test "
+"suite added."
+msgstr ""
+"コードを PHP 8 の書き方に刷新し、出力のエスケープを強化し、初のユニットテスト"
+"スイートを追加しました。"
+
+#. Found in changelog list item.
+msgid ""
+"Plugin URI: now points to the dedicated landing page at https://"
+"plugins.symonov.com/validation-muse-for-cf7/"
+msgstr ""
+"プラグイン URI: 専用のランディングページ https://plugins.symonov.com/"
+"validation-muse-for-cf7/ を指すようになりました"
+
+#. Found in changelog list item.
+msgid "No code or behavior changes"
+msgstr "コードや動作の変更はありません"
+
+#. Found in changelog list item.
+msgid "Readme: USP-first rewrite for SEO discoverability"
+msgstr ""
+"Readme: SEO で見つけやすくするため、USP を前面に出した内容に書き直しました"
+
+#. Found in changelog list item.
+msgid ""
+"Tags: replaced generic <code>messages</code>/<code>forms</code>/"
+"<code>customization</code> with targeted <code>contact-form-7</code>, "
+"<code>cf7</code>, <code>validation</code>, <code>error-message</code>, "
+"<code>multilingual</code>"
+msgstr ""
+"タグ: 汎用的な <code>messages</code>/<code>forms</code>/<code>customization</"
+"code> を、的を絞った <code>contact-form-7</code>、<code>cf7</code>、"
+"<code>validation</code>、<code>error-message</code>、<code>multilingual</"
+"code> に置き換えました"
+
+#. Found in changelog list item.
+msgid ""
+"FAQ: added entries for CF7 6.x SWV compatibility, comparison with other CF7 "
+"validation plugins, and multilingual via Flavor"
+msgstr ""
+"FAQ: CF7 6.x SWV への対応、他の CF7 検証プラグインとの比較、Flavor による多言"
+"語対応についての項目を追加しました"
+
+#. Found in changelog list item.
+msgid "Added multilingual support via Flavor translation plugin integration"
+msgstr "Flavor 翻訳プラグインとの連携による多言語対応を追加しました"
+
+#. Found in changelog list item.
+msgid ""
+"Validation messages can now be translated per language in the form editor"
+msgstr ""
+"フォームエディターで検証メッセージを言語ごとに翻訳できるようになりました"
+
+#. Found in changelog list item.
+msgid "Language tabs appear automatically when Flavor plugin is active"
+msgstr "Flavor プラグインが有効な場合、言語タブが自動的に表示されます"
+
+#. Found in changelog list item.
+msgid "AI Translate button for one-click machine translation of all messages"
+msgstr "すべてのメッセージをワンクリックで機械翻訳する AI Translate ボタン"
+
+#. Found in changelog list item.
+msgid "Translations stored in Flavor's database, keeping plugin data portable"
+msgstr ""
+"翻訳は Flavor のデータベースに保存され、プラグインのデータの可搬性が保たれます"
+
+#. Found in changelog list item.
+msgid ""
+"Zero overhead when Flavor is not installed — all calls behind class_exists() "
+"checks"
+msgstr ""
+"Flavor がインストールされていない場合のオーバーヘッドはゼロ — すべての呼び出し"
+"は class_exists() チェックの内側にあります"
+
+#. Found in changelog list item.
+msgid "Flavor translations cleaned up on plugin uninstall"
+msgstr "プラグインのアンインストール時に Flavor の翻訳を削除するようにしました"
+
+#. Found in changelog list item.
+msgid ""
+"Fixed compatibility with Contact Form 7 6.x SWV (Schema-based Validation)"
+msgstr ""
+"Contact Form 7 6.x SWV (Schema-based Validation) との互換性を修正しました"
+
+#. Found in changelog list item.
+msgid ""
+"Validation filters now run at priority 20 (after CF7 core) to replace SWV "
+"error messages"
+msgstr ""
+"SWV のエラーメッセージを置き換えるため、検証フィルターを優先度 20 (CF7 コアの"
+"後) で実行するようにしました"
+
+#. Found in changelog list item.
+msgid "Added Reflection-based error replacement for already-invalidated fields"
+msgstr ""
+"すでに無効と判定された項目に対する、Reflection によるエラーの置き換えを追加し"
+"ました"
+
+#. Found in changelog list item.
+msgid ""
+"Custom messages now correctly override default CF7 \"The field is required.\" "
+"text"
+msgstr ""
+"独自メッセージが CF7 のデフォルトの文言「The field is required.」を正しく上書"
+"きするようになりました"
+
+#. Found in changelog list item.
+msgid "Fixed variable name mismatch causing \"No required fields\" error"
+msgstr ""
+"「No required fields」エラーの原因となっていた変数名の不一致を修正しました"
+
+#. Found in changelog list item.
+msgid "Refactored codebase to follow WordPress Coding Standards"
+msgstr ""
+"WordPress コーディング規約に従うようコードベースをリファクタリングしました"
+
+#. Found in changelog list item.
+msgid "Reorganized file structure for better maintainability"
+msgstr "保守しやすいようファイル構成を整理しました"
+
+#. Found in changelog list item.
+msgid "Added PHPDoc blocks to all functions and methods"
+msgstr "すべての関数とメソッドに PHPDoc ブロックを追加しました"
+
+#. Found in changelog list item.
+msgid "Improved accessibility with ARIA labels"
+msgstr "ARIA ラベルでアクセシビリティを改善しました"
+
+#. Found in changelog list item.
+msgid "Fixed JavaScript prefix inconsistency"
+msgstr "JavaScript の接頭辞の不統一を修正しました"
+
+#. Found in changelog list item.
+msgid "Fixed uninstall script to use correct meta prefix"
+msgstr "アンインストールスクリプトが正しいメタ接頭辞を使うよう修正しました"
+
+#. Found in changelog list item.
+msgid ""
+"Added extensibility hooks (<code>vmcf7_loaded</code>, "
+"<code>vmcf7_validation_tag_types</code>)"
+msgstr ""
+"拡張用フック (<code>vmcf7_loaded</code>、<code>vmcf7_validation_tag_types</"
+"code>) を追加しました"
+
+#. Found in changelog list item.
+msgid ""
+"Changed capability check from <code>manage_options</code> to "
+"<code>wpcf7_edit_contact_forms</code>"
+msgstr ""
+"権限チェックを <code>manage_options</code> から "
+"<code>wpcf7_edit_contact_forms</code> に変更しました"
+
+#. Found in changelog list item.
+msgid "Updated POT file name to match text domain"
+msgstr "POT ファイル名をテキストドメインに合わせて更新しました"
+
+#. Found in changelog list item.
+msgid "Changed plugin name."
+msgstr "プラグイン名を変更しました。"
+
+#. Found in changelog list item.
+msgid "Added .gitignore file."
+msgstr ".gitignore ファイルを追加しました。"
+
+#. Found in changelog list item.
+msgid "Added WordPress repository collateral (readme, license, POT file)."
+msgstr ""
+"WordPress リポジトリ用の付属ファイル (readme、ライセンス、POT ファイル) を追加"
+"しました。"
+
+#. Found in changelog list item.
+msgid ""
+"Reworked validation hooks to override required and invalid messages without "
+"relying on AJAX filters."
+msgstr ""
+"AJAX フィルターに頼らずに必須メッセージと形式エラーメッセージを上書きできるよ"
+"う、検証フックを作り直しました。"
+
+#. Found in changelog list item.
+msgid ""
+"Hardened sanitization, text domain loading, and uninstall cleanup for release "
+"readiness."
+msgstr ""
+"リリースに向けて、サニタイズ、テキストドメインの読み込み、アンインストール時の"
+"クリーンアップを強化しました。"
+
+#. Found in changelog list item.
+msgid "Initial public iteration bundled with the project."
+msgstr "プロジェクトに同梱された最初の公開版。"
