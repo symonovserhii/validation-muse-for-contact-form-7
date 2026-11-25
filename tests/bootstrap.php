@@ -29,6 +29,9 @@ if ( ! defined( 'VMCF7_BASENAME' ) ) {
 if ( ! defined( 'WEEK_IN_SECONDS' ) ) {
     define( 'WEEK_IN_SECONDS', 604800 );
 }
+if ( ! defined( 'MB_IN_BYTES' ) ) {
+    define( 'MB_IN_BYTES', 1048576 );
+}
 if ( ! defined( 'DAY_IN_SECONDS' ) ) {
     define( 'DAY_IN_SECONDS', 86400 );
 }

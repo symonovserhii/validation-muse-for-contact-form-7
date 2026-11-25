@@ -45,6 +45,7 @@ Target user: anyone running Contact Form 7 who wants branded, regex-validated, c
 - `vmcf7_validation_tag_types` — filter to register custom field types for validation.
 - `vmcf7_translate_message` — filter to plug in additional translation providers for a custom message (used internally for WPML/Polylang).
 - `vmcf7_message` — filter that returns the message written for a field and a message type (`$default, $form_id, $field_name, $type`), or `$default` when none was written or the form is not enabled.
+- `vmcf7_default_message`, `vmcf7_placeholders`, `vmcf7_field_label`, `vmcf7_supports_text_rules`, `vmcf7_swv_invalid_rules` — filters added in 1.8.0 (site-wide fallback messages, custom tokens, label override, rule support per type, SWV invalid-rule classes).
 - `vmcf7_debug` — action fired on Reflection failures, invalid regex, and migration completion (useful diagnostic hook; consumers can log it).
 
 ## Tech Stack

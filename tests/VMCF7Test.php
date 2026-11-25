@@ -98,6 +98,10 @@ namespace {
 
     if ( ! function_exists( 'wpcf7_swv_create_rule' ) ) {
         function wpcf7_swv_create_rule( $name, $args ) {
+            // HardeningTest flips this to exercise the CF7 6.2+ (immutable rules) API.
+            if ( ! empty( $GLOBALS['vmcf7_test_modern_swv'] ) ) {
+                return new \Test_Modern_SWV_Rule( array_merge( array( 'rule' => $name ), $args ) );
+            }
             return new \Contactable\SWV\Rule( $name, $args );
         }
     }
@@ -204,6 +208,15 @@ namespace {
                 },
                 'wp_unslash' => function( $val ) {
                     return $val;
+                },
+                'wp_slash' => function( $val ) {
+                    return is_string( $val ) ? addslashes( $val ) : $val;
+                },
+                'get_post_type' => function( $id = null ) {
+                    return 'wpcf7_contact_form';
+                },
+                'sanitize_file_name' => function( $name ) {
+                    return (string) $name;
                 },
                 'wp_kses_post' => function( $val ) {
                     return preg_replace( '/<script\b[^>]*>(.*?)<\/script>/is', '', $val );
@@ -806,9 +819,8 @@ namespace {
                 ->with( 'vmcf7_ajax_nonce', 'nonce' )
                 ->andReturn( true );
 
+            // Asked twice: the general capability, then the per-form one.
             \Brain\Monkey\Functions\expect( 'current_user_can' )
-                ->once()
-                ->with( 'wpcf7_edit_contact_forms' )
                 ->andReturn( true );
 
             $deleted_keys = array();

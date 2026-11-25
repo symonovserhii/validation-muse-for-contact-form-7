@@ -226,11 +226,57 @@ class VMCF7_Flavor {
 			return;
 		}
 
+		$lang = sanitize_key( $lang );
+		if ( ! $lang ) {
+			return;
+		}
+
 		foreach ( $translations as $field_key => $value ) {
-			if ( preg_match( '/^vmcf7_(.+?)_(required|invalid|regex_message|length_message|required_if_message)$/', $field_key, $matches ) ) {
-				self::save_translation( $form_id, $matches[1], $matches[2], $lang, $value );
+			$parts = VMCF7_Rules::parse_key( $field_key, true );
+			if ( ! $parts || ! is_string( $value ) ) {
+				continue;
+			}
+
+			$value = trim( wp_kses_post( $value ) );
+			if ( '' !== $value ) {
+				self::save_translation( $form_id, $parts['field'], $parts['type'], $lang, $value );
 			}
 		}
+	}
+
+	/**
+	 * Collect a form's source-language messages, keyed by Flavor field key.
+	 *
+	 * Only message types are returned: regex patterns, length limits and
+	 * companion field names are configuration, not text to translate.
+	 *
+	 * @since 1.8.0
+	 *
+	 * @param int $form_id The CF7 form post ID.
+	 * @return array Flavor field key (`vmcf7_{field}_{type}`) => message.
+	 */
+	public static function get_source_messages( $form_id ) {
+		$texts = array();
+		$meta  = get_post_meta( absint( $form_id ) );
+
+		if ( ! is_array( $meta ) ) {
+			return $texts;
+		}
+
+		foreach ( $meta as $key => $values ) {
+			$key = (string) $key;
+			if ( ! str_starts_with( $key, '_' ) || ! VMCF7_Rules::parse_key( $key, true ) ) {
+				continue;
+			}
+
+			$value = is_array( $values ) && isset( $values[0] ) ? $values[0] : '';
+			if ( is_string( $value ) && '' !== trim( $value ) ) {
+				// Convert _vmcf7_field_type to vmcf7_field_type.
+				$texts[ substr( $key, 1 ) ] = $value;
+			}
+		}
+
+		return $texts;
 	}
 
 	/**
@@ -308,24 +354,7 @@ class VMCF7_Flavor {
 			return array();
 		}
 
-		// Collect all EN messages from post meta.
-		$meta  = get_post_meta( $form_id );
-		$texts = array();
-
-		foreach ( $meta as $key => $values ) {
-			if ( ! str_starts_with( $key, '_vmcf7_' ) || '_vmcf7_enabled' === $key ) {
-				continue;
-			}
-
-			$value = $values[0];
-			if ( empty( $value ) ) {
-				continue;
-			}
-
-			// Convert _vmcf7_field_type to vmcf7_field_type.
-			$flavor_key           = substr( $key, 1 );
-			$texts[ $flavor_key ] = $value;
-		}
+		$texts = self::get_source_messages( $form_id );
 
 		if ( empty( $texts ) ) {
 			return array();
@@ -334,11 +363,16 @@ class VMCF7_Flavor {
 		$translator   = new \Flavor\Flv_AI_Translator();
 		$translations = $translator->translate_batch( $texts, $lang );
 
+		if ( ! is_array( $translations ) ) {
+			return array();
+		}
+
+		// Keep only answers to what was asked, as text.
+		$translations = array_filter( array_intersect_key( $translations, $texts ), 'is_string' );
+		$translations = array_filter( array_map( 'trim', array_map( 'wp_kses_post', $translations ) ), 'strlen' );
+
 		// Save each translation.
 		foreach ( $translations as $flavor_key => $translated_text ) {
-			if ( empty( $translated_text ) ) {
-				continue;
-			}
 
 			$cache_key = "{$form_id}_{$flavor_key}_{$lang}";
 			self::$cache[ $cache_key ] = $translated_text;

@@ -42,6 +42,8 @@ if ( $vmcf7_forms ) {
 // Delete plugin options.
 delete_option( 'vmcf7_version' );
 delete_option( 'vmcf7_review_state' );
+delete_option( 'vmcf7_default_template' );
+delete_option( 'vmcf7_migrated_cf7cv_prefix' );
 
 // Clean up Flavor translations if available.
 if ( class_exists( 'Flavor\Flv_DB' ) ) {
@@ -53,7 +55,7 @@ if ( class_exists( 'Flavor\Flv_DB' ) ) {
 		$wpdb->prepare(
 			"DELETE FROM {$vmcf7_table} WHERE object_type = %s AND field_name LIKE %s", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Table name from Flavor API.
 			'post_meta',
-			'vmcf7_%'
+			$wpdb->esc_like( 'vmcf7_' ) . '%'
 		)
 	);
 }
