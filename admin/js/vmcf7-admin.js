@@ -125,13 +125,13 @@
 
 	function fieldValue( $card, type ) {
 		var $input = $card.find( '[data-rule-type="' + type + '"]' ).first();
-		return $input.length ? $.trim( String( $input.val() || '' ) ) : '';
+		return $input.length ? String( $input.val() || '' ).trim() : '';
 	}
 
 	function isCustomized( $card ) {
 		var custom = false;
 		$card.find( '[name^="vmcf7["]' ).each( function() {
-			if ( '' !== $.trim( String( $( this ).val() || '' ) ) ) {
+			if ( '' !== String( $( this ).val() || '' ).trim() ) {
 				custom = true;
 				return false;
 			}
@@ -159,7 +159,7 @@
 	}
 
 	function applyFilter() {
-		var query = $.trim( String( $( '#vmcf7-search' ).val() || '' ) ).toLowerCase();
+		var query = String( $( '#vmcf7-search' ).val() || '' ).trim().toLowerCase();
 		var onlyCustom = $( '#vmcf7-only-custom' ).is( ':checked' );
 		var visible = 0;
 
@@ -545,7 +545,7 @@
 				var message = response && response.data && response.data.message ? response.data.message : '';
 				if ( response && response.success ) {
 					if ( options.reload ) {
-						showNotice( $feedback, $.trim( message + ' ' + t( 'reloading' ) ), 'success', true );
+						showNotice( $feedback, String( message + ' ' + t( 'reloading' ) ).trim(), 'success', true );
 						window.setTimeout( reloadToPanel, 900 );
 						return;
 					}
@@ -602,7 +602,7 @@
 				return;
 			}
 
-			askConfirm( $button.closest( '.vmcf7-tool' ), $button, format( t( 'confirmCopy' ), $.trim( $source.find( 'option:selected' ).text() ) ), t( 'confirmCopyYes' ), function() {
+			askConfirm( $button.closest( '.vmcf7-tool' ), $button, format( t( 'confirmCopy' ), $source.find( 'option:selected' ).text().trim() ), t( 'confirmCopyYes' ), function() {
 				run( {
 					data: {
 						action: 'vmcf7_copy_rules',

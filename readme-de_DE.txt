@@ -2,9 +2,9 @@
 Contributors: simmotorlp
 Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.0
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,10 @@ Nein. Validation Muse stellt keine externen Anfragen. Der optionale AI-Translate
 4. Format-Fehlermeldung für ein E-Mail-Feld im Frontend gerendert.
 
 == Changelog ==
+
+= 1.8.1 =
+* Fix: Der Tab „Benutzerdefinierte Validierung“ verwendet kein jQuery.trim() mehr, das WordPress 7.2 als veraltet meldet und jQuery 4 entfernt.
+* Getestet mit WordPress 7.2.
 
 = 1.8.0 =
 * Neu: Der Tab „Benutzerdefinierte Validierung“ wurde neu gestaltet. Jedes Feld ist eine Karte mit Beschriftung, Typ und dem Hinweis, ob es angepasst ist; zusätzliche Regeln (Länge, Muster, nur manchmal erforderlich) liegen hinter einem einzigen Schalter „Zusätzliche Regeln“; jede Karte zeigt, was Besucher sehen werden. Suche, „Nur angepasste Felder anzeigen“ und „Alle öffnen“/„Alle schließen“ helfen bei langen Formularen.
@@ -216,6 +220,9 @@ Nein. Validation Muse stellt keine externen Anfragen. Der optionale AI-Translate
 * Erste öffentliche Iteration, im Projekt gebündelt.
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+Kompatibilitätsupdate für WordPress 7.2 und das kommende jQuery 4. Das Validierungsverhalten bleibt unverändert.
 
 = 1.8.0 =
 Neu gestalteter Tab „Benutzerdefinierte Validierung“, clientseitige Meldungen funktionieren wieder mit Contact Form 7 6.2+, dazu mehrere Validierungs-Fixes. Bestehende Regeln und Meldungen bleiben unverändert erhalten.

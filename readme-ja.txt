@@ -2,9 +2,9 @@
 Contributors: simmotorlp
 Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.0
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,10 @@ Validation Muse は、次の 3 点を満たす唯一の CF7 検証プラグイ�
 4. フロントエンドに表示された、メール項目の形式エラーメッセージ。
 
 == Changelog ==
+
+= 1.8.1 =
+* 修正: カスタム検証タブで jQuery.trim() を使わなくなりました。WordPress 7.2 では非推奨として警告され、jQuery 4 では削除されます。
+* WordPress 7.2 で動作確認しました。
 
 = 1.8.0 =
 * 新機能: カスタム検証タブを一新しました。各項目は、ラベル、タイプ、カスタマイズ済みかどうかを示すカードになりました。追加ルール (文字数、パターン、条件付き必須) は「追加ルール」スイッチひとつにまとめられ、どのカードにも訪問者に表示される内容が表示されます。項目の多いフォームでは、検索、「カスタマイズ済みの項目のみ表示」、すべて開く / すべて閉じるが役立ちます。
@@ -216,6 +220,9 @@ Validation Muse は、次の 3 点を満たす唯一の CF7 検証プラグイ�
 * プロジェクトに同梱された最初の公開版。
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+WordPress 7.2 と今後の jQuery 4 に対応する互換性アップデートです。検証の動作は変わりません。
 
 = 1.8.0 =
 カスタム検証タブを一新し、Contact Form 7 6.2 以降でクライアント側のメッセージが再び動作するようになったほか、検証に関する複数の修正を行いました。既存のルールとメッセージはそのまま保持されます。

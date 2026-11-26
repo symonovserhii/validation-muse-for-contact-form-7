@@ -2,9 +2,9 @@
 Contributors: simmotorlp
 Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.0
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,10 @@ Nie. Validation Muse nie wysyła żadnych żądań zewnętrznych. Opcjonalny prz
 4. Komunikat o nieprawidłowym formacie dla pola e-mail wyświetlony na froncie witryny.
 
 == Changelog ==
+
+= 1.8.1 =
+* Poprawka: karta „Własna walidacja” nie używa już jQuery.trim(), które WordPress 7.2 zgłasza jako przestarzałe, a jQuery 4 usuwa.
+* Przetestowano z WordPress 7.2.
 
 = 1.8.0 =
 * Nowość: przeprojektowana karta „Własna walidacja”. Każde pole to karta z etykietą, typem i informacją, czy zostało dostosowane; dodatkowe reguły (długość, wzorzec, wymagane tylko czasami) kryją się za jednym przełącznikiem „Dodatkowe reguły”; każda karta pokazuje, co zobaczą odwiedzający. Wyszukiwanie, „Pokaż tylko dostosowane pola” oraz rozwijanie/zwijanie wszystkich ułatwiają pracę z długimi formularzami.
@@ -216,6 +220,9 @@ Nie. Validation Muse nie wysyła żadnych żądań zewnętrznych. Opcjonalny prz
 * Pierwsza publiczna wersja dołączona do projektu.
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+Aktualizacja zgodności z WordPress 7.2 i nadchodzącym jQuery 4. Działanie walidacji się nie zmienia.
 
 = 1.8.0 =
 Przeprojektowana karta „Własna walidacja”, ponownie działające komunikaty po stronie klienta w Contact Form 7 6.2+ oraz kilka poprawek walidacji. Istniejące reguły i komunikaty pozostają bez zmian.

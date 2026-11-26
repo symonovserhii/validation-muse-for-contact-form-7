@@ -2,9 +2,9 @@
 Contributors: simmotorlp
 Tags: contact-form-7, cf7, validation, error-message, multilingual
 Requires at least: 6.0
-Tested up to: 7.1
+Tested up to: 7.2
 Requires PHP: 8.0
-Stable tag: 1.8.0
+Stable tag: 1.8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,10 @@ Non. Validation Muse ne fait aucune requête externe. Le bouton optionnel AI Tra
 4. Message de format invalide pour un champ email rendu en frontend.
 
 == Changelog ==
+
+= 1.8.1 =
+* Fix : l’onglet « Validation personnalisée » n’utilise plus jQuery.trim(), signalé comme obsolète par WordPress 7.2 et supprimé dans jQuery 4.
+* Testé avec WordPress 7.2.
 
 = 1.8.0 =
 * Nouveau : l'onglet « Validation personnalisée » a été repensé. Chaque champ est une carte avec son libellé, son type et l'indication s'il est personnalisé ; les règles supplémentaires (longueur, motif, obligatoire seulement dans certains cas) se trouvent derrière un seul interrupteur « Règles supplémentaires » ; chaque carte montre ce que verront les visiteurs. La recherche, « Afficher uniquement les champs personnalisés » et tout ouvrir/tout fermer aident sur les longs formulaires.
@@ -216,6 +220,9 @@ Non. Validation Muse ne fait aucune requête externe. Le bouton optionnel AI Tra
 * Itération publique initiale intégrée au projet.
 
 == Upgrade Notice ==
+
+= 1.8.1 =
+Mise à jour de compatibilité pour WordPress 7.2 et le futur jQuery 4. Aucun changement dans la validation.
 
 = 1.8.0 =
 Onglet « Validation personnalisée » repensé, messages côté client de nouveau fonctionnels sur Contact Form 7 6.2+ et plusieurs correctifs de validation. Les règles et messages existants sont conservés tels quels.
