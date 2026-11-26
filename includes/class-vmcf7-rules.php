@@ -101,7 +101,7 @@ class VMCF7_Rules {
 		$orig_backtrack = ini_get( 'pcre.backtrack_limit' );
 		$orig_recursion = ini_get( 'pcre.recursion_limit' );
 
-		// phpcs:disable WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.IniSet.Risky -- Limits are restored right below.
+		// phpcs:disable WordPress.PHP.NoSilencedErrors.Discouraged, WordPress.PHP.IniSet.Risky, Squiz.PHP.DiscouragedFunctions.Discouraged -- Limits are restored right below.
 		@ini_set( 'pcre.backtrack_limit', '10000' );
 		@ini_set( 'pcre.recursion_limit', '2000' );
 

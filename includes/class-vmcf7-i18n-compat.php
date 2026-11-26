@@ -154,7 +154,7 @@ class VMCF7_I18n_Compat {
 		if ( function_exists( 'icl_register_string' ) ) {
 			icl_register_string( 'validation-muse-for-contact-form-7', $name, $value );
 		} elseif ( has_action( 'wpml_register_string' ) ) {
-			do_action( 'wpml_register_string', $value, $name, array( 'domain' => 'validation-muse-for-contact-form-7' ), $name, 'LITE' );
+			do_action( 'wpml_register_string', $value, $name, array( 'domain' => 'validation-muse-for-contact-form-7' ), $name, 'LITE' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML's own hook.
 		}
 	}
 
@@ -182,7 +182,7 @@ class VMCF7_I18n_Compat {
 				return $wpml_trans;
 			}
 		} elseif ( has_filter( 'wpml_translate_string' ) ) {
-			$wpml_trans = apply_filters( 'wpml_translate_string', $original, $string_name, array( 'domain' => 'validation-muse-for-contact-form-7' ) );
+			$wpml_trans = apply_filters( 'wpml_translate_string', $original, $string_name, array( 'domain' => 'validation-muse-for-contact-form-7' ) ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WPML's own hook.
 			if ( ! empty( $wpml_trans ) ) {
 				return $wpml_trans;
 			}

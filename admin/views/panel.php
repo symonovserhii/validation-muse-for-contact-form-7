@@ -106,7 +106,7 @@ if ( $vmcf7_is_saved && $vmcf7_field_count ) {
 		array(
 			'post_type'      => 'wpcf7_contact_form',
 			'posts_per_page' => -1,
-			'exclude'        => array( $vmcf7_form_id ),
+			'exclude'        => array( $vmcf7_form_id ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude -- One id out of a short admin-only list.
 			'orderby'        => 'title',
 			'order'          => 'ASC',
 		)
