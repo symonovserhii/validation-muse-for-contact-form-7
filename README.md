@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/wordpress/plugin/v/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Rating](https://img.shields.io/wordpress/plugin/stars/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![Active installs](https://img.shields.io/wordpress/plugin/installs/validation-muse-for-contact-form-7)](https://wordpress.org/plugins/validation-muse-for-contact-form-7/) [![License: GPL v2](https://img.shields.io/badge/License-GPLv2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
-Requires at least: **6.0** · Tested up to: **7.2** · Requires PHP: **8.0** · Stable tag: **1.8.0**
+Requires at least: **6.0** · Tested up to: **7.2** · Requires PHP: **8.0** · Stable tag: **1.8.1**
 
 Custom validation rules & messages for Contact Form 7 — regex, length, required-if, per field, CF7 6.x SWV-compatible, multilingual.
 
@@ -79,6 +79,10 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 4. Invalid-format message for an email field rendered on the frontend.
 
 ## Changelog
+### 1.8.1
+* Fix: the Custom Validation tab no longer uses jQuery.trim(), which WordPress 7.2 reports as deprecated and jQuery 4 removes.
+* Tested with WordPress 7.2.
+
 ### 1.8.0
 * New: the Custom Validation tab is redesigned. Each field is a card with its label, type and whether it is customized; extra rules (length, pattern, required only sometimes) sit behind one "Extra rules" switch; every card shows what visitors will see. Search, "only show customized fields" and open/close all help on long forms.
 * New: ready-made pattern examples and a "try an example answer" box that checks a pattern the same way the site does.
@@ -195,6 +199,9 @@ No. Validation Muse makes no external requests. The optional AI Translate button
 * Initial public iteration bundled with the project.
 
 ## Upgrade Notice
+### 1.8.1
+Compatibility update for WordPress 7.2 and the coming jQuery 4. No changes to validation behavior.
+
 ### 1.8.0
 Redesigned Custom Validation tab, client-side messages working again on Contact Form 7 6.2+, and several validation fixes. Existing rules and messages are kept as they are.
 
